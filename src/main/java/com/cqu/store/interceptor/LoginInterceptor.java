@@ -2,28 +2,28 @@ package com.cqu.store.interceptor;
 
 
 import org.springframework.web.servlet.HandlerInterceptor;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//å®šä¹‰ä¸€ä¸ªæ‹¦æˆªå™¨
+//¶¨ÒåÒ»¸öÀ¹½ØÆ÷
 public class LoginInterceptor implements HandlerInterceptor {
-    //è°ƒç”¨æ‰€æœ‰å¤„ç†è¯·æ±‚çš„æ–¹æ³•ä¹‹å‰è¢«è‡ªåŠ¨è°ƒç”¨æ‰§è¡Œçš„æ–¹æ³•
+    //µ÷ÓÃËùÓĞ´¦ÀíÇëÇóµÄ·½·¨Ö®Ç°±»×Ô¶¯µ÷ÓÃÖ´ĞĞµÄ·½·¨
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
                              Object handler) throws Exception {
-         //HttpServletRequest requestè·å–sessionå¯¹è±¡
-        Object obj= request.getSession().getAttribute("uid");
+        //HttpServletRequest request»ñÈ¡session¶ÔÏó
+        Object obj = request.getSession().getAttribute("uid");
 
-        if(obj==null)
-        {
-            //å¦‚æœæ²¡æœ‰sessionå¯¹è±¡å°±æ‹¦æˆªï¼Œé‡å®šå‘åˆ°login.htmlç™»å½•é¡µé¢
+        if (obj == null) {
+            //Èç¹ûÃ»ÓĞsession¶ÔÏó¾ÍÀ¹½Ø£¬ÖØ¶¨Ïòµ½login.htmlµÇÂ¼Ò³Ãæ
             response.sendRedirect("/web/login.html");
-            //ç»“æŸåç»­çš„è°ƒç”¨
+            //½áÊøºóĞøµÄµ÷ÓÃ
             return false;
         }
 
-        //è¯·æ±‚æ”¾è¡Œ
+        //ÇëÇó·ÅĞĞ
         return true;
     }
 }

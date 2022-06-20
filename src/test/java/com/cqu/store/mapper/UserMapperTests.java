@@ -15,50 +15,39 @@ import java.util.Date;
 
 
 public class UserMapperTests {
-
-
-    //调整错误等级可以消除该处无法自动装配的下划线报错
     @Autowired
     private UserMapper userMapper;
 
-    //用户插入测试
     @Test
-    public void insert_user()
-    {
-        User user =new User();
+    public void insert_user() {
+        User user = new User();
         user.setUsername("tim");
         user.setPassword("123");
-        Integer flag =userMapper.insert(user);
+        Integer flag = userMapper.insert(user);
         System.out.println(flag);
     }
 
-    //用户查询设置通过ID查找
     @Test
-    public void select_user()
-    {
-        User user =userMapper.findByUid(2);
+    public void select_user() {
+        User user = userMapper.findByUid(2);
         System.out.println(user);
     }
 
     @Test
-    //通过用户ID更新密码
-    public void updatePasswordByUid()
-    {
-        userMapper.updatePasswordByUid(1,"654321","admin change",new Date());
+
+    public void updatePasswordByUid() {
+        userMapper.updatePasswordByUid(1, "654321", "admin change", new Date());
     }
+
     @Test
-    //通过用户ID查询用户
-    public void findByUid()
-    {
-        User user=  userMapper.findByUid(1);
+    public void findByUid() {
+        User user = userMapper.findByUid(1);
         System.out.println(user);
     }
 
     @Test
-    //通过用户ID查询用户
-    public void updateInfoByid()
-    {
-        User user=new User();
+    public void updateInfoByid() {
+        User user = new User();
         user.setUid(10);
         user.setGender(1);
         user.setPhone("17843939721");
@@ -69,10 +58,8 @@ public class UserMapperTests {
     }
 
     @Test
-    public void updateAvatarByUid()
-    {
-        //头像信息
-        userMapper.updateAvatarByUid(10,"/index/user.png","liwie1",new Date());
+    public void updateAvatarByUid() {
+        userMapper.updateAvatarByUid(10, "/index/user.png", "liwie1", new Date());
     }
 
 }

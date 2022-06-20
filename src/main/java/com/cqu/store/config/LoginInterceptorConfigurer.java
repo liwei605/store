@@ -11,17 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Configuration  //åŠ è½½å½“å‰çš„æ‹¦æˆªå™¨å¹¶è¿›è¡Œæ³¨å†Œ
-//å¤„ç†å™¨æ‹¦æˆªå™¨çš„æ³¨å†Œ
+@Configuration  //¼ÓÔØµ±Ç°µÄÀ¹½ØÆ÷²¢½øĞĞ×¢²á
+//´¦ÀíÆ÷À¹½ØÆ÷µÄ×¢²á
 public class LoginInterceptorConfigurer implements WebMvcConfigurer {
-    //è¿™ä¸ªæ–¹æ³•æ˜¯ç”¨æ¥é…ç½®æ‹¦æˆªå™¨çš„
+    //Õâ¸ö·½·¨ÊÇÓÃÀ´ÅäÖÃÀ¹½ØÆ÷µÄ
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
-        //åˆ›å»ºä¸€ä¸ªæ‹¦æˆªå™¨çš„å¯¹è±¡ï¼Œåˆ»æ„è¿›è¡Œé‡å®šå‘
-        HandlerInterceptor interceptor =new LoginInterceptor();
-        //é…ç½®ç™½åå•ï¼šå­˜æ”¾åœ¨ä¸€ä¸ªListé›†åˆä¸­
-        List<String> patterns=new ArrayList<>();
+        //´´½¨Ò»¸öÀ¹½ØÆ÷µÄ¶ÔÏó£¬¿ÌÒâ½øĞĞÖØ¶¨Ïò
+        HandlerInterceptor interceptor = new LoginInterceptor();
+        //ÅäÖÃ°×Ãûµ¥£º´æ·ÅÔÚÒ»¸öList¼¯ºÏÖĞ
+        List<String> patterns = new ArrayList<>();
         patterns.add("/bootstrap3/**");
         patterns.add("/css/**");
         patterns.add("/js/**");
@@ -33,7 +33,7 @@ public class LoginInterceptorConfigurer implements WebMvcConfigurer {
         patterns.add("/web/product.html");
         patterns.add("/users/reg");
         patterns.add("/users/login");patterns.add("products/**");
-        //å®Œæˆæ‹¦æˆªå™¨çš„æ³¨å†Œ
-        registry.addInterceptor(interceptor).addPathPatterns("/**").excludePathPatterns(patterns);//è¦æ‹¦æˆªçš„URLæ˜¯ä»€ä¹ˆ
+        //Íê³ÉÀ¹½ØÆ÷µÄ×¢²á
+        registry.addInterceptor(interceptor).addPathPatterns("/**").excludePathPatterns(patterns);//ÒªÀ¹½ØµÄURLÊÇÊ²Ã´
     }
 }

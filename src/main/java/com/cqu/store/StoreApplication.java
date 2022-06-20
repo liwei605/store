@@ -20,15 +20,16 @@ public class StoreApplication {
     public static void main(String[] args) {
         SpringApplication.run(StoreApplication.class, args);
     }
-        @Bean
-        public MultipartConfigElement getMultipartConfigElement() {
-            MultipartConfigFactory factory = new MultipartConfigFactory();
-            // DataSize dataSize = DataSize.ofMegabytes(10);
-            // è®¾ç½®æ–‡ä»¶æœ€å¤§10Mï¼ŒDataUnitæä¾›5ä¸­ç±»å‹B,KB,MB,GB,TB
-            factory.setMaxFileSize(DataSize.of(10, DataUnit.MEGABYTES));
-            factory.setMaxRequestSize(DataSize.of(10, DataUnit.MEGABYTES));
-            // è®¾ç½®æ€»ä¸Šä¼ æ•°æ®æ€»å¤§å°10M
-            return factory.createMultipartConfig();
-        }
+
+    @Bean
+    public MultipartConfigElement getMultipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        // DataSize dataSize = DataSize.ofMegabytes(10);
+        // ÉèÖÃÎÄ¼ş×î´ó10M£¬DataUnitÌá¹©5ÖĞÀàĞÍB,KB,MB,GB,TB
+        factory.setMaxFileSize(DataSize.of(10, DataUnit.MEGABYTES));
+        factory.setMaxRequestSize(DataSize.of(10, DataUnit.MEGABYTES));
+        // ÉèÖÃ×ÜÉÏ´«Êı¾İ×Ü´óĞ¡10M
+        return factory.createMultipartConfig();
+    }
 
 }

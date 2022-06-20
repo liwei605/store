@@ -1,14 +1,14 @@
 package com.cqu.store.util;
 
 import java.io.Serializable;
-//jsonæ•°æ®æ ¼å¼çš„å“åº”
+//jsonÊı¾İ¸ñÊ½µÄÏìÓ¦
 
 public class JsonResult<E> implements Serializable {
-    //çŠ¶æ€ç 
-    private  Integer state;
-    //æè¿°ä¿¡æ¯
+    //×´Ì¬Âë
+    private Integer state;
+    //ÃèÊöĞÅÏ¢
     private String message;
-    //æ•°æ®
+    //Êı¾İ
     private E data;
 
 
@@ -20,10 +20,13 @@ public class JsonResult<E> implements Serializable {
         super();
         this.state = state;
     }
-    /** å‡ºç°å¼‚å¸¸æ—¶è°ƒç”¨ */
+
+    /**
+     * ³öÏÖÒì³£Ê±µ÷ÓÃ
+     */
     public JsonResult(Throwable e) {
         super();
-        // è·å–å¼‚å¸¸å¯¹è±¡ä¸­çš„å¼‚å¸¸ä¿¡æ¯
+        // »ñÈ¡Òì³£¶ÔÏóÖĞµÄÒì³£ĞÅÏ¢
         this.message = e.getMessage();
     }
 

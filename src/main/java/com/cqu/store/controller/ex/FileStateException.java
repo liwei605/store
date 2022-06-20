@@ -1,6 +1,8 @@
 package com.cqu.store.controller.ex;
 
-/** 上传的文件状态异常 */
+/**
+ * �ϴ����ļ�״̬�쳣
+ */
 public class FileStateException extends FileUploadException {
     public FileStateException() {
         super();

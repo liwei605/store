@@ -1,7 +1,7 @@
 package com.cqu.store.service.ex;
 
-//插入异常类
-public class InsertException extends  ServiceException{
+//插入异常
+public class InsertException extends ServiceException {
     public InsertException() {
         super();
     }

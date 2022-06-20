@@ -1,6 +1,7 @@
 package com.cqu.store.service.ex;
+
 //业务层异常类
-public class ServiceException extends  RuntimeException{
+public class ServiceException extends RuntimeException {
     public ServiceException() {
         super();
     }

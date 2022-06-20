@@ -1,6 +1,6 @@
 package com.cqu.store.controller.ex;
 
-/** 上传文件时读写异常 */
+//上传文件读写异常
 public class FileUploadIOException extends FileUploadException {
     public FileUploadIOException() {
         super();
