@@ -57,7 +57,7 @@
                     </div>
                 </li>
                 <li class="li-split">|</li>
-                <li><a href="login.html"><span class="fa fa-user"></span>&nbsp;登录</a></li>
+                <li><a id="loginuser" href="login.html"><!--<span  class="fa fa-user"></span> -->登录</a></li>
             </ul>
         </div>
     </div>
@@ -274,8 +274,32 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        showUser();
         showAddressList();
     });
+
+    function showUser()
+    {
+        $.ajax({
+            url: "/users/get_by_uid",
+            type: "GET",
+            dataType: "json",
+            success: function (json) {
+                if (json.state == 200) {
+                    $("#loginuser").empty();
+                    console.log("username=" + json.data.username);
+                    // console.log("phone=" + json.data.phone);
+                    // console.log("email=" + json.data.email);
+                    // console.log("gender=" + json.data.gender);
+                    let html ='<a id="loginuser" href="userdata.html">#{name}</a>'
+                    html = html.replace(/#{name}/g,"Hello! "+json.data.username );
+                    $("#loginuser").append(html);
+                } else {
+                    alert("获取用户信息失败！" + json.message);
+                }
+            }
+        });
+    }
 
     function showAddressList() {
         $("#address-list").empty();
