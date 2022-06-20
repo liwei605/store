@@ -45,6 +45,8 @@ public class BaseController {
         } else if (e instanceof FileUploadIOException) {
             result.setState(6004);
             result.setMessage(e.getMessage()); //文件上传IO异常
+        } else if (e instanceof ProductNotFoundException) { //商品未找到异常
+            result.setState(4006);
         }
 
         return result;
