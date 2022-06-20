@@ -1,6 +1,8 @@
 package com.cqu.store.controller.ex;
 
-/** 涓婁紶鐨勬枃浠朵负绌虹殑寮傚父锛屼緥濡傛病鏈夐�夋嫨涓婁紶鐨勬枃浠跺氨鎻愪氦浜嗚〃鍗曪紝鎴栭�夋嫨鐨勬枃浠舵槸0瀛楄妭鐨勭┖鏂囦欢 */
+/**
+ * 上传的文件为空的异常，例如没有选择上传的文件就提交了表单，或选择的文件是0字节的空文件
+ */
 public class FileEmptyException extends FileUploadException {
     public FileEmptyException() {
         super();

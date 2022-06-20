@@ -5,30 +5,41 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 
-/** å¤„ç†ç”¨æˆ·æ•°æ®æ“ä½œçš„æŒä¹…å±‚æ¥å£ */
+/**
+ * ´¦ÀíÓÃ»§Êı¾İ²Ù×÷µÄ³Ö¾Ã²ã½Ó¿Ú
+ */
 public interface UserMapper {
     /**
-     * æ’å…¥ç”¨æˆ·æ•°æ®
-     * @param user ç”¨æˆ·æ•°æ®
-     * @return å—å½±å“çš„è¡Œæ•°
+     * ²åÈëÓÃ»§Êı¾İ
+     *
+     * @param user ÓÃ»§Êı¾İ
+     * @return ÊÜÓ°ÏìµÄĞĞÊı
      */
     Integer insert(User user);
 
-    /**
-     * æ ¹æ®ç”¨æˆ·åæŸ¥è¯¢ç”¨æˆ·æ•°æ®
-     * @param username ç”¨æˆ·å
-     * @return åŒ¹é…çš„ç”¨æˆ·æ•°æ®ï¼Œå¦‚æœæ²¡æœ‰åŒ¹é…çš„æ•°æ®ï¼Œåˆ™è¿”å›null
-     */
-    User findByUsername(String username);
 
     /**
-     * æ ¹æ®uidæ›´æ–°ç”¨æˆ·çš„å¯†ç 
-     * @param uid ç”¨æˆ·çš„id
-     * @param password æ–°å¯†ç 
-     * @param modifiedUser æœ€åä¿®æ”¹æ‰§è¡Œäºº
-     * @param modifiedTime æœ€åä¿®æ”¹æ—¶é—´
-     * @return å—å½±å“çš„è¡Œæ•°
+     * ¸ù¾İÓÃ»§Ãû²éÑ¯ÓÃ»§Êı¾İ
+     * @Author supreme
+     * @Date 2022/6/20 8:41
+     * @param username
+     * @return User
      */
+
+    User findByUsername(String username);
+
+
+    /**
+     * ¸ù¾İuid¸üĞÂÓÃ»§µÄÃÜÂë
+     * @Author supreme
+     * @Date 2022/6/20 8:42
+     * @param uid           ÓÃ»§µÄid
+     * @param password      ĞÂÃÜÂë
+     * @param modifiedUser  ×îºóÖ´ĞĞÕß
+     * @param modifiedTime  ×îºóĞŞ¸ÄÊ±¼ä
+     * @return Integer
+     */
+
     Integer updatePasswordByUid(
             @Param("uid") Integer uid,
             @Param("password") String password,
@@ -42,27 +53,35 @@ public interface UserMapper {
             Date modifiedTime); */
 
     /**
-     * æ ¹æ®ç”¨æˆ·idæŸ¥è¯¢ç”¨æˆ·æ•°æ®
-     * @param uid ç”¨æˆ·id
-     * @return åŒ¹é…çš„ç”¨æˆ·æ•°æ®ï¼Œå¦‚æœæ²¡æœ‰åŒ¹é…çš„ç”¨æˆ·æ•°æ®ï¼Œåˆ™è¿”å›null
+     * ¸ù¾İÓÃ»§id²éÑ¯ÓÃ»§Êı¾İ
+     *
+     * @param uid ÓÃ»§id
+     * @return Æ¥ÅäµÄÓÃ»§Êı¾İ£¬Èç¹ûÃ»ÓĞÆ¥ÅäµÄÓÃ»§Êı¾İ£¬Ôò·µ»Ønull
      */
     User findByUid(Integer uid);
 
+
     /**
-     * æ ¹æ®uidæ›´æ–°ç”¨æˆ·èµ„æ–™
-     * @param user å°è£…äº†ç”¨æˆ·idå’Œæ–°ä¸ªäººèµ„æ–™çš„å¯¹è±¡
-     * @return å—å½±å“çš„è¡Œæ•°
+     * ¸ù¾İuid¸üĞÂÓÃ»§×ÊÁÏ
+     * @Author supreme
+     * @Date 2022/6/20 8:44
+     * @param user
+     * @return Integer ÊÜÓ°ÏìµÄĞĞÊı
      */
+
     Integer updateInfoByUid(User user);
 
     /**
-     * æ ¹æ®uidæ›´æ–°ç”¨æˆ·çš„å¤´åƒ
-     * @param uid ç”¨æˆ·çš„id
-     * @param avatar æ–°å¤´åƒçš„è·¯å¾„
-     * @param modifiedUser ä¿®æ”¹æ‰§è¡Œäºº
-     * @param modifiedTime ä¿®æ”¹æ—¶é—´
-     * @return å—å½±å“çš„è¡Œæ•°
+     * ¸ù¾İuid¸üĞÂÓÃ»§Í·Ïñ
+     * @Author supreme
+     * @Date 2022/6/20 8:46
+     * @param uid           ÓÃ»§uid
+     * @param avatar        ĞÂÍ·ÏñÂ·¾­
+     * @param modifiedUser  ĞŞ¸ÄÈË
+     * @param modifiedTime  ĞŞ¸ÄÊ±¼ä
+     * @return Integer
      */
+
     Integer updateAvatarByUid(
             @Param("uid") Integer uid,
             @Param("avatar") String avatar,

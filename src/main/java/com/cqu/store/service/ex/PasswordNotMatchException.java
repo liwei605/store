@@ -1,6 +1,6 @@
 package com.cqu.store.service.ex;
 
-public class PasswordNotMatchException extends ServiceException{
+public class PasswordNotMatchException extends ServiceException {
     public PasswordNotMatchException() {
         super();
     }

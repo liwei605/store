@@ -1,8 +1,6 @@
 package com.cqu.store.service.ex;
-//用户名被占用异常类
 
-//快捷键ctrl +o
-public class UsernameDuplicatedException extends ServiceException{
+public class UsernameDuplicatedException extends ServiceException {
     public UsernameDuplicatedException() {
         super();
     }

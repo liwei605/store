@@ -1,6 +1,8 @@
 package com.cqu.store.controller.ex;
 
-/** æ–‡ä»¶ä¸Šä¼ ç›¸å…³å¼‚å¸¸çš„åŸºç±» */
+/**
+ * ÎÄ¼şÉÏ´«Ïà¹ØÒì³£µÄ»ùÀà
+ */
 public class FileUploadException extends RuntimeException {
     public FileUploadException() {
         super();

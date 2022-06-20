@@ -2,9 +2,8 @@ package com.cqu.store.controller;
 
 import com.cqu.store.controller.ex.*;
 import com.cqu.store.entity.User;
-import com.cqu.store.util.JsonResult;
-import com.cqu.store.controller.ex.*;
 import com.cqu.store.service.IUserService;
+import com.cqu.store.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,65 +17,13 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController //@controller + @ResponseBody
-@RequestMapping("users")//è¯·æ±‚æ‹¦æˆª
-public class UserController extends BaseController{
-    @Autowired
-    private IUserService userService;
+@RequestMapping("users")//ÇëÇóÀ¹½Ø
+public class UserController extends BaseController {
+    //ÏŞÖÆÎÄ¼şÉÏ´«µÄ×î´óÖµ
+    public static final int AVATAR_MAX_SIZE = 1024 * 1024 * 1024;
+    //ÏŞÖÆÎÄ¼şÉÏ´«µÄÀàĞÍ
+    public static final List<String> AVATAR_TYPES = new ArrayList<>();
 
-    @RequestMapping("reg")//è¯·æ±‚æ‹¦æˆª
-    public JsonResult<Void> reg(User user)
-    {
-        userService.reg(user);
-        return new JsonResult<Void> (OK);
-    }
-
-    @RequestMapping("login")//è¯·æ±‚æ‹¦æˆª
-    public  JsonResult<User > login(String username, String password, HttpSession session)
-    {
-        User data= userService.login(username,password); //è¿™ä¸ªdataå°†æ¥ä¼šè¢«å­˜æ”¾åœ¨cookiesæˆ–è€…secceion
-
-        //å‘sessionä¸­å®Œæˆæ•°æ®ç»‘å®š
-        session.setAttribute("uid",data.getUid());
-        session.setAttribute("username",data.getUsername());
-
-
-        //è·å–sessionä¸­ç»‘å®šçš„æ•°æ®
-        System.out.println(getuidFromSession(session));
-        System.out.println(getUsernameFromSession(session));
-        return new JsonResult<User>(OK,data);
-    }
-
-    @RequestMapping("change_password")//è¯·æ±‚æ‹¦æˆª
-    public  JsonResult<Void > changePassword(String oldPassword, String newPassword,HttpSession session)
-    {
-        Integer uid=getuidFromSession(session);
-        String username=getUsernameFromSession(session);
-        userService.changerPassword(uid,username,oldPassword,newPassword);
-        return new JsonResult<>(OK);
-    }
-
-    @RequestMapping("get_by_uid")//è¯·æ±‚æ‹¦æˆª
-    public JsonResult<User> getByUid(HttpSession session)
-    {
-        User data= userService.getByUid(getuidFromSession(session));
-        return  new JsonResult<>(OK,data);
-    }
-
-    @RequestMapping("change_info")
-    public JsonResult<Void> changeInfo(User user, HttpSession session) {
-        // ä»HttpSessionå¯¹è±¡ä¸­è·å–uidå’Œusername
-        Integer uid = getuidFromSession(session);
-        String username = getUsernameFromSession(session);
-        // è°ƒç”¨ä¸šåŠ¡å¯¹è±¡æ‰§è¡Œä¿®æ”¹ç”¨æˆ·èµ„æ–™
-        userService.changeInfo(uid, username, user);
-        // å“åº”æˆåŠŸ
-        return new JsonResult<Void>(OK);
-    }
-
-    //é™åˆ¶æ–‡ä»¶ä¸Šä¼ çš„æœ€å¤§å€¼
-    public static final int AVATAR_MAX_SIZE=1024*1024*1024;
-    //é™åˆ¶æ–‡ä»¶ä¸Šä¼ çš„ç±»å‹
-    public static final List<String> AVATAR_TYPES=new ArrayList<>();
     static {
         AVATAR_TYPES.add("image/jpeg");
         AVATAR_TYPES.add("image/png");
@@ -85,37 +32,85 @@ public class UserController extends BaseController{
         AVATAR_TYPES.add("image/gif");
     }
 
+    @Autowired
+    private IUserService userService;
+
+    @RequestMapping("reg")//ÇëÇóÀ¹½Ø
+    public JsonResult<Void> reg(User user) {
+        userService.reg(user);
+        return new JsonResult<Void>(OK);
+    }
+
+    @RequestMapping("login")//ÇëÇóÀ¹½Ø
+    public JsonResult<User> login(String username, String password, HttpSession session) {
+        User data = userService.login(username, password); //Õâ¸ödata½«À´»á±»´æ·ÅÔÚcookies»òÕßsecceion
+
+        //ÏòsessionÖĞÍê³ÉÊı¾İ°ó¶¨
+        session.setAttribute("uid", data.getUid());
+        session.setAttribute("username", data.getUsername());
+
+
+        //»ñÈ¡sessionÖĞ°ó¶¨µÄÊı¾İ
+        System.out.println(getuidFromSession(session));
+        System.out.println(getUsernameFromSession(session));
+        return new JsonResult<User>(OK, data);
+    }
+
+    @RequestMapping("change_password")//ÇëÇóÀ¹½Ø
+    public JsonResult<Void> changePassword(String oldPassword, String newPassword, HttpSession session) {
+        Integer uid = getuidFromSession(session);
+        String username = getUsernameFromSession(session);
+        userService.changerPassword(uid, username, oldPassword, newPassword);
+        return new JsonResult<>(OK);
+    }
+
+    @RequestMapping("get_by_uid")//ÇëÇóÀ¹½Ø
+    public JsonResult<User> getByUid(HttpSession session) {
+        User data = userService.getByUid(getuidFromSession(session));
+        return new JsonResult<>(OK, data);
+    }
+
+    @RequestMapping("change_info")
+    public JsonResult<Void> changeInfo(User user, HttpSession session) {
+        // ´ÓHttpSession¶ÔÏóÖĞ»ñÈ¡uidºÍusername
+        Integer uid = getuidFromSession(session);
+        String username = getUsernameFromSession(session);
+        // µ÷ÓÃÒµÎñ¶ÔÏóÖ´ĞĞĞŞ¸ÄÓÃ»§×ÊÁÏ
+        userService.changeInfo(uid, username, user);
+        // ÏìÓ¦³É¹¦
+        return new JsonResult<Void>(OK);
+    }
+
     @RequestMapping("change_avatar")
-    public JsonResult<String> changeAvator(HttpSession session, MultipartFile file)
-    {
-        // åˆ¤æ–­ä¸Šä¼ çš„æ–‡ä»¶æ˜¯å¦ä¸ºç©º
+    public JsonResult<String> changeAvator(HttpSession session, MultipartFile file) {
+        // ÅĞ¶ÏÉÏ´«µÄÎÄ¼şÊÇ·ñÎª¿Õ
         if (file.isEmpty()) {
-            // æ˜¯ï¼šæŠ›å‡ºå¼‚å¸¸
-            throw new FileEmptyException("ä¸Šä¼ çš„å¤´åƒæ–‡ä»¶ä¸å…è®¸ä¸ºç©º");
+            // ÊÇ£ºÅ×³öÒì³£
+            throw new FileEmptyException("ÉÏ´«µÄÍ·ÏñÎÄ¼ş²»ÔÊĞíÎª¿Õ");
         }
-        // åˆ¤æ–­ä¸Šä¼ çš„æ–‡ä»¶å¤§å°æ˜¯å¦è¶…å‡ºé™åˆ¶å€¼
-        if (file.getSize() > AVATAR_MAX_SIZE) { // getSize()ï¼šè¿”å›æ–‡ä»¶çš„å¤§å°ï¼Œä»¥å­—èŠ‚ä¸ºå•ä½
-            // æ˜¯ï¼šæŠ›å‡ºå¼‚å¸¸
-            throw new FileSizeException("ä¸å…è®¸ä¸Šä¼ è¶…è¿‡" + (AVATAR_MAX_SIZE / 1024) + "KBçš„å¤´åƒæ–‡ä»¶");
+        // ÅĞ¶ÏÉÏ´«µÄÎÄ¼ş´óĞ¡ÊÇ·ñ³¬³öÏŞÖÆÖµ
+        if (file.getSize() > AVATAR_MAX_SIZE) { // getSize()£º·µ»ØÎÄ¼şµÄ´óĞ¡£¬ÒÔ×Ö½ÚÎªµ¥Î»
+            // ÊÇ£ºÅ×³öÒì³£
+            throw new FileSizeException("²»ÔÊĞíÉÏ´«³¬¹ı" + (AVATAR_MAX_SIZE / 1024) + "KBµÄÍ·ÏñÎÄ¼ş");
         }
-        // åˆ¤æ–­ä¸Šä¼ çš„æ–‡ä»¶ç±»å‹æ˜¯å¦è¶…å‡ºé™åˆ¶
+        // ÅĞ¶ÏÉÏ´«µÄÎÄ¼şÀàĞÍÊÇ·ñ³¬³öÏŞÖÆ
         String contentType = file.getContentType();
-        // boolean contains(Object o)ï¼šå½“å‰åˆ—è¡¨è‹¥åŒ…å«æŸå…ƒç´ ï¼Œè¿”å›ç»“æœä¸ºtrueï¼›è‹¥ä¸åŒ…å«è¯¥å…ƒç´ ï¼Œè¿”å›ç»“æœä¸ºfalse
+        // boolean contains(Object o)£ºµ±Ç°ÁĞ±íÈô°üº¬Ä³ÔªËØ£¬·µ»Ø½á¹ûÎªtrue£»Èô²»°üº¬¸ÃÔªËØ£¬·µ»Ø½á¹ûÎªfalse
         if (!AVATAR_TYPES.contains(contentType)) {
-            // æ˜¯ï¼šæŠ›å‡ºå¼‚å¸¸
-            throw new FileTypeException("æ–‡ä»¶ç±»å‹ä¸æ”¯æŒ");
+            // ÊÇ£ºÅ×³öÒì³£
+            throw new FileTypeException("ÎÄ¼şÀàĞÍ²»Ö§³Ö");
         }
 
-        // è·å–å½“å‰é¡¹ç›®çš„ç»å¯¹ç£ç›˜è·¯å¾„
+        // »ñÈ¡µ±Ç°ÏîÄ¿µÄ¾ø¶Ô´ÅÅÌÂ·¾¶
         String parent = session.getServletContext().getRealPath("upload");
         System.err.println(parent);
-        // ä¿å­˜å¤´åƒæ–‡ä»¶çš„æ–‡ä»¶å¤¹
+        // ±£´æÍ·ÏñÎÄ¼şµÄÎÄ¼ş¼Ğ
         File dir = new File(parent);
         if (!dir.exists()) {
             dir.mkdirs();
         }
 
-        // ä¿å­˜çš„å¤´åƒæ–‡ä»¶çš„æ–‡ä»¶å
+        // ±£´æµÄÍ·ÏñÎÄ¼şµÄÎÄ¼şÃû
         String suffix = "";
         String originalFilename = file.getOriginalFilename();
         int beginIndex = originalFilename.lastIndexOf(".");
@@ -125,29 +120,29 @@ public class UserController extends BaseController{
         String filename = UUID.randomUUID().toString().toUpperCase() + suffix;
 
 
-        // åˆ›å»ºæ–‡ä»¶å¯¹è±¡ï¼Œè¡¨ç¤ºä¿å­˜çš„å¤´åƒæ–‡ä»¶
+        // ´´½¨ÎÄ¼ş¶ÔÏó£¬±íÊ¾±£´æµÄÍ·ÏñÎÄ¼ş
         File dest = new File(dir, filename);
-        // æ‰§è¡Œä¿å­˜å¤´åƒæ–‡ä»¶
+        // Ö´ĞĞ±£´æÍ·ÏñÎÄ¼ş
         try {
             file.transferTo(dest);
         } catch (IllegalStateException e) {
-            // æŠ›å‡ºå¼‚å¸¸
-            throw new FileStateException("æ–‡ä»¶çŠ¶æ€å¼‚å¸¸ï¼Œå¯èƒ½æ–‡ä»¶å·²è¢«ç§»åŠ¨æˆ–åˆ é™¤");
+            // Å×³öÒì³£
+            throw new FileStateException("ÎÄ¼ş×´Ì¬Òì³££¬¿ÉÄÜÎÄ¼şÒÑ±»ÒÆ¶¯»òÉ¾³ı");
         } catch (IOException e) {
-            // æŠ›å‡ºå¼‚å¸¸
-            throw new FileUploadIOException("ä¸Šä¼ æ–‡ä»¶æ—¶è¯»å†™é”™è¯¯ï¼Œè¯·ç¨åé‡æ–°å°è¯•");
+            // Å×³öÒì³£
+            throw new FileUploadIOException("ÉÏ´«ÎÄ¼şÊ±¶ÁĞ´´íÎó£¬ÇëÉÔºóÖØĞÂ³¢ÊÔ");
         }
 
-        // å¤´åƒè·¯å¾„
+        // Í·ÏñÂ·¾¶
         String avatar = "/upload/" + filename;
-        // ä»Sessionä¸­è·å–uidå’Œusername
+        // ´ÓSessionÖĞ»ñÈ¡uidºÍusername
         Integer uid = getuidFromSession(session);
         String username = getUsernameFromSession(session);
-        // å°†å¤´åƒå†™å…¥åˆ°æ•°æ®åº“ä¸­
+        // ½«Í·ÏñĞ´Èëµ½Êı¾İ¿âÖĞ
         userService.changeAvatar(uid, username, avatar);
 
 
-        // è¿”å›æˆåŠŸå¤´åƒè·¯å¾„
+        // ·µ»Ø³É¹¦Í·ÏñÂ·¾¶
         return new JsonResult<String>(OK, avatar);
     }
 }

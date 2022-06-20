@@ -1,6 +1,6 @@
 package com.cqu.store.controller.ex;
 
-/** 上传的文件的大小超出了限制值 */
+//上传的文件夹大小超出限制
 public class FileSizeException extends FileUploadException {
     public FileSizeException() {
         super();

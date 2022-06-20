@@ -1,7 +1,7 @@
 package com.cqu.store.service.ex;
 
-//ç”¨æˆ·åœ¨æ›´æ–°æ•°æ®æ—¶äº§ç”Ÿçš„æœªçŸ¥å¼‚å¸¸
-public class UpdateException extends ServiceException{
+//ÓÃ»§ÔÚ¸üĞÂÊı¾İÊ±²úÉúµÄÎ´ÖªÒì³£
+public class UpdateException extends ServiceException {
     public UpdateException() {
         super();
     }

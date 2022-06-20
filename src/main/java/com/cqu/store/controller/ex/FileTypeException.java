@@ -1,6 +1,8 @@
 package com.cqu.store.controller.ex;
 
-/** 上传的文件类型超出了限制 */
+/**
+ * 上传的文件类型超出了限制
+ */
 public class FileTypeException extends FileUploadException {
     public FileTypeException() {
         super();
