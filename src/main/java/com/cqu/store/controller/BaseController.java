@@ -3,66 +3,77 @@ package com.cqu.store.controller;
 import com.cqu.store.controller.ex.*;
 import com.cqu.store.service.ex.*;
 import com.cqu.store.util.JsonResult;
+import com.cqu.store.controller.ex.*;
+import com.cqu.store.service.ex.*;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpSession;
 
-//¿ØÖÆ²ãÀàµÄ»ùÀà
+//æ§åˆ¶å±‚ç±»çš„åŸºç±»
 public class BaseController {
-
-    public static final int OK = 200;
+    //æ“ä½œæˆåŠŸçŠ¶æ€ç 
+    public static final  int OK=200;
 
     @ExceptionHandler({ServiceException.class, FileUploadException.class})
-    public JsonResult<Void> handleException(Throwable e) {
-        JsonResult<Void> result = new JsonResult<>(e);
-        if (e instanceof UsernameDuplicatedException) {
-            result.setState(4000);
-            result.setMessage(e.getMessage()); //»ñÈ¡Ãû×ÖÕ¼ÓÃµÄ´íÎóĞÅÏ¢
-        } else if (e instanceof InsertException) {
-            result.setState(5000);
-            result.setMessage(e.getMessage()); //»ñÈ¡ÓÃ»§²åÈë´íÎóĞÅÏ¢
-        } else if (e instanceof UserNotFoundException) {
-            result.setState(5001);
-            result.setMessage(e.getMessage()); //ÓÃ»§²»´æÔÚ´íÎó
-        } else if (e instanceof PasswordNotMatchException) {
-            result.setState(5002);
-            result.setMessage(e.getMessage()); //ÓÃ»§ÃÜÂë´íÎóÒì³£
-        } else if (e instanceof UpdateException) {
-            result.setState(5003);
-            result.setMessage(e.getMessage()); //ÓÃ»§ÃÜÂë¸üĞÂÒì³£
-        } else if (e instanceof AddressCountLimitException) {
-            result.setState(5004);
-            result.setMessage("ÓÃ»§ÊÕ»õµØÖ·³¬³öÉÏÏŞ"); //ÓÃ»§ÊÕ»õµØÖ·³¬³öÉÏÏŞÒì³£
+    public JsonResult<Void> handleException(Throwable e)
+    {
+         JsonResult<Void> result =new JsonResult<>(e);
+         if(e instanceof UsernameDuplicatedException)
+         {
+             result.setState(4000);
+             result.setMessage(e.getMessage()); //è·å–åå­—å ç”¨çš„é”™è¯¯ä¿¡æ¯
+         }else if(e instanceof InsertException)
+         {
+             result.setState(5000);
+             result.setMessage(e.getMessage()); //è·å–ç”¨æˆ·æ’å…¥é”™è¯¯ä¿¡æ¯
+         }else if(e instanceof UserNotFoundException)
+         {
+             result.setState(5001);
+             result.setMessage(e.getMessage()); //ç”¨æˆ·æ•°æ®ä¸å­˜åœ¨
+         }else if(e instanceof PasswordNotMatchException)
+         {
+             result.setState(5002);
+             result.setMessage(e.getMessage()); //ç”¨æˆ·å¯†ç é”™è¯¯å¼‚å¸¸
+         }
+         else if(e instanceof UpdateException)
+         {
+             result.setState(5003);
+             result.setMessage(e.getMessage()); //ç”¨æˆ·å¯†ç æ›´æ–°å¼‚å¸¸å¼‚å¸¸
+         }else if(e instanceof FileEmptyException)
+         {
+             result.setState(6000);
+             result.setMessage(e.getMessage()); //ç©ºæ–‡ä»¶å¼‚å¸¸
+         }else if(e instanceof FileSizeException)
+         {
+             result.setState(6001);
+             result.setMessage(e.getMessage()); //æ–‡ä»¶å¤§å°å¼‚å¸¸
+         }else if(e instanceof FileStateException)
+         {
+             result.setState(6002);
+             result.setMessage(e.getMessage()); //æ–‡ä»¶çŠ¶æ€å¼‚å¸¸
+         }else if(e instanceof FileTypeException)
+         {
+             result.setState(6003);
+             result.setMessage(e.getMessage()); //æ–‡ä»¶ç±»å‹å¼‚å¸¸
+         } else if(e instanceof FileUploadIOException)
+         {
+             result.setState(6004);
+             result.setMessage(e.getMessage()); //æ–‡ä»¶ä¸Šä¼ IOå¼‚å¸¸
+         }else if (e instanceof CartNotFoundException) {
+             result.setState(4007);             //è´­ç‰©è½¦ä¸å­˜åœ¨
+         }
 
-        } else if (e instanceof FileEmptyException) {
-            result.setState(6000);
-            result.setMessage(e.getMessage());//¿ÕÎÄ¼şÒì³£
-        } else if (e instanceof FileSizeException) {
-            result.setState(6001);
-            result.setMessage(e.getMessage()); //ÎÄ¼ş´óĞ¡Òì³£
-        } else if (e instanceof FileStateException) {
-            result.setState(6002);
-            result.setMessage(e.getMessage()); //ÎÄ¼ş×´Ì¬Òì³£
-        } else if (e instanceof FileTypeException) {
-            result.setState(6003);
-            result.setMessage(e.getMessage()); //ÎÄ¼şÀàĞÍÒì³£
-        } else if (e instanceof FileUploadIOException) {
-            result.setState(6004);
-            result.setMessage(e.getMessage()); //ÎÄ¼şÉÏ´«IOÒì³£
-        } else if (e instanceof ProductNotFoundException) { //ÉÌÆ·Î´ÕÒµ½Òì³£
-            result.setState(4006);
-        }
+
 
         return result;
     }
 
-    //»ñÈ¡session¶ÔÏóÖĞµÄUID
-    protected final Integer getuidFromSession(HttpSession session) {
-        return Integer.valueOf(session.getAttribute("uid").toString());
+    //è·å–sessionå¯¹è±¡ä¸­çš„UID
+    protected final Integer getuidFromSession(HttpSession session){
+       return Integer.valueOf(session.getAttribute("uid").toString());
     }
-
-    //»ñÈ¡ÓÃ»§Ãû³Æ
-    protected final String getUsernameFromSession(HttpSession session) {
+    //è·å–ç”¨æˆ·åç§°
+    protected final String getUsernameFromSession(HttpSession session){
         return session.getAttribute("username").toString();
     }
 }

@@ -1,15 +1,39 @@
 package com.cqu.store.entity;
 
-import java.util.Objects;
+import java.io.Serializable;
 
-public class Cart extends BaseEntity{
+/** 购物车数据的实体类 */
+public class Cart extends BaseEntity implements Serializable {
     private Integer cid;
     private Integer uid;
     private Integer pid;
     private Long price;
     private Integer num;
 
-    public Integer getCid(){
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "cid=" + cid +
+                ", uid=" + uid +
+                ", pid=" + pid +
+                ", price=" + price +
+                ", num=" + num +
+                '}';
+    }
+
+    public Cart() {
+    }
+
+    public Cart(Integer cid, Integer uid, Integer pid, Long price, Integer num) {
+
+        this.cid = cid;
+        this.uid = uid;
+        this.pid = pid;
+        this.price = price;
+        this.num = num;
+    }
+
+    public Integer getCid() {
         return cid;
     }
 
@@ -48,33 +72,5 @@ public class Cart extends BaseEntity{
     public void setNum(Integer num) {
         this.num = num;
     }
-
-    @Override
-    public String toString() {
-        return "Cart{" +
-                "cid=" + cid +
-                ", uid=" + uid +
-                ", pid=" + pid +
-                ", price=" + price +
-                ", num=" + num +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Cart)) return false;
-        Cart cart = (Cart) o;
-        return Objects.equals(getCid(), cart.getCid()) &&
-                Objects.equals(getUid(), cart.getUid()) &&
-                Objects.equals(getPid(), cart.getPid()) &&
-                Objects.equals(getPrice(), cart.getPrice()) &&
-                Objects.equals(getNum(), cart.getNum());
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(getCid(), getUid(), getPid(), getPrice(), getNum());
-    }
+// Generate: Getter and Setter、Generate hashCode() and equals()、toString()
 }
