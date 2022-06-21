@@ -24,4 +24,5 @@ public class DistrictServiceTests {
             System.out.println(d);
         }
     }
+
 }

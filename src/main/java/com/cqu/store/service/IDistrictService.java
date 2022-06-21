@@ -18,4 +18,13 @@ public interface IDistrictService {
      */
 
     List<District> getByParent(String parent);
+
+
+    /**
+     * 更加code获取name
+     * @param code      区域代码
+     * @return String   区域名称
+     */
+
+    String getNameByCode(String code);
 }
