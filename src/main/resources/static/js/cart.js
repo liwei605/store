@@ -42,27 +42,27 @@ function selDelCart() {
     }
     calcTotal();
 }
-
-$(function () {
+//
+// $(function () {
     //单选一个也得算价格
-    $(".ckitem").click(function () {
-        calcTotal();
-    })
+    // $(".ckitem").click(function () {
+    //     calcTotal();
+    // })
     //开始时计算价格
-    calcTotal();
-})
+   // calcTotal();
+// })
 
 //计算单行小计价格的方法
-function calcRow(rid) {
-    //取单价
-    var vprice = parseFloat($("#goodsPrice" + rid).html());
-    //取数量
-    var vnum = parseFloat($("#goodsCount" + rid).val());
-    //小计金额
-    var vtotal = vprice * vnum;
-    //赋值
-    $("#goodsCast" + rid).html("¥" + vtotal);
-}
+// function calcRow(rid) {
+// //     //取单价
+// //     var vprice = parseFloat($("#goodsPrice" + rid).html());
+// //     //取数量
+// //     var vnum = parseFloat($("#goodsCount" + rid).val());
+// //     //小计金额
+// //     var vtotal = vprice * vnum;
+// //     //赋值
+// //     $("#goodsCast" + rid).html("¥" + vtotal);
+// // }
 
 //计算总价格的方法
 
@@ -84,7 +84,7 @@ function calcTotal() {
 		//小计金额
 		var vtotal = vprice * vnum;
 		//赋值
-		$tr.children(":eq(5)").children("span").html("¥" + vtotal);
+		$tr.children(":eq(5)").children("span").html(vtotal);
 		//计算每个商品的价格小计结束
 
 		//检查是否选中

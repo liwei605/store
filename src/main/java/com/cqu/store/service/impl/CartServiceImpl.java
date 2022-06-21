@@ -93,7 +93,9 @@ public class CartServiceImpl implements ICartService {
             // 是：抛出CartNotFoundException
             throw new CartNotFoundException("尝试访问的购物车数据不存在");
         }
-
+        if(result.getNum()==1){
+            return 1;
+        }
         Integer num = result.getNum() - 1;
         // 创建当前时间对象，作为modifiedTime
         Date now = new Date();
@@ -101,9 +103,7 @@ public class CartServiceImpl implements ICartService {
         if (rows != 1) {
             throw new UpdateException("减少商品数量失败，请联系系统管理员");
         }
-        if(num==0)cartMapper.deleteByCid(cid);
-
-
+//        if(num==0)cartMapper.deleteByCid(cid);
         // 返回新的数量
         return num;
     }

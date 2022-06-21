@@ -285,6 +285,9 @@
         showUser();
     });
 
+    $(".ckitem").click(function () {
+        calcTotal();
+    });
     function showUser()
     {
         $.ajax({
@@ -353,10 +356,7 @@
     }
 
     function addNum(cid) {
-        var n = parseInt($("#goodsCount" + cid).val());
-        $("#goodsCount" + cid).val(n + 1);
-        calcRow(cid);
-        calcTotal();
+
         $.ajax({
             url: "/carts/" + cid + "/num/add",
             type: "POST",
@@ -368,6 +368,7 @@
                     let price = $("#price-" + cid).html();
                     let totalPrice = price * json.data;
                     $("#total-price-" + cid).html(totalPrice);
+                    calcTotal();
                 } else {
                     alert("增加商品数量失败！" + json.message);
                 }
@@ -377,17 +378,12 @@
                 location.href = "login.html";
             }
         });
+
     }
 
 
     function reduceNum(cid) {
-        var n = parseInt($("#goodsCount" + cid).val());
-        if (n == 0)
-            delCartItem(cid);
-            return;
-        $("#goodsCount" + cid).val(n - 1);
-        calcRow(cid);
-        calcTotal();
+
         $.ajax({
             url: "/carts/" + cid + "/num/reduce",
             type: "POST",
@@ -399,8 +395,9 @@
                     let price = $("#price-" + cid).html();
                     let totalPrice = price * json.data;
                     $("#total-price-" + cid).html(totalPrice);
+                    calcTotal();
                 } else {
-                    alert("增加商品数量失败！" + json.message);
+                    alert("减少商品数量失败！" + json.message);
                 }
             },
             error: function (xhr) {
@@ -408,11 +405,11 @@
                 location.href = "login.html";
             }
         });
+
     }
 
     function delCartItem(cid) {
         $(this).parents("tr").remove();
-        console.log("开始计算价格");
         calcTotal();
         $.ajax({
             url: "/carts/" + cid + "/num/delete",
@@ -432,14 +429,7 @@
             }
         });
     }
-    /*
-    $(function() {
-        //返回链接
-        $(".link-account").click(function() {
-            location.href = "orderConfirm.html";
-        });
-    });
-    */
+
 </script>
 </body>
 
