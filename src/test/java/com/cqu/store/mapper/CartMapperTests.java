@@ -2,6 +2,7 @@ package com.cqu.store.mapper;
 
 
 import com.cqu.store.entity.Cart;
+import com.cqu.store.vo.CartVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 
 @RunWith(SpringRunner.class)
@@ -45,4 +47,9 @@ public class CartMapperTests {
         System.out.println(result);
     }
 
+    @Test
+    public void findVOByUid() {
+        List<CartVO> list = cartMapper.findVOByUid(6);
+        System.out.println(list);
+    }
 }

@@ -11,5 +11,9 @@
         select * from t_dict_district WHERE parent=#{parent}
         order by code ASC
     </select>
+    
+    <select id="findNameByCode" resultType="java.lang.String">
+        select name from t_dict_district where code = #{code}
+    </select>
 
 </mapper>
