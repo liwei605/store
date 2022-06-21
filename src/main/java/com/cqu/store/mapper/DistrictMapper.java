@@ -19,4 +19,12 @@ public interface DistrictMapper {
      */
 
     List<District> findByParent(String parent);
+
+    /**
+     * ¸ù¾Ýcode²éÑ¯name
+     * @param code
+     * @return String
+     */
+
+    String findNameByCode(String code);
 }
