@@ -325,13 +325,13 @@
                         + '<td>#{title}#{msg}</td>'
                         + '<td>¥<span id="price-#{cid}">#{realPrice}</span></td>'
                         + '<td>'
-                        + '<input type="button" value="-" class="num-btn" onclick="reduceNum(1)" />'
+                        + '<input type="button" value="-" class="num-btn" onclick="reduceNum(#{cid})" />'
                         + '<input id="num-#{cid}" type="text" size="2" readonly="readonly" class="num-text" value="#{num}">'
                         + '<input class="num-btn" type="button" value="+" onclick="addNum(#{cid})" />'
                         + '</td>'
                         + '<td>¥<span id="total-price-#{cid}">#{totalPrice}</span></td>'
                         + '<td>'
-                        + '<input type="button" onclick="delCartItem(this)" class="cart-del btn btn-default btn-xs" value="删除" />'
+                        + '<input type="button" onclick="delCartItem(#{cid})" class="cart-del btn btn-default btn-xs" value="删除" />'
                         + '</td>'
                         + '</tr>';
                     tr = tr.replace(/#{cid}/g, list[i].cid);
@@ -353,6 +353,10 @@
     }
 
     function addNum(cid) {
+        var n = parseInt($("#goodsCount" + cid).val());
+        $("#goodsCount" + cid).val(n + 1);
+        calcRow(cid);
+        calcTotal();
         $.ajax({
             url: "/carts/" + cid + "/num/add",
             type: "POST",
@@ -375,6 +379,59 @@
         });
     }
 
+
+    function reduceNum(cid) {
+        var n = parseInt($("#goodsCount" + cid).val());
+        if (n == 0)
+            delCartItem(cid);
+            return;
+        $("#goodsCount" + cid).val(n - 1);
+        calcRow(cid);
+        calcTotal();
+        $.ajax({
+            url: "/carts/" + cid + "/num/reduce",
+            type: "POST",
+            dataType: "JSON",
+            success: function (json) {
+                if (json.state == 200) {
+                    // showCartList();
+                    $("#num-" + cid).val(json.data);
+                    let price = $("#price-" + cid).html();
+                    let totalPrice = price * json.data;
+                    $("#total-price-" + cid).html(totalPrice);
+                } else {
+                    alert("增加商品数量失败！" + json.message);
+                }
+            },
+            error: function (xhr) {
+                alert("您的登录信息已经过期，请重新登录！HTTP响应码：" + xhr.status);
+                location.href = "login.html";
+            }
+        });
+    }
+
+    function delCartItem(cid) {
+        $(this).parents("tr").remove();
+        console.log("开始计算价格");
+        calcTotal();
+        $.ajax({
+            url: "/carts/" + cid + "/num/delete",
+            type: "POST",
+            dataType: "JSON",
+            success: function (json) {
+                if (json.state == 200) {
+                    alert("删除成功！");
+                    showCartList();
+                } else {
+                    alert("删除失败！" + json.message);
+                }
+            },
+            error: function (xhr) {
+                alert("您的登录信息已经过期，请重新登录！HTTP响应码：" + xhr.status);
+                location.href = "login.html";
+            }
+        });
+    }
     /*
     $(function() {
         //返回链接
