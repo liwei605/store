@@ -32,8 +32,16 @@ public class BaseController {
             result.setMessage(e.getMessage()); //用户密码更新异常
         } else if (e instanceof AddressCountLimitException) {
             result.setState(5004);
-            result.setMessage("用户收货地址超出上限"); //用户收货地址超出上限异常
-
+            result.setMessage(e.getMessage()); //用户收货地址超出上限异常
+        } else if(e instanceof AccessDeniedException){
+            result.setState(5005);
+            result.setMessage(e.getMessage());//非法访问异常
+        } else if(e instanceof AddressNotFoundException){
+            result.setState(5006);
+            result.setMessage(e.getMessage());//收货地址没有找到异常
+        } else if(e instanceof DeleteException){
+            result.setState(5007);
+            result.setMessage(e.getMessage()); //删除收货地址异常
         } else if (e instanceof FileEmptyException) {
             result.setState(6000);
             result.setMessage(e.getMessage());//空文件异常

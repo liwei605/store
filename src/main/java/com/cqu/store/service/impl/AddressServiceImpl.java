@@ -4,13 +4,13 @@ import com.cqu.store.entity.Address;
 import com.cqu.store.mapper.AddressMapper;
 import com.cqu.store.service.IAddressService;
 import com.cqu.store.service.IDistrictService;
-import com.cqu.store.service.ex.AddressCountLimitException;
-import com.cqu.store.service.ex.InsertException;
+import com.cqu.store.service.ex.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 收货地址实现类
@@ -59,6 +59,79 @@ public class AddressServiceImpl implements IAddressService {
         Integer rows = addressMapper.insert(address);
         if(rows!=1){
             throw new InsertException("新增用户收货地址时发生未知异常");
+        }
+    }
+
+    @Override
+    public List<Address> getByUid(Integer uid) {
+        List<Address> list = addressMapper.findByUid(uid);
+        for(Address address:list){
+//            address.setAid(null);
+//            address.setUid(null);
+            address.setProvinceCode(null);
+            address.setCityCode(null);
+            address.setAreaCode(null);
+            address.setZip(null);
+            address.setTel(null);
+            address.setCreatedTime(null);
+            address.setCreatedUser(null);
+            address.setIsDefault(null);
+            address.setModifiedTime(null);
+            address.setModifiedUser(null);
+        }
+        return list;
+    }
+
+    @Override
+    public void setDefault(Integer aid, Integer uid, String username) {
+        Address address = addressMapper.findByAid(aid);
+        if(address==null){
+            throw new AddressNotFoundException("收货地址不存在");
+        }
+        //检测当前获取到的收货地址数据归属
+        if(!address.getUid().equals(uid)){
+            throw new AccessDeniedException("非法数据访问");
+        }
+        //先将所有收货地址设置为非默认
+        Integer rows = addressMapper.updateNoneDefault(uid);
+        if(rows<1){
+            throw new UpdateException("更新默认地址发生异常");
+        }
+        //将用户选中的地址设置为默认收货地址
+        rows = addressMapper.updateDefaultByAid(aid,username,new Date());
+        if(rows!=1){
+            throw new UpdateException("更新默认地址发生异常");
+        }
+    }
+
+    @Override
+    public void deleteAddress(Integer aid, Integer uid, String username) {
+        Address result = addressMapper.findByAid(aid);
+        if(result==null){
+            throw new AddressNotFoundException("收货地址不存在");
+        }
+        //检测当前获取到的收货地址数据归属
+        if(!result.getUid().equals(uid)){
+            throw new AccessDeniedException("非法数据访问");
+        }
+
+        Integer isDefault = result.getIsDefault();
+
+        //根据aid删除收货地址
+        Integer rows = addressMapper.deleteByAid(aid);
+        if(rows!=1){
+            throw new DeleteException("删除数据产生未知的异常");
+        }
+
+        Integer count = addressMapper.countByUid(uid);
+        if(count==0 || isDefault==0){
+            return;
+        }
+
+        Address address = addressMapper.findLastModified(uid);
+        rows= addressMapper.updateDefaultByAid(address.getAid(),username,new Date());
+        if(rows!=1){
+            throw new UpdateException("更新数据时发生异常");
         }
     }
 }

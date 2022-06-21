@@ -2,6 +2,8 @@ package com.cqu.store.service;
 
 import com.cqu.store.entity.Address;
 
+import java.util.List;
+
 /**
  *  收货地址业务层接口
  * @Author supreme
@@ -17,4 +19,27 @@ public interface IAddressService {
      * @param address   插入的地址
      */
     void addNewAddress(Integer uid, String username, Address address);
+
+    /**
+     * 根据用户uid获取收货地址信息
+     * @param uid               用户uid
+     * @return List<Address>    收货地址信息列表
+     */
+    List<Address> getByUid(Integer uid);
+
+    /**
+     * 修改某个用户某条收货地址为默认地址
+     * @param aid       收货地址id
+     * @param uid       用户uid
+     * @param username  修改者
+     */
+    void setDefault(Integer aid,Integer uid,String username);
+
+    /**
+     *  删除用户选中的收货地址
+     * @param aid       收货地址aid
+     * @param uid       用户uid
+     * @param username  用户名
+     */
+    void deleteAddress(Integer aid, Integer uid, String username);
 }
