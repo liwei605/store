@@ -45,4 +45,17 @@
     ORDER BY
         t_cart.created_time DESC
   </select>
+
+    <!-- 根据购物车数据id查询购物车数据详情：Cart findByCid(Integer cid) -->
+    <select id="findByCid" resultMap="CartEntityMap">
+    SELECT
+   		*
+    FROM
+    	t_cart
+    WHERE
+    	cid = #{cid}
+  </select>
+    <delete id="deleteByCid">
+        delete from t_cart where cid=#{cid}
+    </delete>
 </mapper>

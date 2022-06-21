@@ -52,4 +52,17 @@ public class CartMapperTests {
         List<CartVO> list = cartMapper.findVOByUid(6);
         System.out.println(list);
     }
+    @Test
+    public void findByCid() {
+        Integer cid = 6;
+        Cart result = cartMapper.findByCid(cid);
+        System.out.println(result);
+    }
+
+    @Test
+    public void deleteByCid() {
+        Integer cid = 3;
+        if(cartMapper.deleteByCid(cid));
+            System.out.println("ok");
+    }
 }

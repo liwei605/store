@@ -1,8 +1,8 @@
 package com.cqu.store.vo;
-
 import java.io.Serializable;
+import java.util.Objects;
 
-/**  π∫ŒÔ≥µ ˝æ›µƒValue Object¿‡*/
+/** Ë¥≠Áâ©ËΩ¶Êï∞ÊçÆÁöÑValue ObjectÁ±ª */
 public class CartVO implements Serializable {
     private Integer cid;
     private Integer uid;
@@ -25,6 +25,27 @@ public class CartVO implements Serializable {
                 ", realPrice=" + realPrice +
                 ", image='" + image + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CartVO)) return false;
+        CartVO cartVO = (CartVO) o;
+        return Objects.equals(getCid(), cartVO.getCid()) &&
+                Objects.equals(getUid(), cartVO.getUid()) &&
+                Objects.equals(getPid(), cartVO.getPid()) &&
+                Objects.equals(getPrice(), cartVO.getPrice()) &&
+                Objects.equals(getNum(), cartVO.getNum()) &&
+                Objects.equals(getTitle(), cartVO.getTitle()) &&
+                Objects.equals(getRealPrice(), cartVO.getRealPrice()) &&
+                Objects.equals(getImage(), cartVO.getImage());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getCid(), getUid(), getPid(), getPrice(), getNum(), getTitle(), getRealPrice(), getImage());
     }
 
     public Integer getCid() {
@@ -90,21 +111,4 @@ public class CartVO implements Serializable {
     public void setImage(String image) {
         this.image = image;
     }
-
-    public CartVO(Integer cid, Integer uid, Integer pid, Long price, Integer num, String title, Long realPrice, String image) {
-
-        this.cid = cid;
-        this.uid = uid;
-        this.pid = pid;
-        this.price = price;
-        this.num = num;
-        this.title = title;
-        this.realPrice = realPrice;
-        this.image = image;
-    }
-
-    public CartVO() {
-
-    }
-// Generate: Getter and Setter??Generate hashCode() and equals()??toString()
 }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpSession;
 
-//¿ØÖÆ²ãÀàµÄ»ùÀà
+//ï¿½ï¿½ï¿½Æ²ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿?
 public class BaseController {
 
     public static final int OK = 200;
@@ -17,59 +17,53 @@ public class BaseController {
         JsonResult<Void> result = new JsonResult<>(e);
         if (e instanceof UsernameDuplicatedException) {
             result.setState(4000);
-            result.setMessage(e.getMessage()); //»ñÈ¡Ãû×ÖÕ¼ÓÃµÄ´íÎóĞÅÏ¢
+            result.setMessage(e.getMessage()); //ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½ÃµÄ´ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
         } else if (e instanceof InsertException) {
             result.setState(5000);
-            result.setMessage(e.getMessage()); //»ñÈ¡ÓÃ»§²åÈë´íÎóĞÅÏ¢
+            result.setMessage(e.getMessage()); //ï¿½ï¿½È¡ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï?
         } else if (e instanceof UserNotFoundException) {
             result.setState(5001);
-            result.setMessage(e.getMessage()); //ÓÃ»§²»´æÔÚ´íÎó
+            result.setMessage(e.getMessage()); //ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ï¿½ï¿½
         } else if (e instanceof PasswordNotMatchException) {
             result.setState(5002);
-            result.setMessage(e.getMessage()); //ÓÃ»§ÃÜÂë´íÎóÒì³£
+            result.setMessage(e.getMessage()); //ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì³?
         } else if (e instanceof UpdateException) {
             result.setState(5003);
-            result.setMessage(e.getMessage()); //ÓÃ»§ÃÜÂë¸üĞÂÒì³£
+            result.setMessage(e.getMessage()); //ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì³?
         } else if (e instanceof AddressCountLimitException) {
             result.setState(5004);
-            result.setMessage(e.getMessage()); //ÓÃ»§ÊÕ»õµØÖ·³¬³öÉÏÏŞÒì³£
-        } else if(e instanceof AccessDeniedException){
-            result.setState(5005);
-            result.setMessage(e.getMessage());//·Ç·¨·ÃÎÊÒì³£
-        } else if(e instanceof AddressNotFoundException){
-            result.setState(5006);
-            result.setMessage(e.getMessage());//ÊÕ»õµØÖ·Ã»ÓĞÕÒµ½Òì³£
-        } else if(e instanceof DeleteException){
-            result.setState(5007);
-            result.setMessage(e.getMessage()); //É¾³ıÊÕ»õµØÖ·Òì³£
+            result.setMessage("ï¿½Ã»ï¿½ï¿½Õ»ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"); //ï¿½Ã»ï¿½ï¿½Õ»ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì³£
+
         } else if (e instanceof FileEmptyException) {
             result.setState(6000);
-            result.setMessage(e.getMessage());//¿ÕÎÄ¼şÒì³£
+            result.setMessage(e.getMessage());//ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ì³£
         } else if (e instanceof FileSizeException) {
             result.setState(6001);
-            result.setMessage(e.getMessage()); //ÎÄ¼ş´óĞ¡Òì³£
+            result.setMessage(e.getMessage()); //ï¿½Ä¼ï¿½ï¿½ï¿½Ğ¡ï¿½ì³£
         } else if (e instanceof FileStateException) {
             result.setState(6002);
-            result.setMessage(e.getMessage()); //ÎÄ¼ş×´Ì¬Òì³£
+            result.setMessage(e.getMessage()); //ï¿½Ä¼ï¿½×´Ì¬ï¿½ì³£
         } else if (e instanceof FileTypeException) {
             result.setState(6003);
-            result.setMessage(e.getMessage()); //ÎÄ¼şÀàĞÍÒì³£
+            result.setMessage(e.getMessage()); //ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì³£
         } else if (e instanceof FileUploadIOException) {
             result.setState(6004);
-            result.setMessage(e.getMessage()); //ÎÄ¼şÉÏ´«IOÒì³£
-        } else if (e instanceof ProductNotFoundException) { //ÉÌÆ·Î´ÕÒµ½Òì³£
+            result.setMessage(e.getMessage()); //ï¿½Ä¼ï¿½ï¿½Ï´ï¿½IOï¿½ì³£
+        } else if (e instanceof ProductNotFoundException) { //ï¿½ï¿½Æ·Î´ï¿½Òµï¿½ï¿½ì³£
             result.setState(4006);
+        }else if (e instanceof CartNotFoundException) {
+            result.setState(4007);
         }
 
         return result;
     }
 
-    //»ñÈ¡session¶ÔÏóÖĞµÄUID
+    //ï¿½ï¿½È¡sessionï¿½ï¿½ï¿½ï¿½ï¿½Ğµï¿½UID
     protected final Integer getuidFromSession(HttpSession session) {
         return Integer.valueOf(session.getAttribute("uid").toString());
     }
 
-    //»ñÈ¡ÓÃ»§Ãû³Æ
+    //ï¿½ï¿½È¡ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½
     protected final String getUsernameFromSession(HttpSession session) {
         return session.getAttribute("username").toString();
     }
