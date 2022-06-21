@@ -44,6 +44,8 @@ public class AddressServiceImpl implements IAddressService {
         address.setModifiedUser(username);
         address.setModifiedTime(new Date());
 
+
+
         //3、插入收货地址
         Integer rows = addressMapper.insert(address);
         if(rows!=1){
