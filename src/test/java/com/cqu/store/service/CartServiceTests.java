@@ -56,4 +56,15 @@ public class CartServiceTests {
             System.out.println(e.getMessage());
         }
     }
+
+    @Test
+    public void getVOByCids() {
+        Integer[] cids = {1, 2, 6, 7, 8, 9, 10};
+        Integer uid = 31;
+        List<CartVO> list = cartService.getVOByCids(uid, cids);
+        System.out.println("count=" + list.size());
+        for (CartVO item : list) {
+            System.out.println(item);
+        }
+    }
 }

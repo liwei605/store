@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -119,5 +120,17 @@ public class CartServiceImpl implements ICartService {
 
         boolean ret = cartMapper.deleteByCid(cid);
 
+    }
+    @Override
+    public List<CartVO> getVOByCids(Integer uid, Integer[] cids){
+        List<CartVO> list = cartMapper.findVOByCids(cids);
+        Iterator<CartVO> it = list.iterator();
+        while (it.hasNext()) {
+            CartVO cart = it.next();
+            if (!cart.getUid().equals(uid)) {
+                it.remove();
+            }
+        }
+        return list;
     }
 }
