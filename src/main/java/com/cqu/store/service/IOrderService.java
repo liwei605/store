@@ -1,5 +1,8 @@
 package com.cqu.store.service;
 import com.cqu.store.entity.Order;
+import com.cqu.store.entity.OrderItem;
+
+import java.util.List;
 
 
 public interface IOrderService {
@@ -12,4 +15,8 @@ public interface IOrderService {
      * @return 成功创建的订单数据
      */
     Order create(Integer aid, Integer[] cids, Integer uid, String username);
+
+    List<OrderItem> showOrderItem(Integer uid, String username) ;
+
+    Order showOrder(Integer uid, String username) ;
 }

@@ -90,4 +90,28 @@ public class OrderServiceImpl implements IOrderService {
 // 返回
         return order;
     }
+
+
+    public  List<OrderItem> showOrderItem(Integer uid, String username) {
+        Order order= orderMapper.findOrderByuid(uid);
+        //补全数据：支付订单的时间
+        order.setPayTime(new Date());
+        //获取订单号码
+        Integer oid= order.getOid();
+
+        //通过oid 查找订单物品
+        List<OrderItem> list= orderMapper.findOrderItemByoid(oid);
+
+        //返回订单下物品列表
+        return  list;
+    }
+
+    @Override
+    public Order showOrder(Integer uid, String username) {
+        Order order= orderMapper.findOrderByuid(uid);
+        //获取订单号码
+        order.setPayTime(new Date());
+
+        return  order;
+    }
 }
