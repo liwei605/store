@@ -110,9 +110,11 @@ public class UserController extends BaseController {
             throw new FileTypeException("不支持使用该类型的文件作为头像，允许的文件类型：\n" + AVATAR_TYPES);
         }
 
-        // 获取当前项目的绝对磁盘路径
-        //String parent = session.getServletContext().getRealPath("upload");
-        String parent = "D:\\Desktop\\store1\\src\\main\\resources\\static\\images\\upload";
+
+         //获取当前项目的绝对路径
+
+        String parent = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\images\\upload";
+//        System.out.println(parent);
         // 保存头像文件的文件/夹
         File dir = new File(parent);
         if (!dir.exists()) {
@@ -123,7 +125,7 @@ public class UserController extends BaseController {
 
         // 创建文件对象，表示保存的头像文件
         File dest = new File(dir, originalFilename);
-       // System.out.println(dest);
+
         // 执行保存头像文件
         try {
             file.transferTo(dest);
