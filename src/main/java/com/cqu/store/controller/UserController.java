@@ -112,7 +112,7 @@ public class UserController extends BaseController {
 
         // 获取当前项目的绝对磁盘路径
         //String parent = session.getServletContext().getRealPath("upload");
-        String parent = "D:\\Desktop\\store1\\src\\main\\resources\\static\\images\\upload";
+        String parent = "C:\\Users\\lenovo\\Desktop\\store1\\src\\main\\resources\\static\\images\\upload";
         // 保存头像文件的文件/夹
         File dir = new File(parent);
         if (!dir.exists()) {
