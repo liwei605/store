@@ -41,4 +41,6 @@
 /*管理下拉框li*/
 .top-dropdown-ul li {
     width: 100%;
+    cursor: pointer;
+
 }

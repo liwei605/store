@@ -7,11 +7,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpSession;
 
-//���Ʋ���Ļ���?
+//���Ʋ���Ļ���?
 public class BaseController {
 
     public static final int OK = 200;
-
     @ExceptionHandler({ServiceException.class, FileUploadException.class})
     public JsonResult<Void> handleException(Throwable e) {
         JsonResult<Void> result = new JsonResult<>(e);
@@ -20,16 +19,16 @@ public class BaseController {
             result.setMessage(e.getMessage()); //��ȡ����ռ�õĴ�����Ϣ
         } else if (e instanceof InsertException) {
             result.setState(5000);
-            result.setMessage(e.getMessage()); //��ȡ�û�����������?
+            result.setMessage(e.getMessage()); //��ȡ�û�����������?
         } else if (e instanceof UserNotFoundException) {
             result.setState(5001);
             result.setMessage(e.getMessage()); //�û������ڴ���
         } else if (e instanceof PasswordNotMatchException) {
             result.setState(5002);
-            result.setMessage(e.getMessage()); //�û����������?
+            result.setMessage(e.getMessage()); //�û����������?
         } else if (e instanceof UpdateException) {
             result.setState(5003);
-            result.setMessage(e.getMessage()); //�û����������?
+            result.setMessage(e.getMessage()); //�û����������?
         } else if (e instanceof AddressCountLimitException) {
             result.setState(5004);
             result.setMessage("�û��ջ���ַ��������"); //�û��ջ���ַ���������쳣
@@ -54,6 +53,7 @@ public class BaseController {
         }else if (e instanceof CartNotFoundException) {
             result.setState(4007);
         }
+
 
         return result;
     }

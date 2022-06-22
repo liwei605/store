@@ -53,6 +53,7 @@
 									<li><a href="userdata.html">个人资料</a></li>
 									<li><a href="upload.html">上传头像</a></li>
 									<li><a href="address.html">收货管理	</a></li>
+									<li><a id="logout" onclick="logout()" >账号注销</a> </li>
 								</ul>
 							</div>
 						</li>
@@ -308,9 +309,6 @@
 						if (json.state == 200) {
 							$("#loginuser").empty();
 							console.log("username=" + json.data.username);
-							// console.log("phone=" + json.data.phone);
-							// console.log("email=" + json.data.email);
-							// console.log("gender=" + json.data.gender);
 							let html ='<a id="loginuser" href="userdata.html">#{name}</a>'
 							html = html.replace(/#{name}/g,"Hello! "+json.data.username );
 							$("#loginuser").append(html);
@@ -320,6 +318,21 @@
 					}
 				});
 			}
+            function logout() {
+                $.ajax({
+                    url: "/users/logout",
+                    type: "POST",
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.state == 200) {
+                            alert("您的账号已注销，请重新登录！");
+                            location.href = "login.html";
+                        } else {
+                            alert("注销失败！" + json.message);
+                        }
+                    }
+                });
+            }
 			function showHotList() {
 				$("#hot-list").empty();
 				$.ajax({
