@@ -1,7 +1,9 @@
 package com.cqu.store.service.ex;
 
-public class AccessDeniedException extends ServiceException{
+/** 非法访问的异常 */
+public class AccessDeniedException extends ServiceException {
     public AccessDeniedException() {
+        super();
     }
 
     public AccessDeniedException(String message) {
@@ -16,7 +18,7 @@ public class AccessDeniedException extends ServiceException{
         super(cause);
     }
 
-    public AccessDeniedException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    protected AccessDeniedException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

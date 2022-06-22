@@ -4,39 +4,49 @@ import com.cqu.store.vo.CartVO;
 
 import java.util.List;
 
-/** ´¦ÀíÉÌÆ·Êı¾İµÄÒµÎñ²ã½Ó¿Ú */
 public interface ICartService {
     /**
-     * ½«ÉÌÆ·Ìí¼Óµ½¹ºÎï³µ
-     *
-     * @param uid      µ±Ç°µÇÂ¼ÓÃ»§µÄid
-     * @param pid      ÉÌÆ·µÄid
-     * @param amount   Ôö¼ÓµÄÊıÁ¿
-     * @param username µ±Ç°µÇÂ¼µÄÓÃ»§Ãû
+     *  æŠŠå•†å“æ·»åŠ åˆ°è´­ç‰©è½¦ä¸­
+     * @param uid ç”¨æˆ·id
+     * @param pid å•†å“Id
+     * @param amount å•†å“æ•°é‡
+     * @param usrname ç”¨æˆ·å
      */
-    void addToCart(Integer uid, Integer pid, Integer amount, String username);
+    void addToCart(Integer uid, Integer pid, Integer amount, String usrname);
 
     /**
-     * ÏÔÊ¾¹ºÎï³µ
-     * @param uid
-     * @return
+     * æŸ¥è¯¢æŸç”¨æˆ·çš„è´­ç‰©è½¦æ•°æ®
+     * @param uid ç”¨æˆ·id
+     * @return è¯¥ç”¨æˆ·çš„è´­ç‰©è½¦æ•°æ®çš„åˆ—è¡¨
      */
     List<CartVO> getVOByUid(Integer uid);
 
     /**
-     * ½«¹ºÎï³µÖĞÄ³ÉÌÆ·µÄÊıÁ¿¼Ó1
-     * @param cid ¹ºÎï³µÊıÁ¿µÄid
-     * @param uid µ±Ç°µÇÂ¼µÄÓÃ»§µÄid
-     * @param username µ±Ç°µÇÂ¼µÄÓÃ»§Ãû
-     * @return Ôö¼Ó³É¹¦ºóĞÂµÄÊıÁ¿
+     * å°†è´­ç‰©è½¦ä¸­æŸå•†å“çš„æ•°é‡åŠ 1
+     * @param cid è´­ç‰©è½¦æ•°é‡çš„id
+     * @param uid å½“å‰ç™»å½•çš„ç”¨æˆ·çš„id
+     * @param username å½“å‰ç™»å½•çš„ç”¨æˆ·å
+     * @return å¢åŠ æˆåŠŸåæ–°çš„æ•°é‡
      */
     Integer addNum(Integer cid, Integer uid, String username);
 
     /**
-     * ¸ù¾İÈô¸É¸ö¹ºÎï³µÊı¾İid²éÑ¯ÏêÇéµÄÁĞ±í
-     * @param uid µ±Ç°µÇÂ¼µÄÓÃ»§µÄid
-     * @param cids Èô¸É¸ö¹ºÎï³µÊı¾İid
-     * @return Æ¥ÅäµÄ¹ºÎï³µÊı¾İÏêÇéµÄÁĞ±í
+     * å°†è´­ç‰©è½¦ä¸­æŸå•†å“çš„æ•°é‡å‡1
+     * @param cid è´­ç‰©è½¦æ•°é‡çš„id
+     * @param uid å½“å‰ç™»å½•çš„ç”¨æˆ·çš„id
+     * @param username å½“å‰ç™»å½•çš„ç”¨æˆ·å
+     * @return å¢åŠ æˆåŠŸåæ–°çš„æ•°é‡
+     */
+    Integer reduceNum(Integer cid, Integer uid, String username);
+
+    void deleteCart(Integer cid, Integer uid, String username);
+
+
+    /**
+     * æ ¹æ®è‹¥å¹²ä¸ªè´­ç‰©è½¦æ•°æ®idæŸ¥è¯¢è¯¦æƒ…çš„åˆ—è¡¨
+     * @param uid å½“å‰ç™»å½•çš„ç”¨æˆ·çš„id
+     * @param cids è‹¥å¹²ä¸ªè´­ç‰©è½¦æ•°æ®id
+     * @return åŒ¹é…çš„è´­ç‰©è½¦æ•°æ®è¯¦æƒ…çš„åˆ—è¡¨
      */
     List<CartVO> getVOByCids(Integer uid, Integer[] cids);
 

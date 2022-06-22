@@ -21,4 +21,14 @@ public class AddressServiceTests  {
         address.setName("supreme");
         addressService.addNewAddress(23,"π‹¿Ì‘±",address);
     }
+
+    @Test
+    public void setDefault(){
+        addressService.setDefault(5,15,"zxc");
+    }
+
+    @Test
+    public void deleteAddress(){
+        addressService.deleteAddress(15,23,"123");
+    }
 }

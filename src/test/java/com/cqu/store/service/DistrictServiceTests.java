@@ -1,4 +1,4 @@
-package com.cqu.store.mapper;
+package com.cqu.store.service;
 
 import com.cqu.store.entity.District;
 import com.cqu.store.service.IDistrictService;
@@ -24,4 +24,5 @@ public class DistrictServiceTests {
             System.out.println(d);
         }
     }
+
 }

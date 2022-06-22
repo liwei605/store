@@ -1,5 +1,6 @@
 package com.cqu.store.controller;
 
+
 import com.cqu.store.service.ICartService;
 import com.cqu.store.util.JsonResult;
 import com.cqu.store.vo.CartVO;
@@ -10,55 +11,74 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+
 import java.util.List;
 
-@RestController
+
 @RequestMapping("carts")
+@RestController
 public class CartController extends BaseController {
     @Autowired
-    private ICartService cartService;
+    ICartService cartService;
+
     @RequestMapping("add_to_cart")
-    public JsonResult<Void> addToCart(Integer pid, Integer amount, HttpSession
-            session) {
-        // ´ÓSessionÖĞ»ñÈ¡uidºÍusername
-        Integer uid = getuidFromSession(session);
-        String username = getUsernameFromSession(session);
-        // µ÷ÓÃÒµÎñ¶ÔÏóÖ´ĞĞÌí¼Óµ½¹ºÎï³µ
-        cartService.addToCart(uid, pid, amount, username);
-        // ·µ»Ø³É¹¦
+    public JsonResult<Void> addToCart(Integer pid, Integer amount, HttpSession session){
+        cartService.addToCart(getuidFromSession(session),
+                pid,amount,getUsernameFromSession(session));
         return new JsonResult<Void>(OK);
     }
 
     @GetMapping({"", "/"})
     public JsonResult<List<CartVO>> getVOByUid(HttpSession session) {
-        // ´ÓSessionÖĞ»ñÈ¡uid
+        // ä»Sessionä¸­è·å–uid
         Integer uid = getuidFromSession(session);
-        // µ÷ÓÃÒµÎñ¶ÔÏóÖ´ĞĞ²éÑ¯Êı¾İ
+        // è°ƒç”¨ä¸šåŠ¡å¯¹è±¡æ‰§è¡ŒæŸ¥è¯¢æ•°æ®
         List<CartVO> data = cartService.getVOByUid(uid);
-        // ·µ»Ø³É¹¦ÓëÊı¾İ
+        // è¿”å›æˆåŠŸä¸æ•°æ®
         return new JsonResult<List<CartVO>>(OK, data);
     }
-
     @RequestMapping("{cid}/num/add")
-    public JsonResult<Integer> addNum(@PathVariable("cid") Integer cid, HttpSession
-            session) {
-        // ´ÓSessionÖĞ»ñÈ¡uidºÍusername
+    public JsonResult<Integer> addNum(@PathVariable("cid") Integer cid, HttpSession session) {
+        // ä»Sessionä¸­è·å–uidå’Œusername
         Integer uid = getuidFromSession(session);
         String username = getUsernameFromSession(session);
-        // µ÷ÓÃÒµÎñ¶ÔÏóÖ´ĞĞÔö¼ÓÊıÁ¿
+        // è°ƒç”¨ä¸šåŠ¡å¯¹è±¡æ‰§è¡Œå¢åŠ æ•°é‡
         Integer data = cartService.addNum(cid, uid, username);
-        // ·µ»Ø³É¹¦
+        // è¿”å›æˆåŠŸ
+        return new JsonResult<Integer>(OK, data);
+    }
+    @RequestMapping("{cid}/num/reduce")
+    public JsonResult<Integer> reduceNum(@PathVariable("cid") Integer cid, HttpSession session) {
+        // ä»Sessionä¸­è·å–uidå’Œusername
+        Integer uid = getuidFromSession(session);
+        String username = getUsernameFromSession(session);
+
+        // è°ƒç”¨ä¸šåŠ¡å¯¹è±¡æ‰§è¡Œå‡å°‘æ•°é‡
+        Integer data = cartService.reduceNum(cid, uid, username);
+        // è¿”å›æˆåŠŸ
         return new JsonResult<Integer>(OK, data);
     }
 
-    @GetMapping("list")
-    public JsonResult<List<CartVO>> getVOByCids(Integer[] cids, HttpSession session) {
-        // ´ÓSessionÖĞ»ñÈ¡uid
+    @RequestMapping("{cid}/num/delete")
+    public JsonResult<Integer> deleteCart(@PathVariable("cid") Integer cid, HttpSession session) {
+        // ä»Sessionä¸­è·å–uidå’Œusername
         Integer uid = getuidFromSession(session);
-        // µ÷ÓÃÒµÎñ¶ÔÏóÖ´ĞĞ²éÑ¯Êı¾İ
+        String username = getUsernameFromSession(session);
+
+        // è°ƒç”¨ä¸šåŠ¡å¯¹è±¡æ‰§è¡Œå‡å°‘æ•°é‡
+        cartService.deleteCart(cid, uid, username);
+        // è¿”å›æˆåŠŸ
+        return new JsonResult<Integer>(OK);
+    }
+
+    @GetMapping("list")
+    public JsonResult<List<CartVO>> getVOByCids(Integer[] cids, HttpSession session)
+    {
+// ä»Sessionä¸­è·å–uid
+        Integer uid = getuidFromSession(session);
+// è°ƒç”¨ä¸šåŠ¡å¯¹è±¡æ‰§è¡ŒæŸ¥è¯¢æ•°æ®
         List<CartVO> data = cartService.getVOByCids(uid, cids);
-        // ·µ»Ø³É¹¦ÓëÊı¾İ
+// è¿”å›æˆåŠŸä¸æ•°æ®
         return new JsonResult<>(OK, data);
     }
 }
-

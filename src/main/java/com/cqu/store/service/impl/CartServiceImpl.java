@@ -1,110 +1,128 @@
 package com.cqu.store.service.impl;
+
 import com.cqu.store.entity.Cart;
 import com.cqu.store.entity.Product;
 import com.cqu.store.mapper.CartMapper;
+import com.cqu.store.mapper.ProductMapper;
 import com.cqu.store.service.ICartService;
-import com.cqu.store.service.IProductService;
-import com.cqu.store.service.ex.AccessDeniedException;
 import com.cqu.store.service.ex.CartNotFoundException;
 import com.cqu.store.service.ex.InsertException;
+import com.cqu.store.service.ex.UpdateException;
 import com.cqu.store.vo.CartVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessDeniedException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-/** ???????????????????? */
 @Service
 public class CartServiceImpl implements ICartService {
+    //ä¾èµ–äºè´­ç‰©è½¦çš„æŒä¹…å±‚å’Œå•†å“çš„æŒä¹…å±‚
     @Autowired
     private CartMapper cartMapper;
+
     @Autowired
-    private IProductService productService;
+    private ProductMapper productMapper;
+
+
     @Override
-    public void addToCart(Integer uid, Integer pid, Integer amount, String username)
-    {
-        // ¸ù¾İ²ÎÊıpidºÍuid²éÑ¯¹ºÎï³µÖĞµÄÊı¾İ
-        Cart result = cartMapper.findByUidAndPid(uid, pid);
-        //Integer cid = result.getCid();
-        Date now = new Date();
-        // ÅĞ¶Ï²éÑ¯½á¹ûÊÇ·ñÎªnull
-        if (result == null) {
-            // ÊÇ£º±íÊ¾¸ÃÓÃ»§²¢Î´½«¸ÃÉÌÆ·Ìí¼Óµ½¹ºÎï³µ
-            // ´´½¨Cart¶ÔÏó
+    public void addToCart(Integer uid, Integer pid, Integer amount, String username) {
+        //æŸ¥è¯¢å½“å‰å•†å“æ˜¯å¦å·²ç»åœ¨è´­ç‰©è½¦ä¸­
+        Cart result = cartMapper.findByUidAndPid(uid,pid);
+        Date date = new Date();
+        if(result == null){
             Cart cart = new Cart();
-            // ·â×°Êı¾İ£ºuid,pid,amount
             cart.setUid(uid);
             cart.setPid(pid);
             cart.setNum(amount);
-            // µ÷ÓÃproductService.findById(pid)²éÑ¯ÉÌÆ·Êı¾İ£¬µÃµ½ÉÌÆ·¼Û¸ñ
-            Product product = productService.findById(pid);
-            // ·â×°Êı¾İ£ºprice
+            //ä»·æ ¼ï¼Œæ¥è‡ªäºå•†å“ä¸­çš„æ•°æ®
+            Product product =productMapper.findById(pid);
             cart.setPrice(product.getPrice());
-            // ·â×°Êı¾İ£º4¸öÈÕÖ¾
+
             cart.setCreatedUser(username);
-            cart.setCreatedTime(now);
             cart.setModifiedUser(username);
-            cart.setModifiedTime(now);
-            // µ÷ÓÃinsert(cart)Ö´ĞĞ½«Êı¾İ²åÈëµ½Êı¾İ±íÖĞ
+            cart.setCreatedTime(date);
+            cart.setModifiedTime(date);
+
             Integer rows = cartMapper.insert(cart);
-            if (rows != 1) {
-                throw new InsertException("²åÈëÉÌÆ·Êı¾İÊ±³öÏÖÎ´Öª´íÎó£¬ÇëÁªÏµÏµÍ³¹ÜÀíÔ±");
+            if(rows!=1){
+                throw new InsertException("æ·»åŠ è´­ç‰©è½¦å¤±è´¥ï¼");
             }
-        } else {
-            // ·ñ£º±íÊ¾¸ÃÓÃ»§µÄ¹ºÎï³µÖĞÒÑÓĞ¸ÃÉÌÆ·
-            // ´Ó²éÑ¯½á¹ûÖĞ»ñÈ¡¹ºÎï³µÊı¾İµÄid
-            Integer cid = result.getCid();
-            // ´Ó²éÑ¯½á¹ûÖĞÈ¡³öÔ­ÊıÁ¿£¬Óë²ÎÊıamountÏà¼Ó£¬µÃµ½ĞÂµÄÊıÁ¿
-            Integer num = result.getNum() + amount;
-            // Ö´ĞĞ¸üĞÂÊıÁ¿
-            Integer rows = cartMapper.updateNumByCid(cid, num, username, now);
-            if (rows != 1) {
-                throw new InsertException("ĞŞ¸ÄÉÌÆ·ÊıÁ¿Ê±³öÏÖÎ´Öª´íÎó£¬ÇëÁªÏµÏµÍ³¹ÜÀíÔ±");
+        }else{
+            Integer num = result.getNum()+amount;
+            Integer rows = cartMapper.updateNumByCid(result.getCid(),num,username,date);
+            if(rows!=1){
+                throw new UpdateException("æ·»åŠ è´­ç‰©è½¦å¤±è´¥ï¼");
             }
         }
     }
-
-
 
     @Override
     public List<CartVO> getVOByUid(Integer uid) {
         return cartMapper.findVOByUid(uid);
     }
 
-    @Override
     public Integer addNum(Integer cid, Integer uid, String username) {
-        // µ÷ÓÃfindByCid(cid)¸ù¾İ²ÎÊıcid²éÑ¯¹ºÎï³µÊı¾İ
         Cart result = cartMapper.findByCid(cid);
-        // ÅĞ¶Ï²éÑ¯½á¹ûÊÇ·ñÎªnull
+        // åˆ¤æ–­æŸ¥è¯¢ç»“æœæ˜¯å¦ä¸ºnull
         if (result == null) {
-            // ÊÇ£ºÅ×³öCartNotFoundException
-            throw new CartNotFoundException("³¢ÊÔ·ÃÎÊµÄ¹ºÎï³µÊı¾İ²»´æÔÚ");
+            // æ˜¯ï¼šæŠ›å‡ºCartNotFoundException
+            throw new CartNotFoundException("å°è¯•è®¿é—®çš„è´­ç‰©è½¦æ•°æ®ä¸å­˜åœ¨");
         }
-        // ÅĞ¶Ï²éÑ¯½á¹ûÖĞµÄuidÓë²ÎÊıuidÊÇ·ñ²»Ò»ÖÂ
-        if (!result.getUid().equals(uid)) {
-            // ÊÇ£ºÅ×³öAccessDeniedException
-            throw new AccessDeniedException("·Ç·¨·ÃÎÊ");
-        }
-        // ¿ÉÑ¡£º¼ì²éÉÌÆ·µÄÊıÁ¿ÊÇ·ñ´óÓÚ¶àÉÙ(ÊÊÓÃÓÚÔö¼ÓÊıÁ¿)»òĞ¡ÓÚ¶àÉÙ(ÊÊÓÃÓÚ¼õÉÙÊıÁ¿)
-        // ¸ù¾İ²éÑ¯½á¹ûÖĞµÄÔ­ÊıÁ¿Ôö¼Ó1µÃµ½ĞÂµÄÊıÁ¿num
+
         Integer num = result.getNum() + 1;
-        // ´´½¨µ±Ç°Ê±¼ä¶ÔÏó£¬×÷ÎªmodifiedTime
+
+        // åˆ›å»ºå½“å‰æ—¶é—´å¯¹è±¡ï¼Œä½œä¸ºmodifiedTime
         Date now = new Date();
-        // µ÷ÓÃupdateNumByCid(cid, num, modifiedUser, modifiedTime)Ö´ĞĞĞŞ¸ÄÊıÁ¿
         Integer rows = cartMapper.updateNumByCid(cid, num, username, now);
         if (rows != 1) {
-            throw new InsertException("ĞŞ¸ÄÉÌÆ·ÊıÁ¿Ê±³öÏÖÎ´Öª´íÎó£¬ÇëÁªÏµÏµÍ³¹ÜÀíÔ±");
+            throw new UpdateException("å¢åŠ å¤±è´¥ï¼Œè¯·è”ç³»ç³»ç»Ÿç®¡ç†å‘˜");
         }
-        // ·µ»ØĞÂµÄÊıÁ¿
+
+        // è¿”å›æ–°çš„æ•°é‡
         return num;
-
-
     }
 
     @Override
-    public List<CartVO> getVOByCids(Integer uid, Integer[] cids) {
+    public Integer reduceNum(Integer cid, Integer uid, String username) {
+        // è°ƒç”¨findByCid(cid)æ ¹æ®å‚æ•°cidæŸ¥è¯¢è´­ç‰©è½¦æ•°æ®
+        Cart result = cartMapper.findByCid(cid);
+        // åˆ¤æ–­æŸ¥è¯¢ç»“æœæ˜¯å¦ä¸ºnull
+        if (result == null) {
+            // æ˜¯ï¼šæŠ›å‡ºCartNotFoundException
+            throw new CartNotFoundException("å°è¯•è®¿é—®çš„è´­ç‰©è½¦æ•°æ®ä¸å­˜åœ¨");
+        }
+        if(result.getNum()==1){
+            return 1;
+        }
+        Integer num = result.getNum() - 1;
+        // åˆ›å»ºå½“å‰æ—¶é—´å¯¹è±¡ï¼Œä½œä¸ºmodifiedTime
+        Date now = new Date();
+        Integer rows = cartMapper.updateNumByCid(cid, num, username, now);
+        if (rows != 1) {
+            throw new UpdateException("å‡å°‘å•†å“æ•°é‡å¤±è´¥ï¼Œè¯·è”ç³»ç³»ç»Ÿç®¡ç†å‘˜");
+        }
+//        if(num==0)cartMapper.deleteByCid(cid);
+        // è¿”å›æ–°çš„æ•°é‡
+        return num;
+    }
+    @Override
+    public void deleteCart(Integer cid, Integer uid, String username){
+        // è°ƒç”¨findByCid(cid)æ ¹æ®å‚æ•°cidæŸ¥è¯¢è´­ç‰©è½¦æ•°æ®
+        Cart result = cartMapper.findByCid(cid);
+        // åˆ¤æ–­æŸ¥è¯¢ç»“æœæ˜¯å¦ä¸ºnull
+        if (result == null) {
+            // æ˜¯ï¼šæŠ›å‡ºCartNotFoundException
+            throw new CartNotFoundException("å°è¯•è®¿é—®çš„è´­ç‰©è½¦æ•°æ®ä¸å­˜åœ¨");
+        }
+
+        boolean ret = cartMapper.deleteByCid(cid);
+
+    }
+    @Override
+    public List<CartVO> getVOByCids(Integer uid, Integer[] cids){
         List<CartVO> list = cartMapper.findVOByCids(cids);
         Iterator<CartVO> it = list.iterator();
         while (it.hasNext()) {
@@ -115,6 +133,4 @@ public class CartServiceImpl implements ICartService {
         }
         return list;
     }
-
-
 }

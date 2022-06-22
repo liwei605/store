@@ -163,6 +163,7 @@
                 </div>
                 <div class="pay-bar">
                     <a href="cart.html">返回购物车</a>
+
                     <span class="pull-right"><input id="btn-create-order" type="button" value="在线支付"
                                                     class="btn btn-primary btn-lg link-pay"/></span>
                 </div>
@@ -366,6 +367,7 @@
                 if (json.state == 200) {
                     alert("创建订单成功！");
                     console.log(json.data);
+                    location.href = "payment.html";
                 } else {
                     alert("创建订单失败！" + json.message);
                 }

@@ -3,77 +3,68 @@ package com.cqu.store.controller;
 import com.cqu.store.controller.ex.*;
 import com.cqu.store.service.ex.*;
 import com.cqu.store.util.JsonResult;
-import com.cqu.store.controller.ex.*;
-import com.cqu.store.service.ex.*;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpSession;
 
-//控制层类的基类
+//���Ʋ���Ļ���?
 public class BaseController {
-    //操作成功状态码
-    public static final  int OK=200;
+
+    public static final int OK = 200;
 
     @ExceptionHandler({ServiceException.class, FileUploadException.class})
-    public JsonResult<Void> handleException(Throwable e)
-    {
-         JsonResult<Void> result =new JsonResult<>(e);
-         if(e instanceof UsernameDuplicatedException)
-         {
-             result.setState(4000);
-             result.setMessage(e.getMessage()); //获取名字占用的错误信息
-         }else if(e instanceof InsertException)
-         {
-             result.setState(5000);
-             result.setMessage(e.getMessage()); //获取用户插入错误信息
-         }else if(e instanceof UserNotFoundException)
-         {
-             result.setState(5001);
-             result.setMessage(e.getMessage()); //用户数据不存在
-         }else if(e instanceof PasswordNotMatchException)
-         {
-             result.setState(5002);
-             result.setMessage(e.getMessage()); //用户密码错误异常
-         }
-         else if(e instanceof UpdateException)
-         {
-             result.setState(5003);
-             result.setMessage(e.getMessage()); //用户密码更新异常异常
-         }else if(e instanceof FileEmptyException)
-         {
-             result.setState(6000);
-             result.setMessage(e.getMessage()); //空文件异常
-         }else if(e instanceof FileSizeException)
-         {
-             result.setState(6001);
-             result.setMessage(e.getMessage()); //文件大小异常
-         }else if(e instanceof FileStateException)
-         {
-             result.setState(6002);
-             result.setMessage(e.getMessage()); //文件状态异常
-         }else if(e instanceof FileTypeException)
-         {
-             result.setState(6003);
-             result.setMessage(e.getMessage()); //文件类型异常
-         } else if(e instanceof FileUploadIOException)
-         {
-             result.setState(6004);
-             result.setMessage(e.getMessage()); //文件上传IO异常
-         }else if (e instanceof CartNotFoundException) {
-             result.setState(4007);             //购物车不存在
-         }
+    public JsonResult<Void> handleException(Throwable e) {
+        JsonResult<Void> result = new JsonResult<>(e);
+        if (e instanceof UsernameDuplicatedException) {
+            result.setState(4000);
+            result.setMessage(e.getMessage()); //��ȡ����ռ�õĴ�����Ϣ
+        } else if (e instanceof InsertException) {
+            result.setState(5000);
+            result.setMessage(e.getMessage()); //��ȡ�û�����������?
+        } else if (e instanceof UserNotFoundException) {
+            result.setState(5001);
+            result.setMessage(e.getMessage()); //�û������ڴ���
+        } else if (e instanceof PasswordNotMatchException) {
+            result.setState(5002);
+            result.setMessage(e.getMessage()); //�û����������?
+        } else if (e instanceof UpdateException) {
+            result.setState(5003);
+            result.setMessage(e.getMessage()); //�û����������?
+        } else if (e instanceof AddressCountLimitException) {
+            result.setState(5004);
+            result.setMessage("�û��ջ���ַ��������"); //�û��ջ���ַ���������쳣
 
-
+        } else if (e instanceof FileEmptyException) {
+            result.setState(6000);
+            result.setMessage(e.getMessage());//���ļ��쳣
+        } else if (e instanceof FileSizeException) {
+            result.setState(6001);
+            result.setMessage(e.getMessage()); //�ļ���С�쳣
+        } else if (e instanceof FileStateException) {
+            result.setState(6002);
+            result.setMessage(e.getMessage()); //�ļ�״̬�쳣
+        } else if (e instanceof FileTypeException) {
+            result.setState(6003);
+            result.setMessage(e.getMessage()); //�ļ������쳣
+        } else if (e instanceof FileUploadIOException) {
+            result.setState(6004);
+            result.setMessage(e.getMessage()); //�ļ��ϴ�IO�쳣
+        } else if (e instanceof ProductNotFoundException) { //��Ʒδ�ҵ��쳣
+            result.setState(4006);
+        }else if (e instanceof CartNotFoundException) {
+            result.setState(4007);
+        }
 
         return result;
     }
 
-    //获取session对象中的UID
-    protected final Integer getuidFromSession(HttpSession session){
-       return Integer.valueOf(session.getAttribute("uid").toString());
+    //��ȡsession�����е�UID
+    protected final Integer getuidFromSession(HttpSession session) {
+        return Integer.valueOf(session.getAttribute("uid").toString());
     }
-    //获取用户名称
-    protected final String getUsernameFromSession(HttpSession session){
+
+    //��ȡ�û�����
+    protected final String getUsernameFromSession(HttpSession session) {
         return session.getAttribute("username").toString();
     }
 }

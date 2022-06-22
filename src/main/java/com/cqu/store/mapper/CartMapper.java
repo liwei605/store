@@ -3,59 +3,72 @@ package com.cqu.store.mapper;
 import com.cqu.store.entity.Cart;
 import com.cqu.store.vo.CartVO;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.Date;
 import java.util.List;
 
-/** ´¦Àí¹ºÎï³µÊı¾İµÄ³Ö¾Ã²ã½Ó¿Ú */
+/** å¤„ç†è´­ç‰©è½¦æ•°æ®çš„æŒä¹…å±‚æ¥å£ */
 public interface CartMapper {
     /**
-     * ²åÈë¹ºÎï³µÊı¾İ
-     * @param cart ¹ºÎï³µÊı¾İ
-     * @return ÊÜÓ°ÏìµÄĞĞÊı
+     * æ’å…¥è´­ç‰©è½¦æ•°æ®
+     *
+     * @param cart è´­ç‰©è½¦æ•°æ®
+     * @return å—å½±å“çš„è¡Œæ•°
      */
     Integer insert(Cart cart);
+
     /**
-     * ĞŞ¸Ä¹ºÎï³µÊı¾İÖĞÉÌÆ·µÄÊıÁ¿
-     * @param cid ¹ºÎï³µÊı¾İµÄid
-     * @param num ĞÂµÄÊıÁ¿
-     * @param modifiedUser ĞŞ¸ÄÖ´ĞĞÈË
-     * @param modifiedTime ĞŞ¸ÄÊ±¼ä
-     * @return ÊÜÓ°ÏìµÄĞĞÊı
+     * ä¿®æ”¹è´­ç‰©è½¦æ•°æ®ä¸­å•†å“çš„æ•°é‡
+     *
+     * @param cid          è´­ç‰©è½¦æ•°æ®çš„id
+     * @param num          æ–°çš„æ•°é‡
+     * @param modifiedUser ä¿®æ”¹æ‰§è¡Œäºº
+     * @param modifiedTime ä¿®æ”¹æ—¶é—´
+     * @return å—å½±å“çš„è¡Œæ•°
      */
     Integer updateNumByCid(
             @Param("cid") Integer cid,
             @Param("num") Integer num,
             @Param("modifiedUser") String modifiedUser,
             @Param("modifiedTime") Date modifiedTime);
+
     /**
-     * ¸ù¾İÓÃ»§idºÍÉÌÆ·id²éÑ¯¹ºÎï³µÖĞµÄÊı¾İ
-     * @param uid ÓÃ»§id
-     * @param pid ÉÌÆ·id
-     * @return Æ¥ÅäµÄ¹ºÎï³µÊı¾İ£¬Èç¹û¸ÃÓÃ»§µÄ¹ºÎï³µÖĞ²¢Ã»ÓĞ¸ÃÉÌÆ·£¬Ôò·µ»Ønull
+     * æ ¹æ®ç”¨æˆ·idå’Œå•†å“idæŸ¥è¯¢è´­ç‰©è½¦ä¸­çš„æ•°æ®
+     *
+     * @param uid ç”¨æˆ·id
+     * @param pid å•†å“id
+     * @return åŒ¹é…çš„è´­ç‰©è½¦æ•°æ®ï¼Œå¦‚æœè¯¥ç”¨æˆ·çš„è´­ç‰©è½¦ä¸­å¹¶æ²¡æœ‰è¯¥å•†å“ï¼Œåˆ™è¿”å›null
      */
     Cart findByUidAndPid(
             @Param("uid") Integer uid,
             @Param("pid") Integer pid);
 
     /**
-     * ¸ù¾İÓÃ»§id²éÑ¯ËùÓĞµÄcartÊµÌå
-     * @param uid
-     * @return
+     * æŸ¥è¯¢æŸç”¨æˆ·çš„è´­ç‰©è½¦æ•°æ®
+     *
+     * @param uid ç”¨æˆ·id
+     * @return è¯¥ç”¨æˆ·çš„è´­ç‰©è½¦æ•°æ®çš„åˆ—è¡¨
      */
     List<CartVO> findVOByUid(Integer uid);
 
     /**
-     * ¸ù¾İ¹ºÎï³µÊı¾İid²éÑ¯¹ºÎï³µÊı¾İÏêÇé
-     * @param cid ¹ºÎï³µÊı¾İid
-     * @return Æ¥ÅäµÄ¹ºÎï³µÊı¾İÏêÇé£¬Èç¹ûÃ»ÓĞÆ¥ÅäµÄÊı¾İÔò·µ»Ønull
+     * æ ¹æ®è´­ç‰©è½¦æ•°æ®idæŸ¥è¯¢è´­ç‰©è½¦æ•°æ®è¯¦æƒ…
+     * @param cid è´­ç‰©è½¦æ•°æ®id
+     * @return åŒ¹é…çš„è´­ç‰©è½¦æ•°æ®è¯¦æƒ…ï¼Œå¦‚æœæ²¡æœ‰åŒ¹é…çš„æ•°æ®åˆ™è¿”å›null
      */
     Cart findByCid(Integer cid);
 
     /**
-     * ¸ù¾İÈô¸É¸ö¹ºÎï³µÊı¾İid²éÑ¯ÏêÇéµÄÁĞ±í
-     * @param cids Èô¸É¸ö¹ºÎï³µÊı¾İid
-     * @return Æ¥ÅäµÄ¹ºÎï³µÊı¾İÏêÇéµÄÁĞ±í
+     * æ ¹æ®è´­ç‰©è½¦æ•°æ®idåˆ é™¤è¯¥å•†å“æ•°æ®
+     * @param cid è´­ç‰©è½¦æ•°æ®id
+     * @return åŒ¹é…çš„è´­ç‰©è½¦æ•°æ®è¯¦æƒ…ï¼Œå¦‚æœæ²¡æœ‰åŒ¹é…çš„æ•°æ®åˆ™è¿”å›null
+     */
+    boolean deleteByCid(Integer cid);
+
+    /**
+     * æ ¹æ®è‹¥å¹²ä¸ªè´­ç‰©è½¦æ•°æ®idæŸ¥è¯¢è¯¦æƒ…çš„åˆ—è¡¨
+     * @param cids è‹¥å¹²ä¸ªè´­ç‰©è½¦æ•°æ®id
+     * @return åŒ¹é…çš„è´­ç‰©è½¦æ•°æ®è¯¦æƒ…çš„åˆ—è¡¨
      */
     List<CartVO> findVOByCids(Integer[] cids);
-
 }
