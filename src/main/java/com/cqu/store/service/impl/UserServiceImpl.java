@@ -19,75 +19,75 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void reg(User user) {
         String username = user.getUsername();
-        //µ÷ÓÃfindByUsernameÅĞ¶ÏÓÃ»§ÊÇ·ñ±»×¢²á¹ı
+        //ï¿½ï¿½ï¿½ï¿½findByUsernameï¿½Ğ¶ï¿½ï¿½Ã»ï¿½ï¿½Ç·ï¿½×¢ï¿½ï¿½ï¿½
         User result = userMapper.findByUsername(username);
         if (result != null) {
-            //Å×³öÒì³££¬ÒòÎªÓÃ»§Ãû±»Õ¼ÓÃ
-            throw new UsernameDuplicatedException("ÓÃ»§Ãû±»Õ¼ÓÃ£¬Çë¸ü¸ÄÓÃ»§Ãû");
+            //ï¿½×³ï¿½ï¿½ì³£ï¿½ï¿½ï¿½ï¿½Îªï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½ï¿½
+            throw new UsernameDuplicatedException("ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½");
         }
-        //ÃÜÂë¼ÓÃÜ´¦Àí  md5Ëã·¨ĞÎÊ½¼ÓÃÜ
-        //ÑÎÖµ+ÃÜÂë+ÑÎÖµ  =========ÑÎÖµ¾ÍÊÇÒ»¸öËæ»úµÄ×Ö·û´®
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü´ï¿½ï¿½ï¿½  md5ï¿½ã·¨ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½
+        //ï¿½ï¿½Öµ+ï¿½ï¿½ï¿½ï¿½+ï¿½ï¿½Öµ  =========ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
         String oldPassword = user.getPassword();
-        //»ñÈ¡ÑÎÖµ£¨Ëæ»úÉú³ÉµÄ£©
+        //ï¿½ï¿½È¡ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÉµÄ£ï¿½
         String salt = UUID.randomUUID().toString().toUpperCase();
-        //²¹È«Êı¾İ£ºÑÎÖµµÄ¼ÇÂ¼
+        //ï¿½ï¿½È«ï¿½ï¿½ï¿½İ£ï¿½ï¿½ï¿½Öµï¿½Ä¼ï¿½Â¼
         user.setSalt(salt);
 
-        //½«ÃÜÂëºÍÑÎÖµ×÷ÎªÒ»¸öÕûÌå¼ÓÃÜ
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ÎªÒ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         String md5password = getMD5Password(oldPassword, salt);
-        //¼ÓÃÜÍê±Ïºó½«ÃÜÂëÉèÖÃµ½UserÖĞ
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½Userï¿½ï¿½
         user.setPassword(md5password);
 
-        //²¹È«ĞÅÏ¢,ÒòÎª×¢²áÖ»ĞèÒªÊäÈëÓÃ»§ÃûºÍÃÜÂë
-        //²¹È«Êı¾İ£ºis_delete=0
+        //ï¿½ï¿½È«ï¿½ï¿½Ï¢,ï¿½ï¿½Îª×¢ï¿½ï¿½Ö»ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        //ï¿½ï¿½È«ï¿½ï¿½ï¿½İ£ï¿½is_delete=0
         user.setIsDelete(0);
-        //²¹È«4¸öĞÅÏ¢£º
+        //ï¿½ï¿½È«4ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½
         user.setCreatedUser(user.getAvatar());
         user.setModifiedUser(user.getUsername());
         Date date = new Date();
         user.setCreatedTime(date);
         user.setModifiedTime(date);
 
-        //Ö´ĞĞ×¢²áÒµÎñ
+        //Ö´ï¿½ï¿½×¢ï¿½ï¿½Òµï¿½ï¿½
         Integer flag = userMapper.insert(user);
         if (flag != 1) {
-            throw new InsertException("ÓÃ»§ÔÚ×¢²áÊ±·¢ÉúÁËÎ´ÖªµÄÒì³£!");
+            throw new InsertException("ï¿½Ã»ï¿½ï¿½ï¿½×¢ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î´Öªï¿½ï¿½ï¿½ì³£!");
         }
     }
 
     @Override
     public User login(String username, String password) {
-        //¸ù¾İÓÃ»§Ãû³ÆÀ´²éÑ¯ÓÃ»§µÄÊı¾İÊÇ·ñ´æÔÚ£¬Èç¹û²»´æÔÚ£¬ÔòÅ×³öÒì³£
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½×³ï¿½ï¿½ì³£
         User result = userMapper.findByUsername(username);
 
         if (result == null) {
-            throw new UserNotFoundException("ÓÃ»§Êı¾İ²»´æÔÚ");
+            throw new UserNotFoundException("ï¿½Ã»ï¿½ï¿½ï¿½ï¿½İ²ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
-        //¼ì²âÓÃ»§ÃÜÂëÊÇ·ñÆ¥Åä
-        //1.ÏÈ»ñÈ¡µ½Êı¾İ¿âÖĞµÄ¼ÓÃÜÖ®ºóµÄÃÜÂë
+        //ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Æ¥ï¿½ï¿½
+        //1.ï¿½È»ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½İ¿ï¿½ï¿½ĞµÄ¼ï¿½ï¿½ï¿½Ö®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         String oldpassword = result.getPassword();
-        //2.ÓÃ»§ÃÜÂëºÍ¼ÓÃÜ½øĞĞ±È½Ï
-        //2.1 ÏÖ»ñÈ¡ÑÎÖµ
+        //2.ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½Ü½ï¿½ï¿½Ğ±È½ï¿½
+        //2.1 ï¿½Ö»ï¿½È¡ï¿½ï¿½Öµ
         String salt = result.getSalt();
-        //2.2 ½«ÓÃ»§µÄÃÜÂë°´ÕÕÏàÍ¬µÄmd5Ëã·¨½øĞĞ¼ÓÃÜ
+        //2.2 ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë°´ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½md5ï¿½ã·¨ï¿½ï¿½ï¿½Ğ¼ï¿½ï¿½ï¿½
         String newMd5Password = getMD5Password(password, salt);
 
         if (!newMd5Password.equals(oldpassword)) {
-            throw new PasswordNotMatchException("ÓÃ»§ÃÜÂë´íÎó");
+            throw new PasswordNotMatchException("ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
-        //ÅĞ¶Ïid_delete×Ö¶ÎµÄÖµÊÇ·ñÎª1£¬±íÊ¾ÓÃ»§ÒÑ¾­É¾³ı
+        //ï¿½Ğ¶ï¿½id_deleteï¿½Ö¶Îµï¿½Öµï¿½Ç·ï¿½Îª1ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Ã»ï¿½ï¿½Ñ¾ï¿½É¾ï¿½ï¿½
         if (result.getIsDelete() == 1) {
-            throw new UserNotFoundException("ÓÃ»§Êı¾İ²»´æÔÚ");
+            throw new UserNotFoundException("ï¿½Ã»ï¿½ï¿½ï¿½ï¿½İ²ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
 
-        //µ÷ÓÃmapper²ãµÄfindbyusernameÀ´²éÑ¯
+        //ï¿½ï¿½ï¿½ï¿½mapperï¿½ï¿½ï¿½findbyusernameï¿½ï¿½ï¿½ï¿½Ñ¯
         User user = new User();
         user.setUid(result.getUid());
         user.setUsername(result.getUsername());
         user.setAvatar(result.getAvatar());
         user.setPassword(result.getPassword());
         user.setGender(result.getGender());
-        //·µ»ØµÇÂ¼ÓÃ»§
+        //ï¿½ï¿½ï¿½Øµï¿½Â¼ï¿½Ã»ï¿½
         return user;
     }
 
@@ -95,21 +95,21 @@ public class UserServiceImpl implements IUserService {
     public void changerPassword(Integer uid, String username, String oldPassword, String newPassword) {
         User result = userMapper.findByUid(uid);
         if (result == null || result.getIsDelete() == 1) {
-            throw new UserNotFoundException("ÓÃ»§Êı¾İ²»´æÔÚ");
+            throw new UserNotFoundException("ï¿½Ã»ï¿½ï¿½ï¿½ï¿½İ²ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
-        //Ô­Ê¼ÃÜÂëºÍÊı¾İ¿âÖĞµÄÃÜÂë½øĞĞ±È½Ï
+        //Ô­Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ¿ï¿½ï¿½Ğµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ±È½ï¿½
         String oldMd5Password = getMD5Password(oldPassword, result.getSalt());
         if (!oldMd5Password.equals(result.getPassword())) {
-            throw new PasswordNotMatchException("ÃÜÂë´íÎó");
+            throw new PasswordNotMatchException("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
 
-        //½«ĞÂµÄÃÜÂëÉèÖÃµ½Êı¾İ¿âÖĞ,½«ĞÂµÄÃÜÂë
+        //ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½İ¿ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½
 
         String newMd5Password = getMD5Password(newPassword, result.getSalt());
         Integer rows = userMapper.updatePasswordByUid(uid, newMd5Password, username, new Date());
 
         if (rows != 1) {
-            throw new UpdateException("¸üĞÂÊı¾İ²úÉúÎ´ÖªÒì³£");
+            throw new UpdateException("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ²ï¿½ï¿½ï¿½Î´Öªï¿½ì³£");
         }
     }
 
@@ -117,18 +117,18 @@ public class UserServiceImpl implements IUserService {
     public User getByUid(Integer uid) {
         User result = userMapper.findByUid(uid);
         if (result == null || result.getIsDelete() == 1) {
-            throw new UserNotFoundException("ÓÃ»§Êı¾İ²»´æÔÚ");
+            throw new UserNotFoundException("ï¿½Ã»ï¿½ï¿½ï¿½ï¿½İ²ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
 
-        // ´´½¨ĞÂµÄUser¶ÔÏó
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½Userï¿½ï¿½ï¿½ï¿½
         User user = new User();
-        // ½«ÒÔÉÏ²éÑ¯½á¹ûÖĞµÄusername/phone/email/gender·â×°µ½ĞÂUser¶ÔÏóÖĞ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ï²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½Ğµï¿½username/phone/email/genderï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½Userï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         user.setUsername(result.getUsername());
         user.setPhone(result.getPhone());
         user.setEmail(result.getEmail());
         user.setGender(result.getGender());
-
-        // ·µ»ØĞÂµÄUser¶ÔÏó
+        user.setAvatar(result.getAvatar());
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½Userï¿½ï¿½ï¿½ï¿½
         return user;
     }
 
@@ -136,21 +136,21 @@ public class UserServiceImpl implements IUserService {
     public void changeInfo(Integer uid, String username, User user) {
         User result = userMapper.findByUid(uid);
         if (result == null || result.getIsDelete() == 1) {
-            throw new UserNotFoundException("ÓÃ»§Êı¾İ²»´æÔÚ");
+            throw new UserNotFoundException("ï¿½Ã»ï¿½ï¿½ï¿½ï¿½İ²ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
-        // Ïò²ÎÊıuserÖĞ²¹È«Êı¾İ£ºuid
+        // ï¿½ï¿½ï¿½ï¿½ï¿½userï¿½Ğ²ï¿½È«ï¿½ï¿½ï¿½İ£ï¿½uid
         user.setUid(uid);
-        // Ïò²ÎÊıuserÖĞ²¹È«Êı¾İ£ºmodifiedUser(username)
+        // ï¿½ï¿½ï¿½ï¿½ï¿½userï¿½Ğ²ï¿½È«ï¿½ï¿½ï¿½İ£ï¿½modifiedUser(username)
         user.setModifiedUser(username);
-        // Ïò²ÎÊıuserÖĞ²¹È«Êı¾İ£ºmodifiedTime(new Date())
+        // ï¿½ï¿½ï¿½ï¿½ï¿½userï¿½Ğ²ï¿½È«ï¿½ï¿½ï¿½İ£ï¿½modifiedTime(new Date())
         user.setModifiedTime(new Date());
-        // µ÷ÓÃuserMapperµÄupdateInfoByUid(User user)·½·¨Ö´ĞĞĞŞ¸Ä£¬²¢»ñÈ¡·µ»ØÖµ
+        // ï¿½ï¿½ï¿½ï¿½userMapperï¿½ï¿½updateInfoByUid(User user)ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½Ş¸Ä£ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Öµ
         Integer rows = userMapper.updateInfoByUid(user);
 
-        // ÅĞ¶ÏÒÔÉÏ·µ»ØµÄÊÜÓ°ÏìĞĞÊıÊÇ·ñ²»Îª1
+        // ï¿½Ğ¶ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½Øµï¿½ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Îª1
         if (rows != 1) {
-            // ÊÇ£ºÅ×³öUpdateExceptionÒì³£
-            throw new UpdateException("¸üĞÂÓÃ»§Êı¾İÊ±³öÏÖÎ´Öª´íÎó£¬ÇëÁªÏµÏµÍ³¹ÜÀíÔ±");
+            // ï¿½Ç£ï¿½ï¿½×³ï¿½UpdateExceptionï¿½ì³£
+            throw new UpdateException("ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Î´Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏµÏµÍ³ï¿½ï¿½ï¿½ï¿½Ô±");
         }
 
     }
@@ -159,18 +159,18 @@ public class UserServiceImpl implements IUserService {
     public void changeAvatar(Integer uid, String username, String avatar) {
         User result = userMapper.findByUid(uid);
         if (result == null || result.getIsDelete() == 1) {
-            throw new UserNotFoundException("ÓÃ»§Êı¾İ²»´æÔÚ");
+            throw new UserNotFoundException("ï¿½Ã»ï¿½ï¿½ï¿½ï¿½İ²ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
         Integer rows = userMapper.updateAvatarByUid(uid, avatar, username, new Date());
         if (rows != 1) {
-            throw new UpdateException("¸üĞÂÓÃ»§Í·Ïñ²úÉúÎ´ÖªµÄÒì³£");
+            throw new UpdateException("ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½Î´Öªï¿½ï¿½ï¿½ì³£");
         }
     }
 
 
-    //¶¨ÒåÒ»¸öMD5¼ÓÃÜÀà
+    //ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½MD5ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private String getMD5Password(String Password, String salt) {
-        //md5¼ÓÃÜËã·¨µ÷ÓÃÈı´Î¼ÓÃÜ
+        //md5ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¼ï¿½ï¿½ï¿½
         for (int i = 0; i < 3; i++) {
             Password = DigestUtils.md5DigestAsHex((salt + Password + salt).getBytes()).toUpperCase();
         }
