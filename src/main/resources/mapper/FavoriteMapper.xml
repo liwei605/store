@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqu.store.mapper.FavoriteMapper">
+    <resultMap id="FavoriteEntityMap" type="com.cqu.store.vo.FavoriteVO">
+        <id column="fid" property="fid"/>
+        <result column="pid" property="pid"/>
+        <result column="uid" property="uid"/>
+        <result column="created_user" property="createdUser"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="modified_user" property="modifiedUser"/>
+        <result column="modified_time" property="modifiedTime"/>
+    </resultMap>
+
+    <insert id="insertFavorite" useGeneratedKeys="true" keyProperty="fid">
+        INSERT INTO store.t_favorite (uid, pid,  created_user, created_time, modified_user, modified_time)
+        VALUES (#{uid}, #{pid}, #{createdUser}, #{createdTime}, #{modifiedUser}, #{modifiedTime})
+    </insert>
+
+    <select id="findByUid" resultMap="FavoriteEntityMap">
+        select
+        fid,
+        uid,
+        pid,
+        t_product.title,
+        t_product.price,
+        t_product.image
+        from store.t_favorite left join store.t_product on t_favorite.pid=t_product.id
+        where uid=#{uid}
+        ORDER BY
+        t_favorite.created_time DESC
+    </select>
+
+    <delete id="deleteFavorite" >
+        delete from t_favorite where fid=#{fid}
+    </delete>
+
+    <select id="findByUidAndPid" resultType="com.cqu.store.entity.Favorite">
+        select
+        *
+        from
+        store.t_favorite
+        where uid=#{uid} and pid=#{pid}
+    </select>
+
+    <select id="findByFid" resultType="com.cqu.store.entity.Favorite">
+        select
+        *
+        from
+        store.t_favorite
+        where fid=#{fid}
+    </select>
+</mapper>
