@@ -111,10 +111,11 @@ public class UserController extends BaseController {
         }
 
 
-         //获取当前项目的绝对路径
-
+        //获取当前项目的绝对路径
         String parent = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\images\\upload";
-//        System.out.println(parent);
+
+
+
         // 保存头像文件的文件/夹
         File dir = new File(parent);
         if (!dir.exists()) {
