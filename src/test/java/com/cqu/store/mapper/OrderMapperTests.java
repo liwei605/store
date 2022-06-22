@@ -7,6 +7,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class OrderMapperTests {
@@ -29,5 +32,19 @@ public class OrderMapperTests {
         orderItem.setTitle("高档本子");
         Integer rows = orderMapper.insertOrderItem(orderItem);
         System.out.println("rows=" + rows);
+    }
+    @Test
+    public void findOrderByuid() {
+        Order order= orderMapper.findOrderByuid(10);
+        System.err.println(order);
+    }
+
+
+    @Test
+    public void findOrderItemByoid() {
+        Order order= orderMapper.findOrderByuid(10);
+        Integer oid= order.getOid();
+       List<OrderItem>list= orderMapper.findOrderItemByoid(oid);
+        System.err.println(list);
     }
 }

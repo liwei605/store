@@ -1,5 +1,6 @@
 package com.cqu.store.service;
 import com.cqu.store.entity.Order;
+import com.cqu.store.entity.OrderItem;
 import com.cqu.store.service.ex.ServiceException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import com.cqu.store.service.IOrderService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -27,5 +30,21 @@ public class OrderServiceTests {
             System.out.println(e.getClass().getSimpleName());
             System.out.println(e.getMessage());
         }
+    }
+
+    @Test
+    public void showOrderItem() {
+        Integer uid= 10;
+        List<OrderItem> list = orderService.showOrderItem(uid,"liwei1");
+
+        System.err.println(list);
+    }
+
+    @Test
+    public void showOrder() {
+        Integer uid= 10;
+        Order list = orderService.showOrder(uid,"liwei");
+
+        System.err.println(list);
     }
 }

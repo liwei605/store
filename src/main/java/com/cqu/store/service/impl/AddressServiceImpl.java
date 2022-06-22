@@ -36,7 +36,7 @@ public class AddressServiceImpl implements IAddressService {
         Integer count = addressMapper.countByUid(uid);
 
         if(count>=maxCount){
-            throw  new AddressCountLimitException("收获地址数量超出上限");
+            throw  new AddressCountLimitException("number of address out of limits!");
         }
         //2、补全省市区相关数据
         String provinceName =  districtService.getNameByCode(address.getProvinceCode());
@@ -58,7 +58,7 @@ public class AddressServiceImpl implements IAddressService {
         //4、插入收货地址
         Integer rows = addressMapper.insert(address);
         if(rows!=1){
-            throw new InsertException("新增用户收货地址时发生未知异常");
+            throw new InsertException("add new user wrong!");
         }
     }
 
@@ -86,21 +86,21 @@ public class AddressServiceImpl implements IAddressService {
     public void setDefault(Integer aid, Integer uid, String username) {
         Address address = addressMapper.findByAid(aid);
         if(address==null){
-            throw new AddressNotFoundException("收货地址不存在");
+            throw new AddressNotFoundException("address is not exist!");
         }
         //检测当前获取到的收货地址数据归属
         if(!address.getUid().equals(uid)){
-            throw new AccessDeniedException("非法数据访问");
+            throw new AccessDeniedException("illegle access of data!");
         }
         //先将所有收货地址设置为非默认
         Integer rows = addressMapper.updateNoneDefault(uid);
         if(rows<1){
-            throw new UpdateException("更新默认地址发生异常");
+            throw new UpdateException("default address change failed!");
         }
         //将用户选中的地址设置为默认收货地址
         rows = addressMapper.updateDefaultByAid(aid,username,new Date());
         if(rows!=1){
-            throw new UpdateException("更新默认地址发生异常");
+            throw new UpdateException("default address change failed!");
         }
     }
 
@@ -108,11 +108,11 @@ public class AddressServiceImpl implements IAddressService {
     public void deleteAddress(Integer aid, Integer uid, String username) {
         Address result = addressMapper.findByAid(aid);
         if(result==null){
-            throw new AddressNotFoundException("收货地址不存在");
+            throw new AddressNotFoundException("address is not exist!");
         }
         //检测当前获取到的收货地址数据归属
         if(!result.getUid().equals(uid)){
-            throw new AccessDeniedException("非法数据访问");
+            throw new AccessDeniedException("illegle access of data!");
         }
 
         Integer isDefault = result.getIsDefault();
@@ -120,7 +120,7 @@ public class AddressServiceImpl implements IAddressService {
         //根据aid删除收货地址
         Integer rows = addressMapper.deleteByAid(aid);
         if(rows!=1){
-            throw new DeleteException("删除数据产生未知的异常");
+            throw new DeleteException("delete failed!");
         }
 
         Integer count = addressMapper.countByUid(uid);
@@ -131,7 +131,7 @@ public class AddressServiceImpl implements IAddressService {
         Address address = addressMapper.findLastModified(uid);
         rows= addressMapper.updateDefaultByAid(address.getAid(),username,new Date());
         if(rows!=1){
-            throw new UpdateException("更新数据时发生异常");
+            throw new UpdateException("change data failed!");
         }
     }
     @Override
@@ -139,10 +139,10 @@ public class AddressServiceImpl implements IAddressService {
         // 根据收货地址数据id，查询收货地址详情
         Address address = addressMapper.findByAid(aid);
         if (address == null) {
-            throw new AddressNotFoundException("尝试访问的收货地址数据不存在");
+            throw new AddressNotFoundException("address is not exist!");
         }
         if (!address.getUid().equals(uid)) {
-            throw new AccessDeniedException("非法访问");
+            throw new AccessDeniedException("illegle access of data!");
         }
         address.setProvinceCode(null);
         address.setCityCode(null);

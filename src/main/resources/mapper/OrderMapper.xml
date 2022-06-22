@@ -3,7 +3,51 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cqu.store.mapper.OrderMapper">
+
+    <resultMap id="OrderEntityMap" type="com.cqu.store.entity.Order">
+        <id column="oid" property="oid"/>
+        <result column="uid" property="uid"/>
+        <result column="recv_name" property="recvName"/>
+        <result column="recv_phone" property="recvPhone"/>
+        <result column="recv_province" property="recvProvince"/>
+        <result column="recv_city" property="recvCity"/>
+        <result column="recv_area" property="recvArea"/>
+        <result column="recv_address" property="recvAddress"/>
+        <result column="total_price" property="totalPrice"/>
+        <result column="STATUS" property="status"/>
+        <result column="order_time" property="orderTime"/>
+        <result column="pay_time" property="payTime"/>
+    </resultMap>
+
+<!--    private Integer id;
+    private Integer oid;
+    private Integer pid;
+    private String title;
+    private String image;
+    private Long price;
+    private Integer num;-->
+    <resultMap id="OrderItemEntityMap" type="com.cqu.store.entity.OrderItem">
+        <id column="id" property="id"/>
+        <result column="oid" property="oid"/>
+        <result column="pid" property="pid"/>
+        <result column="title" property="title"/>
+        <result column="image" property="image"/>
+        <result column="price" property="price"/>
+        <result column="num" property="num"/>
+    </resultMap>
+
+    <!-- 通过uid找到所有的订单 List<Order> findOrderByuid(Integer uid)-->
+    <select id="findOrderByuid" resultMap="OrderEntityMap">
+        SELECT
+            *
+        FROM
+            store.t_order
+        WHERE
+            uid=#{uid}
+    </select>
+
     <!-- 插入订单数据：Integer insertOrder(Order order) -->
+
     <insert id="insertOrder" useGeneratedKeys="true" keyProperty="oid">
         INSERT INTO t_order (
         uid, recv_name, recv_phone, recv_province, recv_city, recv_area,
@@ -27,4 +71,15 @@
         #{createdTime},#{modifiedUser},#{modifiedTime}
         )
 </insert>
+
+    <!--  List<OrderItem> findOrderItemByoid(Integer oid); -->
+    <select id="findOrderItemByoid" resultMap="OrderItemEntityMap">
+        SELECT
+            *
+        FROM
+            store.t_order_item
+        WHERE
+            oid = #{oid}
+    </select>
+
 </mapper>

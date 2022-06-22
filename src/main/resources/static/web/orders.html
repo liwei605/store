@@ -103,10 +103,10 @@
                 <div id="collapseOne" class="panel-collapse collapse in">
                     <div class="panel-body">
                         <div><a href="orders.html"><b>全部订单</b></a></div>
-                        <div><a href="orders.html">待付款</a></div>
-                        <div><a href="orders.html">待收货</a></div>
-                        <div><a href="orders.html">待评价</a></div>
-                        <div><a href="orders.html">退货退款</a></div>
+<!--                        <div><a href="orders.html">待付款</a></div>-->
+<!--                        <div><a href="orders.html">待收货</a></div>-->
+<!--                        <div><a href="orders.html">待评价</a></div>-->
+<!--                        <div><a href="orders.html">退货退款</a></div>-->
                     </div>
                 </div>
             </div>
@@ -131,7 +131,7 @@
     <!--左侧导航结束-->
     <div class="col-md-10">
         <div class="panel panel-default">
-            <div class="panel-heading">
+            <div id="order-list" class="panel-heading">
                 <p class="panel-title">
                     订单号：1101000001，下单时间：2018-12-1 17:50:30 ，收货人：八戒
                 </p>
@@ -150,7 +150,11 @@
                         <th width="10%">操作</th>
                     </tr>
                     </thead>
-                    <tbody class="orders-body">
+
+
+
+
+                    <tbody id="orderItem-list" class="orders-body">
                     <tr>
                         <td><img src="../images/portal/12DELLXPS13-silvery/collect.png" class="img-responsive"/></td>
                         <td>联想(Lenovo)小新Air13 Pro 13.3英寸14.8mm超轻薄笔记本电脑</td>
@@ -192,53 +196,65 @@
                         <td><a href="#" class="btn btn-default btn-xs">确认收货</a></td>
                     </tr>
                     </tbody>
+
+
+
+
+
+
                 </table>
-                <div>
-                    <span class="pull-right">订单总金额：¥20689</span>
+                <div id="tP">
+                    <span  class="pull-right">订单总金额：¥20689</span>
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <p class="panel-title">
-                    订单号：1101000301，下单时间：2018-12-2 20:32:17 ， 收货人：八戒
-                </p>
-            </div>
-            <div class="panel-body">
-                <table class="orders-table" width="100%">
-                    <thead>
-                    <tr>
-                        <th width="15%"></th>
-                        <th width="30%">商品</th>
-                        <th width="8%">单价</th>
-                        <th width="8%">数量</th>
-                        <th width="9%">小计</th>
-                        <th width="10%">售后</th>
-                        <th width="10%">状态</th>
-                        <th width="10%">操作</th>
-                    </tr>
-                    </thead>
-                    <tbody class="orders-body">
-                    <tr>
-                        <td><img src="../images/portal/12DELLXPS13-silvery/collect.png" class="img-responsive"/></td>
-                        <td>联想(Lenovo)小新Air13 Pro 13.3英寸14.8mm超轻薄笔记本电脑</td>
-                        <td>¥<span>5298</span></td>
-                        <td>1件</td>
-                        <td>¥<span>5298</span></td>
-                        <td><a href="#">申请售后</a></td>
-                        <td>
-                            <div>已发货</div>
-                            <div><a href="orderInfo.html">订单详情</a></div>
-                        </td>
-                        <td><a href="#" class="btn btn-default btn-xs">确认收货</a></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div>
-                    <span class="pull-right">订单总金额：¥5298</span>
-                </div>
-            </div>
-        </div>
+<!--        <div class="panel panel-default">-->
+<!--            <div class="panel-heading">-->
+<!--                <p id="order_id" class="panel-title">-->
+<!--                    订单号：-->
+<!--                </p>-->
+<!--                <p class="panel-title">-->
+<!--                    下单时间：-->
+<!--                </p>-->
+<!--                <p class="panel-title">-->
+<!--                    收货人：-->
+<!--                </p>-->
+<!--            </div>-->
+<!--            <div class="panel-body">-->
+<!--                <table class="orders-table" width="100%">-->
+<!--                    <thead>-->
+<!--                    <tr>-->
+<!--                        <th width="15%"></th>-->
+<!--                        <th width="30%">商品</th>-->
+<!--                        <th width="8%">单价</th>-->
+<!--                        <th width="8%">数量</th>-->
+<!--                        <th width="9%">小计</th>-->
+<!--                        <th width="10%">售后</th>-->
+<!--                        <th width="10%">状态</th>-->
+<!--                        <th width="10%">操作</th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody class="orders-body">-->
+<!--                    <tr>-->
+<!--                        <td><img src="../images/portal/12DELLXPS13-silvery/collect.png" class="img-responsive"/></td>-->
+<!--                        <td>联想(Lenovo)小新Air13 Pro 13.3英寸14.8mm超轻薄笔记本电脑</td>-->
+<!--                        <td>¥<span>5298</span></td>-->
+<!--                        <td>1件</td>-->
+<!--                        <td>¥<span>5298</span></td>-->
+<!--                        <td><a href="#">申请售后</a></td>-->
+<!--                        <td>-->
+<!--                            <div>已发货</div>-->
+<!--                            <div><a href="orderInfo.html">订单详情</a></div>-->
+<!--                        </td>-->
+<!--                        <td><a href="#" class="btn btn-default btn-xs">确认收货</a></td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--                <div>-->
+<!--                    <span class="pull-right">订单总金额：¥5298</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </div>
 <!--页脚开始-->
@@ -329,8 +345,9 @@
 <!--页脚结束-->
 <script type="text/javascript">
     $(document).ready(function() {
-
         showUser();
+        showOrder();
+        showOrderItemList();
     });
     function showUser()
     {
@@ -351,6 +368,65 @@
                 } else {
                     alert("获取用户信息失败！" + json.message);
                 }
+            }
+        });
+    }
+
+
+    function showOrderItemList() {
+        $("#orderItem-list").empty();
+        $( "#tP" ).empty();
+        $.ajax({
+            url: "/orders/show_order_item",
+            type: "GET",
+            dataType: "JSON",
+            success: function (json) {
+                var tP=0;
+                let list = json.data;
+                for (let i = 0; i < list.length; i++) {
+                    let tr = '<tr>'
+                        + '<td>'
+                        + '<td><img src="..#{image}collect.png"  class="img-responsive" width="150" height="100"/></td>'
+                       + '<td>#{title}</td>'
+                        + '<td>¥<span>#{price}</span></td>'
+                        + '<td>#{num}</td>'
+                        + '<td>¥<span>#{totalprice}</span></td>'
+                        + '<td><a href="#">申请售后</a></td>'
+                        + '<td>'
+                        + '<div>已发货</div>'
+                        + '<div><a href="orderInfo.html">订单详情</a></div>'
+                        + '</td>'
+                        + '<td><a href="#" class="btn btn-default btn-xs">确认收货</a></td>'
+                        + '</tr>';
+                    tr = tr.replace(/#{num}/g, list[i].num);
+                    tr = tr.replace(/#{price}/g, list[i].price);
+                    tr = tr.replace(/#{title}/g, list[i].title);
+                    tr = tr.replace(/#{image}/g, list[i].image);
+                    tr = tr.replace(/#{totalprice}/g, list[i].price * list[i].num);
+                    tr = tr.replace(/#{num}/g, list[i].num);
+                    tP=tP+list[i].price * list[i].num;
+                    $("#orderItem-list").append(tr);
+                }
+                let tT ='<span  class="pull-right">订单总金额：¥#{tp}</span>';
+                tT =tT.replace(/#{tp}/g,tP)
+                $( "#tP" ).append(tT);
+            }
+        });
+    }
+
+    function showOrder() {
+        $("#order-list").empty();
+        $.ajax({
+            url: "/orders/show_order",
+            type: "GET",
+            dataType: "JSON",
+            success: function (json) {
+                    let tr = '<p class="panel-title">订单号：#{oid} ,下单时间：#{c_time} ,收货人：#{username} </p> ';
+
+                    tr = tr.replace(/#{oid}/g, json.data.o_st_id);
+                    tr = tr.replace(/#{c_time}/g, json.data.creat_time);
+                    tr = tr.replace(/#{username}/g, json.data.recv_name);
+                    $("#order-list").append(tr);
             }
         });
     }
