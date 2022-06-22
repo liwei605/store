@@ -322,7 +322,7 @@
                 for (let i = 0; i < list.length; i++) {
                     let tr = '<tr>'
                         + '<td>'
-                        + '<input name="cids" value="#{cid}" type="checkbox" class="ckitem" />'
+                        + '<input name="cids" value="#{cid}" type="checkbox" class="ckitem" onclick="calcTotal()"/>'
                         + '</td>'
                         + '<td><img src="..#{image}collect.png" class="img-responsive" /></td>'
                         + '<td>#{title}#{msg}</td>'
