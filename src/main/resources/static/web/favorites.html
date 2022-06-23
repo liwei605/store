@@ -92,8 +92,8 @@
 <!--头部结束-->
 <!--导航结束-->
 <div class="container">
-    <div class="col-md-offset-1 col-md-10"><b>我的收藏：</b></div>
-    <div class="col-md-offset-1 col-md-10">
+    <div id="col-md-offset-0" class="col-md-offset-1 col-md-10"><b>我的收藏：</b></div>
+    <div id="col-md-offset-1"  class="col-md-offset-1 col-md-10">
         <div class="col-md-3">
             <div class="goods-panel" style="">
                 <div class="move-img img-search" style="background-size: 100%;">
@@ -155,7 +155,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-offset-1 col-md-10">
+    <div id="col-md-offset-2"  class="col-md-offset-1 col-md-10">
         <div class="col-md-3">
             <div class="goods-panel" style="">
                 <div class="move-img img-search">
@@ -217,7 +217,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-offset-1 col-md-10">
+    <div id="col-md-offset-3"  class="col-md-offset-1 col-md-10">
         <div class="col-md-3">
             <div class="goods-panel">
                 <div class="move-img img-search">
@@ -279,7 +279,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-offset-1 col-md-10">
+    <div id="col-md-offset-4" class="col-md-offset-4 col-md-10">
         <p align="center">
             <a href="#">上一页</a>
             <a href="#">1</a>
@@ -382,6 +382,7 @@
     $(document).ready(function() {
 
         showUser();
+        showfaver();
     });
     function showUser()
     {
@@ -393,9 +394,6 @@
                 if (json.state == 200) {
                     $("#loginuser").empty();
                     console.log("username=" + json.data.username);
-                    // console.log("phone=" + json.data.phone);
-                    // console.log("email=" + json.data.email);
-                    // console.log("gender=" + json.data.gender);
                     let html ='<a id="loginuser" href="userdata.html">#{name}</a>'
                     html = html.replace(/#{name}/g,"Hello! "+json.data.username );
                     $("#loginuser").append(html);
@@ -404,6 +402,95 @@
                 }
             }
         });
+    }
+
+    function showfaver()
+    {
+        $("#col-md-offset-1").empty();
+        $("#col-md-offset-2").empty();
+        $("#col-md-offset-3").empty();
+
+        $.ajax({
+            url: "/favorites/",
+            type: "GET",
+            dataType: "JSON",
+            success: function (json) {
+                let list = json.data;
+                var row =list.length/4+1;
+                var mod =list.length%4;
+                var index=0;
+                for (let i=1; i<=row;i++){
+                    var row_id ="#col-md-offset-"+i;
+                    if(i<row)
+                    {
+                        for (let m=0 ; m<4;m++){
+                            var  tr =eximage(list[index].title,list[index].price,list[index].image,list[index].fid);
+                            index =index +1;
+                            $(row_id).append(tr);
+                        }
+                    }else {
+                        for (let m=0 ; m<mod;m++){
+                            var  tr =eximage(list[index].title,list[index].price,list[index].image);
+                            index =index +1;
+                            $(row_id).append(tr);
+                        }
+                    }
+
+                }
+            }
+        });
+    }
+
+
+    function cancel(fid)
+    {
+
+        $.ajax({
+            url: "/favorites/"+fid+"/cancelFavorite",
+            type: "GET",
+            dataType: "JSON",
+            success: function (json) {
+                if(json.state=200)
+                {
+                    alert("取消成功!");
+                    showfaver();
+                }else {
+                    alert("取消失败!"+json.message);
+                }
+            },
+            error:function (xhr)
+            {
+                alert("您的登录信息已经过期，请重新登录！HTTP响应码：" + xhr.status);
+                location.href = "login.html";
+            }
+        });
+    }
+
+
+    function eximage(title,price,image,fid)
+    {
+        let tr = '<div class="col-md-3">'
+            +'<div class="goods-panel" style="">'
+            +'    <div class="move-img img-search" style="background-size: 100%;">'
+            +'       <img src="..#{image}collect.png" class="img-responsive">'
+            +'   </div>'
+            +'    <p>¥#{price}</p>'
+            +'    <p class="text-row-3"><a href="product.html">'
+            +'        <small>#{title}</small>'
+            +'    </a></p>'
+            +'    <span>'
+            +'			<a  href="javascript:void(0)" class="btn_btn-default_btn-xs_add-fav" onclick="cancel(#{fid});"><span'
+            +'                class="fa fa-heart"></span>取消收藏</a>'
+            +'		<a href="cart.html" class="btn btn-default btn-xs add-cart"><span'
+            +'           class="fa fa-cart-arrow-down"></span>加入购物车</a>'
+            +'		</span>'
+            +'</div>'
+            +'</div>';
+        tr=tr.replace(/#{title}/g,title);
+        tr=tr.replace(/#{price}/g,price);
+        tr=tr.replace(/#{image}/g,image);
+        tr=tr.replace(/#{fid}/g,fid);
+        return tr;
     }
 </script>
 
