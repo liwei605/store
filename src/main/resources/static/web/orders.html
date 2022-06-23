@@ -129,15 +129,20 @@
         </div>
     </div>
     <!--左侧导航结束-->
-    <div class="col-md-10">
-        <div class="panel panel-default">
-            <div id="order-list" class="panel-heading">
+    <div id="totalorder" class="col-md-10">
+
+
+        <div id="one-order" class="panel panel-default">
+
+            <div id="order-info" class="panel-heading">
                 <p class="panel-title">
                     订单号：1101000001，下单时间：2018-12-1 17:50:30 ，收货人：八戒
                 </p>
             </div>
-            <div class="panel-body">
-                <table class="orders-table" width="100%">
+
+
+            <div id="panel-body" class="panel-body">
+                <table id="orders-table" class="orders-table" width="100%">
                     <thead>
                     <tr>
                         <th width="15%"></th>
@@ -150,7 +155,6 @@
                         <th width="10%">操作</th>
                     </tr>
                     </thead>
-
 
 
 
@@ -198,14 +202,14 @@
                     </tbody>
 
 
-
-
-
-
                 </table>
+
+
                 <div id="tP">
                     <span  class="pull-right">订单总金额：¥20689</span>
                 </div>
+
+
             </div>
         </div>
 <!--        <div class="panel panel-default">-->
@@ -346,8 +350,9 @@
 <script type="text/javascript">
     $(document).ready(function() {
         showUser();
-        showOrder();
-        showOrderItemList();
+        // showOrder();
+        // showOrderItemList();
+        showOrderAndOrderItem();
     });
     function showUser()
     {
@@ -373,63 +378,111 @@
     }
 
 
-    function showOrderItemList() {
-        $("#orderItem-list").empty();
-        $( "#tP" ).empty();
+    function showOrderAndOrderItem()
+    {
+        $("#totalorder").empty();
         $.ajax({
-            url: "/orders/show_order_item",
-            type: "GET",
-            dataType: "JSON",
-            success: function (json) {
-                var tP=0;
-                let list = json.data;
-                for (let i = 0; i < list.length; i++) {
-                    let tr = '<tr>'
-                        + '<td>'
-                        + '<td><img src="..#{image}collect.png"  class="img-responsive" width="150" height="100"/></td>'
-                       + '<td>#{title}</td>'
-                        + '<td>¥<span>#{price}</span></td>'
-                        + '<td>#{num}</td>'
-                        + '<td>¥<span>#{totalprice}</span></td>'
-                        + '<td><a href="#">申请售后</a></td>'
-                        + '<td>'
-                        + '<div>已发货</div>'
-                        + '<div><a href="orderInfo.html">订单详情</a></div>'
-                        + '</td>'
-                        + '<td><a href="#" class="btn btn-default btn-xs">确认收货</a></td>'
-                        + '</tr>';
-                    tr = tr.replace(/#{num}/g, list[i].num);
-                    tr = tr.replace(/#{price}/g, list[i].price);
-                    tr = tr.replace(/#{title}/g, list[i].title);
-                    tr = tr.replace(/#{image}/g, list[i].image);
-                    tr = tr.replace(/#{totalprice}/g, list[i].price * list[i].num);
-                    tr = tr.replace(/#{num}/g, list[i].num);
-                    tP=tP+list[i].price * list[i].num;
-                    $("#orderItem-list").append(tr);
-                }
-                let tT ='<span  class="pull-right">订单总金额：¥#{tp}</span>';
-                tT =tT.replace(/#{tp}/g,tP)
-                $( "#tP" ).append(tT);
-            }
-        });
+                    url: "/orders/show_order_and_orderItem",
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function (json) {
+                        let VOlist = json.data;
+                        for (let i = 0; i < VOlist.length; i++) {
+                            var oneorder= VOlist[i].order;
+                            var oneorderItemList= VOlist[i].orderItemList;
+
+                            var p= getp(oneorder.oid,oneorder.orderTime,oneorder.recvName);
+                            // alert(p);
+                            var Tr='';
+                            for (let m=0;m<oneorderItemList.length;m++)
+                            {
+                               var tr= gettr(oneorderItemList[m].image,oneorderItemList[m].title,oneorderItemList[m].num,oneorderItemList[m].price);
+                                Tr=Tr+tr;
+                            }
+
+                            var tP= gettP(oneorder.totalPrice);
+
+                            var one_order='<div id="one-order" class="panel panel-default">'
+                                +'<div id="order-info" class="panel-heading">'
+                                +p
+                                +'</div>'
+                                +'<div id="panel-body" class="panel-body">'
+                                +'<table id="orders-table" class="orders-table" width="100%">'
+                                +'<thead>'
+                                +'<tr>'
+                                +'<th width="15%"></th>'
+                                +'<th width="30%">商品</th>'
+                                +'<th width="8%">单价</th>'
+                                +'<th width="8%">数量</th>'
+                                +'<th width="9%">小计</th>'
+                                +'<th width="10%">售后</th>'
+                                +'<th width="10%">状态</th>'
+                                +'<th width="10%">操作</th>'
+                                +'</tr>'
+                                +'<thead>'
+                                +'<tbody id="orderItem-list" class="orders-body">'
+                                +Tr
+                                +'</tbody>'
+                                +'</table>'
+                                +'<div id="tP">'
+                                +tP
+                                +'</div>'
+                                +'</div>'
+                                +'</div>';
+                            $("#totalorder").append(one_order);
+                        }
+
+                    }
+                });
+
     }
 
-    function showOrder() {
-        $("#order-list").empty();
-        $.ajax({
-            url: "/orders/show_order",
-            type: "GET",
-            dataType: "JSON",
-            success: function (json) {
-                    let tr = '<p class="panel-title">订单号：#{oid} ,下单时间：#{c_time} ,收货人：#{username} </p> ';
+    function gettr(image,title,num,price)
+    {
+      var tr=  '<tr>'
+            +'<td><img src="..#{image}collect.png" class="img-responsive"/></td>'
+          +'<td>#{title}</td>'
+          +'<td>¥<span>#{price}</span></td>'
+          +'<td>#{num}件</td>'
+          +'<td>¥<span>#{totalprice}</span></td>'
+          +'<td><a href="#">申请售后</a></td>'
+          +'<td>'
+          +'    <div>已发货</div>'
+          +'    <div><a href="orderInfo.html">订单详情</a></div>'
+          +'</td>'
+          +'<td><a href="#" class="btn btn-default btn-xs">确认收货</a></td>'
+          +'</tr>';
 
-                    tr = tr.replace(/#{oid}/g, json.data.o_st_id);
-                    tr = tr.replace(/#{c_time}/g, json.data.creat_time);
-                    tr = tr.replace(/#{username}/g, json.data.recv_name);
-                    $("#order-list").append(tr);
-            }
-        });
+
+        tr= tr.replace(/#{num}/g, num);
+        tr= tr.replace(/#{image}/g, image);
+        tr= tr.replace(/#{price}/g, price);
+        tr= tr.replace(/#{title}/g, title);
+        tr= tr.replace(/#{totalprice}/g,num*price);
+
+        return tr;
     }
+
+    function gettP(totalprice)
+    {
+        var tP='<span class="pull-right">订单总金额：¥#{price}</span>';
+        tP=tP.replace(/#{price}/g, totalprice);
+
+        return tP;
+    }
+
+    function getp(oid,ordertime,rcve_name)
+    {
+        var p='<p class="panel-title">订单号：100000000-#{oid}，下单时间：#{ordertime} ，收货人:#{rcve_name} </p>';
+
+        p=p.replace(/#{oid}/g,oid);
+        p=p.replace(/#{ordertime}/g,ordertime);
+        p=p.replace(/#{rcve_name}/g,rcve_name);
+
+        return p;
+    }
+
+
 </script>
 </body>
 

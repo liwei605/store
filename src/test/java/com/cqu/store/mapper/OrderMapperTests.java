@@ -35,16 +35,22 @@ public class OrderMapperTests {
     }
     @Test
     public void findOrderByuid() {
-        Order order= orderMapper.findOrderByuid(10);
-        System.err.println(order);
+        List<Order> orderlist= orderMapper.findOrderByuid(10);
+        System.err.println(orderlist);
     }
 
 
     @Test
     public void findOrderItemByoid() {
-        Order order= orderMapper.findOrderByuid(10);
-        Integer oid= order.getOid();
-       List<OrderItem>list= orderMapper.findOrderItemByoid(oid);
-        System.err.println(list);
+        List<Order> orderlist= orderMapper.findOrderByuid(10);
+        for (int i=0;i<orderlist.size();i++)
+        {
+            List<OrderItem>list= orderMapper.findOrderItemByoid(orderlist.get(i).getOid());
+            System.err.println(list);
+            System.err.println();
+            System.err.println();
+        }
+
+
     }
 }

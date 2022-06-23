@@ -19,7 +19,7 @@ public interface OrderMapper {
     Integer insertOrderItem(OrderItem orderItem);
 
     //通过用户id来找订单ID
-    Order findOrderByuid(Integer uid);
+    List<Order> findOrderByuid(Integer uid);
 
     //通过订单id来找该订单下的物品ID
     List<OrderItem> findOrderItemByoid(Integer oid);

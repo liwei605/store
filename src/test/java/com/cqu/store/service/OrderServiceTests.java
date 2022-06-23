@@ -33,18 +33,30 @@ public class OrderServiceTests {
     }
 
     @Test
-    public void showOrderItem() {
-        Integer uid= 10;
-        List<OrderItem> list = orderService.showOrderItem(uid,"liwei1");
-
-        System.err.println(list);
+    public void getOrder() {
+        List<Order> orderlist= orderService.getOrder(10);
+        System.err.println(orderlist);
     }
-
     @Test
-    public void showOrder() {
-        Integer uid= 10;
-        Order list = orderService.showOrder(uid,"liwei");
-
+    public void getOrderItemByoid()
+    {
+        List<OrderItem> list= orderService.getOrderItemByoid(19);
         System.err.println(list);
     }
+
+//    @Test
+//    public void showOrderItem() {
+//        Integer uid= 10;
+//        List<OrderItem> list = orderService.showOrderItem(uid,"liwei1");
+//
+//        System.err.println(list);
+//    }
+//
+//    @Test
+//    public void showOrder() {
+//        Integer uid= 10;
+//        Order list = orderService.showOrder(uid,"liwei");
+//
+//        System.err.println(list);
+//    }
 }

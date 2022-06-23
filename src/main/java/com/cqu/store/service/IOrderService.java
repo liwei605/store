@@ -16,7 +16,11 @@ public interface IOrderService {
      */
     Order create(Integer aid, Integer[] cids, Integer uid, String username);
 
-    List<OrderItem> showOrderItem(Integer uid, String username) ;
+//    List<OrderItem> showOrderItem(Integer uid, String username) ;
+//
+//    Order showOrder(Integer uid, String username) ;
+    //通过uid获取该用户的所有订单
+    List<Order> getOrder(Integer uid) ;
 
-    Order showOrder(Integer uid, String username) ;
+    List<OrderItem> getOrderItemByoid(Integer oid) ;
 }

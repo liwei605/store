@@ -8,6 +8,7 @@ import com.cqu.store.service.ICartService;
 import com.cqu.store.service.IOrderService;
 import com.cqu.store.service.ex.InsertException;
 import com.cqu.store.vo.CartVO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -91,27 +92,46 @@ public class OrderServiceImpl implements IOrderService {
         return order;
     }
 
-
-    public  List<OrderItem> showOrderItem(Integer uid, String username) {
-        Order order= orderMapper.findOrderByuid(uid);
-        //补全数据：支付订单的时间
-        order.setPayTime(new Date());
-        //获取订单号码
-        Integer oid= order.getOid();
-
-        //通过oid 查找订单物品
-        List<OrderItem> list= orderMapper.findOrderItemByoid(oid);
-
-        //返回订单下物品列表
-        return  list;
+    @Override
+    public List<Order> getOrder(Integer uid) {
+        List<Order> orderlist=  orderMapper.findOrderByuid(uid);
+        //补全支付时间信息
+        for (int i =0; i<orderlist.size();i++)
+        {
+            orderlist.get(i).setPayTime(new Date());
+        }
+        return  orderlist;
     }
 
     @Override
-    public Order showOrder(Integer uid, String username) {
-        Order order= orderMapper.findOrderByuid(uid);
-        //获取订单号码
-        order.setPayTime(new Date());
+    public List<OrderItem> getOrderItemByoid(Integer oid) {
+        //通过单号获取物品
+        List<OrderItem> orderItemlist = orderMapper.findOrderItemByoid(oid);
 
-        return  order;
+        return  orderItemlist;
     }
+
+
+//    public  List<OrderItem> showOrderItem(Integer uid, String username) {
+//        Order order= orderMapper.findOrderByuid(uid);
+//        //补全数据：支付订单的时间
+//        order.setPayTime(new Date());
+//        //获取订单号码
+//        Integer oid= order.getOid();
+//
+//        //通过oid 查找订单物品
+//        List<OrderItem> list= orderMapper.findOrderItemByoid(oid);
+//
+//        //返回订单下物品列表
+//        return  list;
+//    }
+//
+//    @Override
+//    public Order showOrder(Integer uid, String username) {
+//        Order order= orderMapper.findOrderByuid(uid);
+//        //获取订单号码
+//        order.setPayTime(new Date());
+//
+//        return  order;
+//    }
 }
