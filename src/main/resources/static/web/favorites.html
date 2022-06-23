@@ -424,13 +424,13 @@
                     if(i<row)
                     {
                         for (let m=0 ; m<4;m++){
-                            var  tr =eximage(list[index].title,list[index].price,list[index].image,list[index].fid);
+                            var  tr =eximage(list[index].title,list[index].price,list[index].image,list[index].fid,list[index].pid);
                             index =index +1;
                             $(row_id).append(tr);
                         }
                     }else {
                         for (let m=0 ; m<mod;m++){
-                            var  tr =eximage(list[index].title,list[index].price,list[index].image);
+                            var  tr =eximage(list[index].title,list[index].price,list[index].image,list[index].fid,list[index].pid);
                             index =index +1;
                             $(row_id).append(tr);
                         }
@@ -467,7 +467,30 @@
     }
 
 
-    function eximage(title,price,image,fid)
+    function addtocart(pid) {
+        $.ajax({
+            url: "/carts/add_to_cart",
+            type: "POST",
+            data: {
+                "pid": pid,
+                "amount": 1
+            },
+            dataType: "JSON",
+            success: function (json) {
+                if (json.state == 200) {
+                    alert("增加成功！");
+                } else {
+                    alert("增加失败！" + json.message);
+                }
+            },
+            error: function (xhr) {
+                alert("您的登录信息已经过期，请重新登录！HTTP响应码：" + xhr.status);
+                location.href = "login.html";
+            }
+        });
+    }
+
+    function eximage(title,price,image,fid,pid)
     {
         let tr = '<div class="col-md-3">'
             +'<div class="goods-panel" style="">'
@@ -481,7 +504,7 @@
             +'    <span>'
             +'			<a  href="javascript:void(0)" class="btn_btn-default_btn-xs_add-fav" onclick="cancel(#{fid});"><span'
             +'                class="fa fa-heart"></span>取消收藏</a>'
-            +'		<a href="cart.html" class="btn btn-default btn-xs add-cart"><span'
+            +'		<a href="cart.html" class="btn btn-default btn-xs add-cart" onclick="addtocart(#{pid});"><span'
             +'           class="fa fa-cart-arrow-down"></span>加入购物车</a>'
             +'		</span>'
             +'</div>'
@@ -490,6 +513,7 @@
         tr=tr.replace(/#{price}/g,price);
         tr=tr.replace(/#{image}/g,image);
         tr=tr.replace(/#{fid}/g,fid);
+        tr=tr.replace(/#{pid}/g,pid);
         return tr;
     }
 </script>

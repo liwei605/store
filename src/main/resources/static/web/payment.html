@@ -130,10 +130,10 @@
                         </label>
                     </div>
                 </div>
-                <div>订单号：1101000301，支付金额¥5298，收款方圆心电脑商城</div>
-                <div class="pay-bar">
+                <div id="order">订单号：1101000301，支付金额¥5298，收款方圆心电脑商城</div>
+                <div id="ordertotal" class="pay-bar">
                     <a href="cart.html">返回购物车</a>
-                    <span class="pull-right">¥5298.00 <input type="button" value="确认付款"
+                    <span class="pull-right"> <input type="button" value="确认付款"
                                                              class="btn btn-primary btn-lg link-success"/></span>
                 </div>
             </form>
@@ -230,6 +230,7 @@
     $(document).ready(function() {
 
         showUser();
+        showorder();
     });
     function showUser()
     {
@@ -253,6 +254,25 @@
             }
         });
     }
+
+    function showorder()
+    {
+        $("#order").empty();
+
+        $.ajax({
+            url: "/orders/show_order",
+            type: "GET",
+            dataType: "JSON",
+            success: function (json) {
+                // alert(totalprice);
+                let tr='订单号：#{o_st_id}，支付金额¥#{price}，收款方电脑商城';
+                tr=tr.replace(/#{o_st_id}/g, json.data.o_st_id);
+                tr=tr.replace(/#{price}/g, json.data.total_price);
+                $("#order").append(tr);
+            }
+        });
+    }
+
 </script>
 </body>
 

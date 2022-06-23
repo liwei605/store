@@ -57,6 +57,8 @@ public class OrderController extends BaseController {
         //设置下单时间
 //        data.setCreat_time(new Date());
         data.setCreat_time(order.getOrderTime().toString());
+        //设置总价格
+        data.setTotal_price(order.getTotalPrice().toString());
 
         return new JsonResult<OderVO>(OK, data);
     }
