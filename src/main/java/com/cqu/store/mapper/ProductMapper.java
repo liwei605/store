@@ -6,7 +6,7 @@ import java.util.List;
 public interface ProductMapper {
     
     /**
-     * 通过商品热销优先级找商品
+     * 通锟斤拷锟斤拷品锟斤拷锟斤拷锟斤拷锟饺硷拷锟斤拷锟斤拷品
      * @Author supreme
      * @Date 2022/6/20 8:49
      * @return List<Product> 
@@ -14,8 +14,10 @@ public interface ProductMapper {
 
     List<Product> findHotList();
 
+    List<Product> findPCList();
+
     /**
-     * 根据商品id返回商品
+     * 锟斤拷锟斤拷锟斤拷品id锟斤拷锟斤拷锟斤拷品
      * @Author supreme
      * @Date 2022/6/20 8:50
      * @param id

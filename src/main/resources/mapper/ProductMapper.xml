@@ -27,6 +27,15 @@
         LIMIT 0,4
     </select>
 
+    <select id="findPCList" resultMap="ProductEntityMap">
+        SELECT
+        *
+        FROM
+        store.t_product
+        WHERE
+        category_id=163
+    </select>
+
     <!-- 根据商品id查询商品详情：Product findById(Integer id) -->
     <select id="findById" resultMap="ProductEntityMap">
         SELECT

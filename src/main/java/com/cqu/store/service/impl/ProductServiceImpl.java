@@ -29,6 +29,19 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+    public List<Product> findPCList() {
+        List<Product> list = productMapper.findPCList();
+        for (Product product : list) {
+            product.setPriority(null);
+            product.setCreatedUser(null);
+            product.setCreatedTime(null);
+            product.setModifiedUser(null);
+            product.setModifiedTime(null);
+        }
+        return list;
+    }
+
+    @Override
     public Product findById(Integer id) {
         // 根据参数id调用私有方法执行查询，获取商品数据
         Product product = productMapper.findById(id);

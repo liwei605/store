@@ -26,4 +26,13 @@ public class ProductMapperTests {
         }
     }
 
+    @Test
+    public void findPCList() {
+        List<Product> list = productMapper.findPCList();
+        System.err.println("count=" + list.size());
+        for (Product item : list) {
+            System.err.println(item);
+        }
+    }
+
 }

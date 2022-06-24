@@ -81,6 +81,7 @@ var typelist = [{
     "id": "20",
     "parentId": "3",
     "name": "电脑整机"
+
 }, {
     "id": "21",
     "parentId": "3",
@@ -145,6 +146,7 @@ function initMenu() {
 
         if (typelist[i].parentId == "0") {
 
+
             $(".index-menu").append($("<li data='" + typelist[i].id + "'>" + typelist[i].name + "</li>"))
         }
     }
@@ -196,10 +198,20 @@ window.addEventListener("load", function () {
         /*加载json数据*/
         for (var i = 0; i < typelist.length; i++) {
             if ($(this).attr("data") == typelist[i].parentId) {
-                $(".second-menu").append($("<li class='second-menu-li' data='" + typelist[i].id +
-                    "' >" + typelist[i].name + "</li>"))
+                if(typelist[i].id=="20"){
+                    $(".second-menu").append($("<li class='second-menu-li' data='20'><a href=\"PClist.html\">笔记本电脑</a></li>"))
+                }
+                else{
+                    $(".second-menu").append($("<li class='second-menu-li' data='" + typelist[i].id +
+                        "' >" + typelist[i].name + "</li>"))
+                }
+
             }
         }
+
+        //<li class='second-menu-li' data='20'><a href="favorites.html">电脑整机</a></li>
+
+
         offLeft = $(this).width() + $(this).offset().left;
         offTop = $(this).offset().top;
         $("#showIndex").css("top", offTop - 2 + "px")
