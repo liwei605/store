@@ -298,9 +298,6 @@
                 if (json.state == 200) {
                     $("#loginuser").empty();
                     console.log("username=" + json.data.username);
-                    // console.log("phone=" + json.data.phone);
-                    // console.log("email=" + json.data.email);
-                    // console.log("gender=" + json.data.gender);
                     let html ='<a id="loginuser" href="userdata.html">#{name}</a>'
                     html = html.replace(/#{name}/g,"Hello! "+json.data.username );
                     $("#loginuser").append(html);

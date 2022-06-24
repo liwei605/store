@@ -30,6 +30,10 @@ public class DiscussServiceImpl implements IDiscussService {
         Discuss discuss = new Discuss();
         discuss.setUid(uid);
         discuss.setPid(pid);
+        //防止评论过长超出数据库限制
+        if(discussion.length()>80){
+            discussion = discussion.substring(0,80);
+        }
         discuss.setDiscussion(discussion);
         discuss.setCreatedTime(date);
         discuss.setModifiedTime(date);

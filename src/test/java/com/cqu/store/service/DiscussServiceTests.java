@@ -24,6 +24,6 @@ public class DiscussServiceTests {
 
     @Test
     public void testInsert(){
-        discussService.insertDiscuss(8,442, "great");
+        discussService.insertDiscuss(6,10000017, "太坑了");
     }
 }

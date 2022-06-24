@@ -176,6 +176,44 @@
         </div>
     </div>
     <!--商品信息展示结束-->
+
+    <!--评论列表-->
+    <div class="discussContainer">
+        <div class="discuss" >
+
+            <div class="panel-heading" >
+                <p class="panel-title">商品评论</p>
+            </div>
+            <div id="discuss-list" class="panel-item">
+                <div class="discuss-item">
+                    <div class="discusss-username">test01</div>
+                    <div class="discussion">great</div>
+                    <div class="discuss-time">16：57</div>
+                </div>
+                <div class="discuss-item">
+                    <div class="discusss-username">test02</div>
+                    <div class="discussion">good</div>
+                    <div class="discuss-time">16：57</div>
+                </div>
+                <div class="discuss-item">
+                    <div class="discusss-username">test03</div>
+                    <div class="discussion">bad</div>
+                    <div class="discuss-time">16：57</div>
+                </div>
+                <div class="discuss-item">
+                    <div class="discusss-username">test04</div>
+                    <div class="discussion">excellent</div>
+                    <div class="discuss-time">16：57</div>
+                </div>
+				
+            </div>
+			<div id="myDiscuss">
+				<input name="discuss" type="text" id="discussInput" placeholder="请输入评论"/>
+				<button id="sendDiscuss">发表评论</button>
+			</div>
+        </div>
+    </div>
+
     <!--售后信息开始-->
     <div class="col-md-offset-1 col-md-10">
         <div class="panel panel-default">
@@ -329,12 +367,9 @@
     let id = $.getUrlParam("id");
     console.log("id=" + id);
 
-
-
     $(document).ready(function () {
-
         showUser();
-
+        showDiscuss();
         $.ajax({
             url: "/products/" + id + "/details",
             type: "GET",
@@ -358,7 +393,77 @@
             }
         });
     });
+    function showDiscuss(){
+        $("#discuss-list").empty();
+        var username;
+        $.ajax({
+            url: "/users/get_by_uid",
+            type: "GET",
+            dataType: "json",
+            success: function (json) {
+                if (json.state == 200) {
+                    username = json.data.username;
+                } else {
+                    alert("获取用户信息失败！" + json.message);
+                }
+            }
+        });
 
+        $.ajax({
+
+            url:  "/discuss/" + id + "/search",
+            type: "GET",
+            dataType: "json",
+            success: function (json) {
+                if (json.state == 200) {
+                    let list = json.data;
+                    for(let i = 0; i < list.length; i++){
+                        let html = '<div class="discuss-item">'
+                            + '<div class="discusss-username">#{username} : </div>'
+                            + '<div class="discussion">#{discussion}</div>'
+                            + '<div class="discuss-time">#{time}</div>'
+                            + '</div>';
+
+                        html = html.replace(/#{username}/g, username);
+                        html = html.replace(/#{discussion}/g, list[i].discussion);
+                        html = html.replace(/#{time}/g, list[i].createdTime);
+
+                        $("#discuss-list").append(html);
+
+                    }
+                } else {
+                    alert("获取评论信息失败！" + json.message);
+                }
+            }
+        });
+    }
+
+	$("#sendDiscuss").click(function(){
+		$.ajax({
+		    url: "/discuss/insert",
+		    type: "POST",
+		    data: {
+		        "pid": id,
+		        "discussion": $("#discussInput").val()
+		    },
+		    dataType: "JSON",
+		    success: function (json) {
+		        if (json.state == 200) {
+		            alert("发表成功！");
+                    showDiscuss();
+                    $('#discussInput').html('');
+                    $("#discussInput").empty();
+		        } else {
+		            alert("发表失败！" + json.message);
+		        }
+		    },
+		    error: function (xhr) {
+		        alert("您的登录信息已经过期，请重新登录！HTTP响应码：" + xhr.status);
+		        location.href = "login.html";
+		    }
+		});
+	})
+	
     $("#btn-add-to-cart").click(function () {
         $.ajax({
             url: "/carts/add_to_cart",

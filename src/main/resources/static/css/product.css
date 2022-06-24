@@ -46,6 +46,41 @@
 .form-space {
     margin: 10px 0;
 }
+.container {
+	width: 100%;
+	height: 100%;
+}
+
+/*商品评论*/
+.discussContainer {
+	
+	width: 500px;
+	background: #f0f9ff;
+	padding: 8px;
+	margin: 5px;
+	margin-left: 700px;
+}
+
+.panel-title{
+	font-size: 30px;
+}
+
+.discuss-item {
+	margin: 20px;
+}
+
+.discusss-username {
+	font-size: 20px;
+	margin: 10px;
+	float:left;
+}
+.discussion {
+	font-size: 20px;
+}
+.discuss-time {
+	font-size: 14px;
+}
+
 
 /*售后的图标*/
 .saled-icon {

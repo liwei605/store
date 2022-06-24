@@ -19,9 +19,9 @@ public class DiscussMapperTests {
     @Test
     public  void insertDiscuss(){
         Discuss discuss = new Discuss();
-        discuss.setUid(7);
-        discuss.setPid(442);
-        discuss.setDiscussion("bad");
+        discuss.setUid(8);
+        discuss.setPid(10000017);
+        discuss.setDiscussion("unbelievable!");
         Date date = new Date();
         int ret = discussMapper.insertDiscuss(discuss);
         System.out.println(ret);
