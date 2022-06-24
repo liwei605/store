@@ -393,24 +393,11 @@
             }
         });
     });
+
+
     function showDiscuss(){
         $("#discuss-list").empty();
-        var username;
         $.ajax({
-            url: "/users/get_by_uid",
-            type: "GET",
-            dataType: "json",
-            success: function (json) {
-                if (json.state == 200) {
-                    username = json.data.username;
-                } else {
-                    alert("获取用户信息失败！" + json.message);
-                }
-            }
-        });
-
-        $.ajax({
-
             url:  "/discuss/" + id + "/search",
             type: "GET",
             dataType: "json",
@@ -423,17 +410,17 @@
                             + '<div class="discussion">#{discussion}</div>'
                             + '<div class="discuss-time">#{time}</div>'
                             + '</div>';
-
-                        html = html.replace(/#{username}/g, username);
+                        html = html.replace(/#{username}/g, list[i].createdUser);
                         html = html.replace(/#{discussion}/g, list[i].discussion);
                         html = html.replace(/#{time}/g, list[i].createdTime);
-
                         $("#discuss-list").append(html);
-
                     }
-                } else {
+                }else {
                     alert("获取评论信息失败！" + json.message);
                 }
+            },
+            error:function (json) {
+                alert("获取评论信息失败！" + json.message);
             }
         });
     }

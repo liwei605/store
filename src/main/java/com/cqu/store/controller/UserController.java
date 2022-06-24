@@ -5,10 +5,7 @@ import com.cqu.store.entity.User;
 import com.cqu.store.service.IUserService;
 import com.cqu.store.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -71,6 +68,11 @@ public class UserController extends BaseController {
         User data = userService.getByUid(getuidFromSession(session));
         return new JsonResult<>(OK, data);
     }
+
+
+
+
+
     @RequestMapping("logout")//账号注销
     public JsonResult<Void> logout(HttpSession session){
         session.invalidate();
