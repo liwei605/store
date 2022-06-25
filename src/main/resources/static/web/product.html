@@ -175,16 +175,17 @@
             </form>
         </div>
     </div>
-    <!--商品信息展示结束-->
+
 
     <!--评论列表-->
-    <div class="discussContainer">
-        <div class="discuss" >
+    <div class="col-md-offset-1 col-md-10">
+        <div class="panel panel-default" >
 
             <div class="panel-heading" >
                 <p class="panel-title">商品评论</p>
             </div>
-            <div id="discuss-list" class="panel-item">
+
+            <div id="discuss-list" class="panel-body">
                 <div class="discuss-item">
                     <div class="discusss-username">test01</div>
                     <div class="discussion">great</div>
@@ -205,16 +206,17 @@
                     <div class="discussion">excellent</div>
                     <div class="discuss-time">16：57</div>
                 </div>
-				
+
             </div>
-			<div id="myDiscuss">
-				<input name="discuss" type="text" id="discussInput" placeholder="请输入评论"/>
-				<button id="sendDiscuss">发表评论</button>
-			</div>
+
+            <div id="myDiscuss">
+                <input name="discuss" type="text" id="discussInput" placeholder="请输入评论"/>
+                <button id="sendDiscuss">发表评论</button>
+            </div>
         </div>
     </div>
 
-    <!--售后信息开始-->
+
     <div class="col-md-offset-1 col-md-10">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -273,6 +275,10 @@
             </div>
         </div>
     </div>
+
+
+
+
 </div>
 <!--页脚开始-->
 <div class="clearfix"></div>
@@ -296,6 +302,7 @@
             <p>专属特权</p>
         </div>
     </div>
+
     <!--联系我们、下载客户端等-->
     <div class="container beforeBottom">
         <div class="col-md-offset-1 col-md-3">
@@ -412,15 +419,17 @@
                             + '</div>';
                         html = html.replace(/#{username}/g, list[i].createdUser);
                         html = html.replace(/#{discussion}/g, list[i].discussion);
-                        html = html.replace(/#{time}/g, list[i].createdTime);
+                        html = html.replace(/#{time}/g, list[i].createdTime.toString());
                         $("#discuss-list").append(html);
                     }
                 }else {
                     alert("获取评论信息失败！" + json.message);
+                    location.herf="login.html";
                 }
             },
             error:function (json) {
                 alert("获取评论信息失败！" + json.message);
+                location.herf="login.html";
             }
         });
     }

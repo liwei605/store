@@ -70,15 +70,17 @@
 }
 
 .discusss-username {
-	font-size: 20px;
+    font-size: 18px;
 	margin: 10px;
 	float:left;
+    color: #092F97;
 }
 .discussion {
-	font-size: 20px;
+	font-size: 13px;
 }
 .discuss-time {
-	font-size: 14px;
+	font-size: 12px;
+    color: #999999;
 }
 
 

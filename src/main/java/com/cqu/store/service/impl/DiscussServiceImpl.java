@@ -7,6 +7,9 @@ import com.cqu.store.service.IDiscussService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +30,19 @@ public class DiscussServiceImpl implements IDiscussService {
     @Override
     public Integer insertDiscuss(Integer uid, Integer pid, String discussion) {
         Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateString = formatter.format(date);
+
+        Date currentTime_2 = null;
+        try {
+            currentTime_2 = formatter.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        System.err.println(currentTime_2);
+
+
         Discuss discuss = new Discuss();
         discuss.setUid(uid);
         discuss.setPid(pid);
@@ -35,8 +51,8 @@ public class DiscussServiceImpl implements IDiscussService {
             discussion = discussion.substring(0,80);
         }
         discuss.setDiscussion(discussion);
-        discuss.setCreatedTime(date);
-        discuss.setModifiedTime(date);
+        discuss.setCreatedTime(currentTime_2);
+        discuss.setModifiedTime(currentTime_2);
         String username = userMapper.findByUid(uid).getUsername();
         discuss.setCreatedUser(username);
         discuss.setModifiedUser(username);

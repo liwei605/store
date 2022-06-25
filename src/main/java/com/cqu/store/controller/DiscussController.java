@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RequestMapping("discuss")
@@ -21,6 +24,21 @@ public class DiscussController extends BaseController{
     @GetMapping("{pid}/search")
     public JsonResult<List<Discuss>> searchByPid(@PathVariable("pid") Integer pid){
         List<Discuss> list = discussService.searchByPid(pid);
+        for (int i=0;i<list.size();i++)
+        {
+            Date date = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String dateString = formatter.format(date);
+
+            Date currentTime_2 = null;
+            try {
+                currentTime_2 = formatter.parse(dateString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            System.err.println(currentTime_2);
+            list.get(i).setCreatedTime(currentTime_2);
+        }
         return new JsonResult<List<Discuss>>(OK,list);
     }
 
