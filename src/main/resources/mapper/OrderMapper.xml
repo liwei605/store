@@ -82,4 +82,12 @@
             oid = #{oid}
     </select>
 
+
+    <delete id="deleteOrderByoid" >
+        delete from t_order where oid=#{oid} and uid=#{uid}
+    </delete>
+
+    <delete id="deleteOrderItemByoid" >
+        delete from t_order_item where oid=#{oid}
+    </delete>
 </mapper>

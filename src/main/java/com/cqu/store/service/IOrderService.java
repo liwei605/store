@@ -23,4 +23,8 @@ public interface IOrderService {
     List<Order> getOrder(Integer uid) ;
 
     List<OrderItem> getOrderItemByoid(Integer oid) ;
+
+
+    // 删除订单
+    Integer deleteOrderByoid(Integer oid ,Integer uid,String username);
 }

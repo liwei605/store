@@ -50,7 +50,17 @@ public class OrderMapperTests {
             System.err.println();
             System.err.println();
         }
+    }
 
+    @Test
+    public void deleteOrderByoid(){
+       int row= orderMapper.deleteOrderByoid(26,10);
+       System.err.println(row);
+    }
 
+    @Test
+    public void deleteOrderItemByoid(){
+        int row= orderMapper.deleteOrderItemByoid(23);
+        System.err.println(row);
     }
 }

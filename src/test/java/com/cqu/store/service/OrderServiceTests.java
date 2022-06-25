@@ -44,19 +44,10 @@ public class OrderServiceTests {
         System.err.println(list);
     }
 
-//    @Test
-//    public void showOrderItem() {
-//        Integer uid= 10;
-//        List<OrderItem> list = orderService.showOrderItem(uid,"liwei1");
-//
-//        System.err.println(list);
-//    }
-//
-//    @Test
-//    public void showOrder() {
-//        Integer uid= 10;
-//        Order list = orderService.showOrder(uid,"liwei");
-//
-//        System.err.println(list);
-//    }
+    @Test
+    public void deleteUserOrder()
+    {
+       int row= orderService.deleteOrderByoid(22,10,"liwei3");
+        System.err.println(row);
+    }
 }

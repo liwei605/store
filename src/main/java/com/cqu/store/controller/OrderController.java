@@ -60,38 +60,16 @@ public class OrderController extends BaseController {
         //返回视图对象list
         return new JsonResult<List<OrderAndOrderItemVO>>(OK,orderAndOrderItemVOlist);
     }
-//    @RequestMapping("show_order_item")
-//    public JsonResult<List<OrderItem>> showOrderItem(HttpSession session)
-//    {
-//        // 从Session中取出uid和username
-//        Integer uid = getuidFromSession(session);
-//        String username = getUsernameFromSession(session);
-//        // 调用业务对象执行业务
-//        List<OrderItem> data= orderService.showOrderItem(uid,username);
-//        // 返回成功与数据
-//        return new JsonResult<List<OrderItem>>(OK, data);
-//    }
-//
-//    @RequestMapping("show_order")
-//    public JsonResult<OderVO> showOrder(HttpSession session){
-//
-//        // 从Session中取出uid和username
-//        Integer uid = getuidFromSession(session);
-//        String username = getUsernameFromSession(session);
-//        // 调用业务对象执行业务
-//        Order order= orderService.showOrder(uid,username);
-//        System.err.println(order.getOrderTime());
-//        OderVO data =new OderVO();
-//        //随机订单号
-//        data.setO_st_id("10000000"+order.getOid());
-//        //设置收货人
-//        data.setRecv_name(order.getRecvName());
-//        //设置下单时间
-////        data.setCreat_time(new Date());
-//        data.setCreat_time(order.getOrderTime().toString());
-//        //设置总价格
-//        data.setTotal_price(order.getTotalPrice().toString());
-//
-//        return new JsonResult<OderVO>(OK, data);
-//    }
+
+
+    @RequestMapping("deleteorder")
+    public JsonResult<Void> deleteOrder(Integer oid,HttpSession session)
+    {
+        // 从Session中取出uid和username
+        Integer uid = getuidFromSession(session);
+        //从session中取出username
+        String username =getUsernameFromSession(session);
+        orderService.deleteOrderByoid(oid,uid,username);
+        return new JsonResult<Void>(OK);
+    }
 }

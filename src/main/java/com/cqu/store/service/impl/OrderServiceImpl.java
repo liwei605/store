@@ -2,11 +2,16 @@ package com.cqu.store.service.impl;
 import com.cqu.store.entity.Address;
 import com.cqu.store.entity.Order;
 import com.cqu.store.entity.OrderItem;
+import com.cqu.store.entity.User;
 import com.cqu.store.mapper.OrderMapper;
+import com.cqu.store.mapper.UserMapper;
 import com.cqu.store.service.IAddressService;
 import com.cqu.store.service.ICartService;
 import com.cqu.store.service.IOrderService;
+import com.cqu.store.service.IUserService;
 import com.cqu.store.service.ex.InsertException;
+import com.cqu.store.service.ex.OrderNotFound;
+import com.cqu.store.service.ex.UserNotFoundException;
 import com.cqu.store.vo.CartVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +26,12 @@ public class OrderServiceImpl implements IOrderService {
     @Autowired
     private OrderMapper orderMapper;
     @Autowired
+    private UserMapper userMapper;
+    @Autowired
     private IAddressService addressService;
     @Autowired
     private ICartService cartService;
+
     @Transactional
     @Override
     public Order create(Integer aid, Integer[] cids, Integer uid, String username) {
@@ -109,6 +117,29 @@ public class OrderServiceImpl implements IOrderService {
         List<OrderItem> orderItemlist = orderMapper.findOrderItemByoid(oid);
 
         return  orderItemlist;
+    }
+
+
+    @Override
+    public Integer deleteOrderByoid(Integer oid, Integer uid,String username) {
+         User user= userMapper.findByUsername(username);
+        if(user==null)
+        {
+            throw new UserNotFoundException("user not found!");
+        }
+        //删除用户的某个订单
+        int row =orderMapper.deleteOrderByoid(oid,uid);
+        if(row==0)
+        {
+            throw new OrderNotFound("order not found!");
+        }
+        int  Itemrow = orderMapper.deleteOrderItemByoid(oid);
+        if(Itemrow==0)
+        {
+            throw new OrderNotFound("This order Exception,no orderItem in this order!");
+        }
+        //返回删除的物品的个数
+        return Itemrow;
     }
 
 

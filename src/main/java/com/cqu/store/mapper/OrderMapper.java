@@ -23,4 +23,10 @@ public interface OrderMapper {
 
     //通过订单id来找该订单下的物品ID
     List<OrderItem> findOrderItemByoid(Integer oid);
+
+    //通过订单id和用户id删除订单
+    Integer deleteOrderByoid(Integer oid ,Integer uid);
+
+    //通过订单id删除订单下的物品
+    Integer deleteOrderItemByoid(Integer oid );
 }

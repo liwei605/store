@@ -207,12 +207,16 @@
                 </table>
 
 
-                <div id="tP">
+                <div id="tP" >
                     <span  class="pull-right">订单总金额：¥20689</span>
+                    <a href="#" class="btn btn-default btn-xs">确认收货</a>
                 </div>
 
 
             </div>
+
+
+
         </div>
 <!--        <div class="panel panel-default">-->
 <!--            <div class="panel-heading">-->
@@ -419,18 +423,20 @@
                                 +'<th width="9%">小计</th>'
                                 +'<th width="10%">售后</th>'
                                 +'<th width="10%">状态</th>'
-                                +'<th width="10%">操作</th>'
+                                // +'<th width="10%">操作</th>'
                                 +'</tr>'
                                 +'<thead>'
                                 +'<tbody id="orderItem-list" class="orders-body">'
                                 +Tr
                                 +'</tbody>'
                                 +'</table>'
-                                +'<div id="tP">'
+                                +'<div >'
                                 +tP
+                                +'<input id="#{oid}" value="确认收货:" class="btn btn-default btn-xs" type="button" onclick="deleteorder(#{oid});">100000000-#{oid}</input>'
                                 +'</div>'
                                 +'</div>'
                                 +'</div>';
+                            one_order=one_order.replace(/#{oid}/g, oneorder.oid);
                             $("#totalorder").append(one_order);
                         }
 
@@ -452,7 +458,7 @@
           +'    <div>已发货</div>'
           +'    <div><a href="orderInfo.html">订单详情</a></div>'
           +'</td>'
-          +'<td><a href="#" class="btn btn-default btn-xs">确认收货</a></td>'
+          // +'<td><a href="#" class="btn btn-default btn-xs">确认收货</a></td>'
           +'</tr>';
 
 
@@ -475,7 +481,7 @@
 
     function getp(oid,ordertime,rcve_name)
     {
-        var p='<p class="panel-title">订单号：100000000-#{oid}，下单时间：#{ordertime} ，收货人:#{rcve_name} </p>';
+        var p='<p  class="panel-title">订单号：100000000-#{oid}，下单时间：#{ordertime} ，收货人:#{rcve_name} </p>';
 
         p=p.replace(/#{oid}/g,oid);
         p=p.replace(/#{ordertime}/g,ordertime);
@@ -484,7 +490,32 @@
         return p;
     }
 
+//删除订单
+    function deleteorder(oid)
+    {
+        $.ajax({
+            url: "/orders/deleteorder",
+            type: "GET",
+            data:{
+                "oid": oid
+            },
+            dataType: "JSON",
+            success: function (json) {
+                if (json.state == 200) {
+                    alert("收货确认，订单将被删除");
+                    showOrderAndOrderItem();
+                }else
+                {
+                    alert("订单删除失败"+ json.message);
+                }
+            },
+            error: function (xhr) {
+                alert("您的登录信息已经过期，请重新登录！HTTP响应码：" + xhr.status);
+                location.href = "login.html";
+            }
+        });
 
+    }
 </script>
 </body>
 
