@@ -40,7 +40,7 @@ public class DiscussServiceImpl implements IDiscussService {
             e.printStackTrace();
         }
 
-        System.err.println(currentTime_2);
+//        System.err.println(currentTime_2);
 
 
         Discuss discuss = new Discuss();
