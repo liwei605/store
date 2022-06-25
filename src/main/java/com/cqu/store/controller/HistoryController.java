@@ -40,4 +40,12 @@ public class HistoryController  extends BaseController{
         historyService.deleteHistory(hid,uid);
         return  new JsonResult<Void>(OK);
     }
+
+    @RequestMapping("deleteAll")
+    public JsonResult<Void> deleteAll(HttpSession session)
+    {
+        historyService.deleteAllHistory(getuidFromSession(session));
+        return  new JsonResult<Void>(OK);
+    }
+
 }

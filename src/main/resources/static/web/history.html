@@ -94,7 +94,12 @@
 <!--头部结束-->
 <!--导航结束-->
 <div class="container">
-    <div id="col-md-offset-0" class="col-md-offset-1 col-md-10"><b>我的浏览记录：</b></div>
+    <div id="col-md-offset-0" class="col-md-offset-1 col-md-10"><b>我的浏览记录：</b>
+        <button  type="button" class="btn btn-default" onclick="deleteAll()">
+            <span class="fa fa-check"></span> 一键删除
+        </button>
+    </div>
+
     <div id="col-md-offset-1"  class="col-md-offset-1 col-md-10">
         <div class="col-md-3">
             <div class="goods-panel" style="">
@@ -281,15 +286,6 @@
             </div>
         </div>
     </div>
-    <div id="col-md-offset-4" class="col-md-offset-4 col-md-10">
-        <p align="center">
-            <a href="#">上一页</a>
-            <a href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">下一页</a>
-        </p>
-    </div>
 </div>
 <!--页脚开始-->
 <div class="clearfix"></div>
@@ -404,6 +400,30 @@
                 }
             }
         });
+    }
+
+    function deleteAll() {
+        $.ajax(
+            {
+                url:"/history/deleteAll",
+                type:"Get",
+                dataType:"json",
+                success: function (json) {
+                    if (json.state == 200) {
+                        alert("删除成功！");
+                        showHistory();
+                    } else {
+                        alert("删除失败！" + json.message);
+                    }
+                },
+                error: function (xhr) {
+                    alert("您的登录信息已经过期，请重新登录！HTTP响应码：" + xhr.status);
+                    location.href = "login.html";
+                }
+
+            }
+        );
+
     }
 
     function showHistory()

@@ -12,4 +12,6 @@ public interface IHistoryService {
     List<HistoryVO> findByUid(Integer uid);
 
     void deleteHistory(Integer hid,Integer uid);
+
+    void deleteAllHistory(Integer uid);
 }

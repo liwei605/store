@@ -67,4 +67,20 @@ public class HistoryServiceImpl implements IHistoryService {
             }
         }
     }
+
+    @Override
+    public void deleteAllHistory(Integer uid) {
+        List<HistoryVO> list=historyMapper.findByUid(uid);
+        Integer hid=0;
+        Integer rows=0;
+        for(int i=0;i<list.size();i++)
+        {
+            hid=list.get(i).getHid();
+            rows=historyMapper.deleteHistory(hid);
+            if(rows!=1)
+            {
+                throw  new DeleteException("删除浏览记录失败，请联系管理员");
+            }
+        }
+    }
 }
