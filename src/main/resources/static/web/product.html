@@ -446,9 +446,9 @@
 		    success: function (json) {
 		        if (json.state == 200) {
 		            alert("发表成功！");
+                    document.getElementById("discussInput").value="";
                     showDiscuss();
-                    $('#discussInput').html('');
-                    $("#discussInput").empty();
+
 		        } else {
 		            alert("发表失败！" + json.message);
                     location.href = "login.html";
