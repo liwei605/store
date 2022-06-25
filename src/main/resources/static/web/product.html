@@ -38,6 +38,8 @@
         <!--快捷选项-->
         <div class="col-md-9 top-item">
             <ul class="list-inline pull-right">
+                <li><a href="history.html"><span class="fa fa-file-text"></span>&nbsp;浏览记录</a></li>
+                <li class="li-split">|</li>
                 <li><a href="favorites.html"><span class="fa fa-heart"></span>&nbsp;收藏</a></li>
                 <li class="li-split">|</li>
                 <li><a href="orders.html"><span class="fa fa-file-text"></span>&nbsp;订单</a></li>
@@ -175,17 +177,16 @@
             </form>
         </div>
     </div>
-
+    <!--商品信息展示结束-->
 
     <!--评论列表-->
-    <div class="col-md-offset-1 col-md-10">
-        <div class="panel panel-default" >
+    <div class="discussContainer">
+        <div class="discuss" >
 
             <div class="panel-heading" >
                 <p class="panel-title">商品评论</p>
             </div>
-
-            <div id="discuss-list" class="panel-body">
+            <div id="discuss-list" class="panel-item">
                 <div class="discuss-item">
                     <div class="discusss-username">test01</div>
                     <div class="discussion">great</div>
@@ -208,15 +209,14 @@
                 </div>
 
             </div>
-
-            <div id="myDiscuss">
-                <input name="discuss" type="text" id="discussInput" placeholder="请输入评论"/>
-                <button id="sendDiscuss">发表评论</button>
-            </div>
+			<div id="myDiscuss">
+				<input name="discuss" type="text" id="discussInput" placeholder="请输入评论"/>
+				<button id="sendDiscuss">发表评论</button>
+			</div>
         </div>
     </div>
 
-
+    <!--售后信息开始-->
     <div class="col-md-offset-1 col-md-10">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -275,10 +275,6 @@
             </div>
         </div>
     </div>
-
-
-
-
 </div>
 <!--页脚开始-->
 <div class="clearfix"></div>
@@ -302,7 +298,6 @@
             <p>专属特权</p>
         </div>
     </div>
-
     <!--联系我们、下载客户端等-->
     <div class="container beforeBottom">
         <div class="col-md-offset-1 col-md-3">
@@ -374,9 +369,12 @@
     let id = $.getUrlParam("id");
     console.log("id=" + id);
 
+
+
     $(document).ready(function () {
+
         showUser();
-        showDiscuss();
+        addHistory();
         $.ajax({
             url: "/products/" + id + "/details",
             type: "GET",
@@ -419,17 +417,15 @@
                             + '</div>';
                         html = html.replace(/#{username}/g, list[i].createdUser);
                         html = html.replace(/#{discussion}/g, list[i].discussion);
-                        html = html.replace(/#{time}/g, list[i].createdTime.toString());
+                        html = html.replace(/#{time}/g, list[i].createdTime);
                         $("#discuss-list").append(html);
                     }
                 }else {
                     alert("获取评论信息失败！" + json.message);
-                    location.herf="login.html";
                 }
             },
             error:function (json) {
                 alert("获取评论信息失败！" + json.message);
-                location.herf="login.html";
             }
         });
     }
@@ -459,7 +455,7 @@
 		    }
 		});
 	})
-	
+
     $("#btn-add-to-cart").click(function () {
         $.ajax({
             url: "/carts/add_to_cart",
@@ -503,6 +499,17 @@
                     alert("获取用户信息失败！" + json.message);
                 }
             }
+        });
+    }
+    function addHistory()
+    {
+        $.ajax({
+            url: "/history/add_to_history",
+            type: "POST",
+            data: {
+                "pid": id,
+            },
+            dataType: "JSON"
         });
     }
 
