@@ -94,7 +94,7 @@
 <!--头部结束-->
 <!--导航结束-->
 <div class="container">
-    <div id="col-md-offset-0" class="col-md-offset-1 col-md-10"><b>我的收藏：</b></div>
+    <div id="col-md-offset-0" class="col-md-offset-1 col-md-10"><b>我的浏览记录：</b></div>
     <div id="col-md-offset-1"  class="col-md-offset-1 col-md-10">
         <div class="col-md-3">
             <div class="goods-panel" style="">
@@ -384,7 +384,7 @@
     $(document).ready(function() {
 
         showUser();
-        showfaver();
+        showHistory();
     });
     function showUser()
     {
@@ -406,14 +406,14 @@
         });
     }
 
-    function showfaver()
+    function showHistory()
     {
         $("#col-md-offset-1").empty();
         $("#col-md-offset-2").empty();
         $("#col-md-offset-3").empty();
 
         $.ajax({
-            url: "/favorites/",
+            url: "/history/",
             type: "GET",
             dataType: "JSON",
             success: function (json) {
@@ -426,13 +426,13 @@
                     if(i<row)
                     {
                         for (let m=0 ; m<4;m++){
-                            var  tr =eximage(list[index].title,list[index].price,list[index].image,list[index].fid,list[index].pid);
+                            var  tr =eximage(list[index].title,list[index].price,list[index].image,list[index].hid,list[index].pid);
                             index =index +1;
                             $(row_id).append(tr);
                         }
                     }else {
                         for (let m=0 ; m<mod;m++){
-                            var  tr =eximage(list[index].title,list[index].price,list[index].image,list[index].fid,list[index].pid);
+                            var  tr =eximage(list[index].title,list[index].price,list[index].image,list[index].hid,list[index].pid);
                             index =index +1;
                             $(row_id).append(tr);
                         }
@@ -444,20 +444,20 @@
     }
 
 
-    function cancel(fid)
+    function cancel(hid)
     {
 
         $.ajax({
-            url: "/favorites/"+fid+"/cancelFavorite",
+            url: "/history/"+hid+"/cancelHistory",
             type: "GET",
             dataType: "JSON",
             success: function (json) {
                 if(json.state=200)
                 {
-                    alert("取消成功!");
-                    showfaver();
+                    alert("删除成功!");
+                    showHistory();
                 }else {
-                    alert("取消失败!"+json.message);
+                    alert("删除失败!"+json.message);
                 }
             },
             error:function (xhr)
@@ -492,7 +492,7 @@
         });
     }
 
-    function eximage(title,price,image,fid,pid)
+    function eximage(title,price,image,hid,pid)
     {
         let tr = '<div class="col-md-3">'
             +'<div class="goods-panel" style="">'
@@ -504,8 +504,8 @@
             +'        <small>#{title}</small>'
             +'    </a></p>'
             +'    <span>'
-            +'			<a  href="javascript:void(0)" class="btn_btn-default_btn-xs_add-fav" onclick="cancel(#{fid});"><span'
-            +'                class="fa fa-heart"></span>取消收藏</a>'
+            +'			<a  href="javascript:void(0)" class="btn_btn-default_btn-xs_add-fav" onclick="cancel(#{hid});"><span'
+            +'                class="fa fa-heart"></span>删除浏览记录</a>'
             +'		<a href="cart.html" class="btn btn-default btn-xs add-cart" onclick="addtocart(#{pid});"><span'
             +'           class="fa fa-cart-arrow-down"></span>加入购物车</a>'
             +'		</span>'
@@ -514,7 +514,7 @@
         tr=tr.replace(/#{title}/g,title);
         tr=tr.replace(/#{price}/g,price);
         tr=tr.replace(/#{image}/g,image);
-        tr=tr.replace(/#{fid}/g,fid);
+        tr=tr.replace(/#{hid}/g,hid);
         tr=tr.replace(/#{pid}/g,pid);
         return tr;
     }

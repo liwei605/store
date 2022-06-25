@@ -38,6 +38,8 @@
         <!--快捷选项-->
         <div class="col-md-9 top-item">
             <ul class="list-inline pull-right">
+                <li><a href="history.html"><span class="fa fa-file-text"></span>&nbsp;浏览记录</a></li>
+                <li class="li-split">|</li>
                 <li><a href="favorites.html"><span class="fa fa-heart"></span>&nbsp;收藏</a></li>
                 <li class="li-split">|</li>
                 <li><a href="orders.html"><span class="fa fa-file-text"></span>&nbsp;订单</a></li>
@@ -205,7 +207,7 @@
                     <div class="discussion">excellent</div>
                     <div class="discuss-time">16：57</div>
                 </div>
-				
+
             </div>
 			<div id="myDiscuss">
 				<input name="discuss" type="text" id="discussInput" placeholder="请输入评论"/>
@@ -367,9 +369,12 @@
     let id = $.getUrlParam("id");
     console.log("id=" + id);
 
+
+
     $(document).ready(function () {
+
         showUser();
-        showDiscuss();
+        addHistory();
         $.ajax({
             url: "/products/" + id + "/details",
             type: "GET",
@@ -450,7 +455,7 @@
 		    }
 		});
 	})
-	
+
     $("#btn-add-to-cart").click(function () {
         $.ajax({
             url: "/carts/add_to_cart",
@@ -494,6 +499,17 @@
                     alert("获取用户信息失败！" + json.message);
                 }
             }
+        });
+    }
+    function addHistory()
+    {
+        $.ajax({
+            url: "/history/add_to_history",
+            type: "POST",
+            data: {
+                "pid": id,
+            },
+            dataType: "JSON"
         });
     }
 
