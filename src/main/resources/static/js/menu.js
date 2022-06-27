@@ -16,67 +16,67 @@ var typelist = [{
 }, {
     "id": "4",
     "parentId": "0",
-    "name": "个护化妆"
+    "name": "神州"
 }, {
     "id": "5",
     "parentId": "0",
-    "name": "钟表"
+    "name": "技嘉"
 }, {
     "id": "6",
     "parentId": "0",
-    "name": "母婴"
+    "name": "MIUI/小米"
 }, {
     "id": "7",
     "parentId": "0",
-    "name": "食品饮料"
+    "name": "alienware"
 }, {
     "id": "8",
     "parentId": "0",
-    "name": "汽车用品"
+    "name": "京天华盛"
 }, {
     "id": "9",
     "parentId": "0",
-    "name": "玩具乐器"
+    "name": "IPASON/攀升"
 }, {
     "id": "10",
     "parentId": "0",
-    "name": "手机"
+    "name": "ENVINDA/恩维达"
 }, {
     "id": "11",
     "parentId": "0",
-    "name": "数码"
+    "name": "honor/荣耀"
 }, {
     "id": "12",
     "parentId": "0",
-    "name": "家居家装"
+    "name": "宁美国度"
 }, {
     "id": "13",
     "parentId": "0",
-    "name": "厨具"
+    "name": "华为"
 }, {
     "id": "14",
     "parentId": "0",
-    "name": "服饰内衣"
+    "name": "金河田"
 }, {
     "id": "15",
     "parentId": "0",
-    "name": "鞋靴"
+    "name": "HP"
 }, {
     "id": "16",
     "parentId": "0",
-    "name": "礼品箱包"
+    "name": "Dell"
 }, {
     "id": "17",
     "parentId": "0",
-    "name": "珠宝"
+    "name": "苹果"
 }, {
     "id": "18",
     "parentId": "0",
-    "name": "运动健康"
+    "name": "华硕"
 }, {
     "id": "19",
     "parentId": "0",
-    "name": "充值票务"
+    "name": "联想"
 }, {
     "id": "20",
     "parentId": "3",
