@@ -48,7 +48,7 @@ public class HistoryServiceImpl implements IHistoryService {
     public void deleteHistory(Integer hid, Integer uid) {
         Integer rows=0;
         Date date=new Date();
-        //查询是否收藏已存在
+        //查询是否存在该浏览记录
         History result=historyMapper.findByHid(hid);
         if (result==null)
         {
