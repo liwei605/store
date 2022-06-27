@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpSession;
 
-//????????????
+//»ùÀà¿ØÖÆ²ã
 public class BaseController {
 
     public static final int OK = 200;
@@ -31,8 +31,7 @@ public class BaseController {
             result.setMessage(e.getMessage()); //?????????????
         } else if (e instanceof AddressCountLimitException) {
             result.setState(5004);
-            result.setMessage("?????????????????"); //???????????????????
-
+            result.setMessage(e.getMessage()); //???????????????????
         } else if (e instanceof FileEmptyException) {
             result.setState(6000);
             result.setMessage(e.getMessage());//???????
@@ -52,6 +51,15 @@ public class BaseController {
             result.setState(4006);
         }else if (e instanceof CartNotFoundException) {
             result.setState(4007);
+        }else if(e instanceof FavoriteNotFoundException)
+        {
+            result.setState(4008);
+        }else if(e instanceof HistoryNotFound)
+        {
+            result.setState(4009);
+        }else if(e instanceof OrderNotFound)
+        {
+            result.setState(4010);
         }
 
 
