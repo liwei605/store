@@ -20,7 +20,7 @@ public class HistoryController  extends BaseController{
     IHistoryService historyService;
 
     @RequestMapping("add_to_history")
-    public JsonResult<Void> addToFavorite(Integer pid, HttpSession session)
+    public JsonResult<Void> addToHistory(Integer pid, HttpSession session)
     {
         historyService.insertHistory(getuidFromSession(session),pid,getUsernameFromSession(session));
         return  new JsonResult<Void>(OK);
@@ -34,7 +34,7 @@ public class HistoryController  extends BaseController{
         return new JsonResult<>(OK,data);
     }
     @RequestMapping("{hid}/cancelHistory")
-    public JsonResult<Void> deleteFavorite(@PathVariable("hid") Integer hid, HttpSession session )
+    public JsonResult<Void> deleteHistory(@PathVariable("hid") Integer hid, HttpSession session )
     {
         Integer uid=getuidFromSession(session);
         historyService.deleteHistory(hid,uid);

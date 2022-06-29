@@ -7,6 +7,7 @@ import com.cqu.store.mapper.ProductMapper;
 import com.cqu.store.service.ICartService;
 import com.cqu.store.service.ex.CartNotFoundException;
 import com.cqu.store.service.ex.InsertException;
+import com.cqu.store.service.ex.ProductNotFoundException;
 import com.cqu.store.service.ex.UpdateException;
 import com.cqu.store.vo.CartVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,11 @@ public class CartServiceImpl implements ICartService {
             cart.setNum(amount);
             //价格，来自于商品中的数据
             Product product =productMapper.findById(pid);
+            if (product==null)
+            {
+                throw new ProductNotFoundException("Product does not exist, adding failed");
+            }
             cart.setPrice(product.getPrice());
-
             cart.setCreatedUser(username);
             cart.setModifiedUser(username);
             cart.setCreatedTime(date);

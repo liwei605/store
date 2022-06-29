@@ -34,17 +34,17 @@ public class UserController extends BaseController {
     @Autowired
     private IUserService userService;
 
-    @RequestMapping("reg")//��������
+    @RequestMapping("reg")//用户注册
     public JsonResult<Void> reg(User user) {
         userService.reg(user);
         return new JsonResult<Void>(OK);
     }
 
-    @RequestMapping("login")//��������
+    @RequestMapping("login")//用户登录
     public JsonResult<User> login(String username, String password, HttpSession session) {
         User data = userService.login(username, password); //���data�����ᱻ�����cookies����secceion
 
-        //��session��������ݰ�
+        //将uid和username存入到HttpSession中
         session.setAttribute("uid", data.getUid());
         session.setAttribute("username", data.getUsername());
 

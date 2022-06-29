@@ -47,7 +47,7 @@ public class BaseController {
         } else if (e instanceof FileUploadIOException) {
             result.setState(6004);
             result.setMessage(e.getMessage()); //??????IO??
-        } else if (e instanceof ProductNotFoundException) { //???δ?????
+        } else if (e instanceof ProductNotFoundException) { //商品不存在
             result.setState(4006);
         }else if (e instanceof CartNotFoundException) {
             result.setState(4007);

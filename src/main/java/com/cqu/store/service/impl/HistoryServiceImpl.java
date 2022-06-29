@@ -1,12 +1,11 @@
 package com.cqu.store.service.impl;
 
 import com.cqu.store.entity.History;
+import com.cqu.store.entity.Product;
 import com.cqu.store.mapper.HistoryMapper;
+import com.cqu.store.mapper.ProductMapper;
 import com.cqu.store.service.IHistoryService;
-import com.cqu.store.service.ex.AccessDeniedException;
-import com.cqu.store.service.ex.DeleteException;
-import com.cqu.store.service.ex.HistoryNotFound;
-import com.cqu.store.service.ex.InsertException;
+import com.cqu.store.service.ex.*;
 import com.cqu.store.vo.HistoryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,12 +19,20 @@ public class HistoryServiceImpl implements IHistoryService {
     @Autowired
     private HistoryMapper historyMapper;
 
+    @Autowired
+    private ProductMapper productMapper;
+
     @Override
     public void insertHistory(Integer uid,Integer pid,String username)
     {
         Integer rows=0;
         Date date=new Date();
         History result=new History();
+        Product p= productMapper.findById(pid);
+        if(p==null)
+        {
+            throw  new ProductNotFoundException("product not found!");
+        }
         result.setPid(pid);
         result.setUid(uid);
         result.setCreatedTime(date);
@@ -48,7 +55,7 @@ public class HistoryServiceImpl implements IHistoryService {
     public void deleteHistory(Integer hid, Integer uid) {
         Integer rows=0;
         Date date=new Date();
-        //查询是否收藏已存在
+        //查询是否存在该浏览记录
         History result=historyMapper.findByHid(hid);
         if (result==null)
         {
