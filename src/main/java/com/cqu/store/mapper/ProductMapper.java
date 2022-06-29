@@ -25,4 +25,10 @@ public interface ProductMapper {
      */
 
     Product findById(Integer id);
+
+    /**
+     * 搜索功能
+     * @return 返回搜到的商品列表
+     */
+    List<Product> SearchPC(String key);
 }

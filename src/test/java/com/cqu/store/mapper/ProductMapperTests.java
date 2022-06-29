@@ -35,4 +35,11 @@ public class ProductMapperTests {
         }
     }
 
+    @Test
+    public  void testSearch(){
+        String key = "小新";
+        List<Product> list = productMapper.SearchPC(key);
+        System.err.println(list);
+    }
+
 }

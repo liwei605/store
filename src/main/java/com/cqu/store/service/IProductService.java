@@ -3,20 +3,22 @@ import com.cqu.store.entity.Product;
 
 import java.util.List;
 
-/** 处理商品数据的业务层接口 */
+/** 锟斤拷锟斤拷锟斤拷品锟斤拷锟捷碉拷业锟斤拷锟接匡拷 */
 public interface IProductService {
     /**
-     * 查询热销商品的前四名
-     * @return 热销商品前四名的集合
+     * 锟斤拷询锟斤拷锟斤拷锟斤拷品锟斤拷前锟斤拷锟斤拷
+     * @return 锟斤拷锟斤拷锟斤拷品前锟斤拷锟斤拷锟侥硷拷锟斤拷
      */
     List<Product> findHotList();
 
     /**
-     * 根据商品id查询商品详情
-     * @param id 商品id
-     * @return 匹配的商品详情，如果没有匹配的数据则返回null
+     * 锟斤拷锟斤拷锟斤拷品id锟斤拷询锟斤拷品锟斤拷锟斤拷
+     * @param id 锟斤拷品id
+     * @return 匹锟斤拷锟斤拷锟狡凤拷锟斤拷椋拷锟斤拷没锟斤拷匹锟斤拷锟斤拷锟斤拷锟斤拷蚍祷锟絥ull
      */
     Product findById(Integer id);
 
     List<Product> findPCList();
+
+    List<Product> SearchPC(String key);
 }

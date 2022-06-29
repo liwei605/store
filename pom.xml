@@ -54,6 +54,13 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
+        <!--&lt;!&ndash; 支付宝支付jar包 &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.alipay.sdk</groupId>-->
+            <!--<artifactId>alipay-sdk-java</artifactId>-->
+            <!--<version>3.1.0</version>-->
+        <!--</dependency>-->
+
     </dependencies>
     <build>
         <plugins>

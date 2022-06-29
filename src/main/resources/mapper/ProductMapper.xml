@@ -45,4 +45,9 @@
         WHERE
         id=#{id}
     </select>
+
+    <select id="SearchPC" resultMap="ProductEntityMap">
+        SELECT * FROM t_product
+        WHERE title LIKE concat('%',#{key},'%')
+    </select>
 </mapper>

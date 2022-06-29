@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/** ´¦ÀíÉÌÆ·Êý¾ÝµÄÒµÎñ²ãÊµÏÖÀà */
+/** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½Ýµï¿½Òµï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ */
 @Service
 public class ProductServiceImpl implements IProductService {
     @Autowired
@@ -42,21 +42,27 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+    public List<Product> SearchPC(String key) {
+        List<Product> list = productMapper.SearchPC(key);
+        return list;
+    }
+
+    @Override
     public Product findById(Integer id) {
-        // ¸ù¾Ý²ÎÊýidµ÷ÓÃË½ÓÐ·½·¨Ö´ÐÐ²éÑ¯£¬»ñÈ¡ÉÌÆ·Êý¾Ý
+        // ï¿½ï¿½ï¿½Ý²ï¿½ï¿½ï¿½idï¿½ï¿½ï¿½ï¿½Ë½ï¿½Ð·ï¿½ï¿½ï¿½Ö´ï¿½Ð²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½
         Product product = productMapper.findById(id);
-        // ÅÐ¶Ï²éÑ¯½á¹ûÊÇ·ñÎªnull
+        // ï¿½Ð¶Ï²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Îªnull
         if (product == null) {
-            // ÊÇ£ºÅ×³öProductNotFoundException
-            throw new ProductNotFoundException("³¢ÊÔ·ÃÎÊµÄÉÌÆ·Êý¾Ý²»´æÔÚ");
+            // ï¿½Ç£ï¿½ï¿½×³ï¿½ProductNotFoundException
+            throw new ProductNotFoundException("ï¿½ï¿½ï¿½Ô·ï¿½ï¿½Êµï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½Ý²ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
-        // ½«²éÑ¯½á¹ûÖÐµÄ²¿·ÖÊôÐÔÉèÖÃÎªnull
+        // ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ÐµÄ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªnull
         product.setPriority(null);
         product.setCreatedUser(null);
         product.setCreatedTime(null);
         product.setModifiedUser(null);
         product.setModifiedTime(null);
-        // ·µ»Ø²éÑ¯½á¹û
+        // ï¿½ï¿½ï¿½Ø²ï¿½Ñ¯ï¿½ï¿½ï¿½
         return product;
     }
 }

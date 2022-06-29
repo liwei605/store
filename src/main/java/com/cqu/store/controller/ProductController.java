@@ -32,10 +32,16 @@ public class ProductController extends BaseController{
 
     @GetMapping("{id}/details")
     public JsonResult<Product> getById(@PathVariable("id") Integer id) {
-// 调用业务对象执行获取数据
+        // 调用业务对象执行获取数据
         Product data = productService.findById(id);
         return new JsonResult<Product>(OK, data);
-// 返回成功和数据
+        // 返回成功和数据
+    }
+
+    @GetMapping("{key}/search")
+    public JsonResult<List<Product>> Search(@PathVariable("key") String key){
+        List<Product> data = productService.SearchPC(key);
+        return new JsonResult<List<Product>>(OK, data);
     }
 
 }
